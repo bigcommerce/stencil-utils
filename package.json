@@ -1,5 +1,7 @@
 {
+  "name": "stencil-utils",
   "jspm": {
+    "main": "index",
     "directories": {
       "lib": "src",
       "packages": "jspm_packages"

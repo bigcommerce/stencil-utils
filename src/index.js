@@ -1,6 +1,6 @@
-import Cart from './src/events/cart';
-import Product from './src/events/product';
-import Account from './src/events/account';
+import Cart from './events/cart';
+import Product from './events/product';
+import Account from './events/account';
 
 var internals = {
     events:{
@@ -10,7 +10,7 @@ var internals = {
     }
 };
 
-export class StencilUtils {
+export default class StencilUtils {
     constructor(){
         this.events = internals.events;
     }

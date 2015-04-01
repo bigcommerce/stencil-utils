@@ -1,7 +1,7 @@
 import BcEvents from './bc-events';
 import _ from 'lodash';
 
-export class AccountEvents extends BcEvents {
+export default class AccountEvents extends BcEvents {
 
     /**
      *
