@@ -1,4 +1,4 @@
-import {BcEvents} from '../src/events/bc-events';
+import {BcEvents} from '../src/events/index';
 import $ from 'jquery';
 
 describe('BcEvents', ()=> {
