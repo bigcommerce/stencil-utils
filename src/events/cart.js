@@ -1,8 +1,6 @@
 import BcEvents from './index';
 import _ from 'lodash';
 
-console.log(BcEvents);
-
 export default class CartEvents extends BcEvents {
 
     /**
