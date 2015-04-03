@@ -42,7 +42,6 @@ export default class BcEvents extends EventEmitter {
         _.forIn(this.dataMap, (eventDesc, eventTag) => {
             let ele = document.querySelector(eventTag);
             if (ele) {
-
                 $('body').on(eventDesc.trigger.join(' '), eventTag, (event) => {
                     this.emit(eventDesc.eventName, event, ele);
                 });
