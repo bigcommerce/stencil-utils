@@ -10,8 +10,14 @@ export  default class ProductEvents extends BcEvents {
     constructor(options){
         this.options = options || {};
         this.dataMap = {
-            '[data-product-add]': 'product-item-add',
-            '[data-product-remove]': 'product-item-remove'
+            '[data-product-add]': {
+                eventName: 'product-item-add',
+                trigger: ['click']
+            },
+            '[data-product-remove]': {
+                eventName: 'product-item-remove',
+                trigger: ['click']
+            }
         }
     }
 }
