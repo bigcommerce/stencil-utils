@@ -9,7 +9,7 @@ export default class CartEvents extends BcEvents {
      *
      * @param {object} options
      */
-    constructor(options){
+    constructor(options) {
         this.options = options || {};
         this.dataMap = {
             '[data-cart-add]': {

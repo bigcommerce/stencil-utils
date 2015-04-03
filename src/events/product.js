@@ -7,7 +7,7 @@ export  default class ProductEvents extends BcEvents {
      *
      * @param {object} options
      */
-    constructor(options){
+    constructor(options) {
         this.options = options || {};
         this.dataMap = {
             '[data-product-add]': {

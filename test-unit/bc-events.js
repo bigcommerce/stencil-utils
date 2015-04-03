@@ -9,7 +9,8 @@ describe('BcEvents', () => {
 
     it('should return true when there is a listener for an emitter', () => {
         var events = new BcEvents.default();
-        events.on('new-item', () => {});
+        events.on('new-item', () => {
+        });
         expect(events.emit('new-item')).toBeTruthy();
     });
 
@@ -28,7 +29,7 @@ describe('BcEvents', () => {
         var myListener = (event) => {
             console.log('test');
         };
-        var eventHandler = events.on('new-event', myListener );
+        var eventHandler = events.on('new-event', myListener);
 
         expect(eventHandler._events['new-event']).toBeDefined();
 
@@ -60,7 +61,7 @@ describe('BcEvents', () => {
         spyOn(document, 'querySelector').and.returnValue(mockedDocument);
         spyOn($.fn, 'on');
 
-        events.emitterInit.apply(mockData,[]);
+        events.emitterInit.apply(mockData, []);
 
         expect(document.querySelector).toHaveBeenCalled();
         expect($.fn.on).toHaveBeenCalled();
