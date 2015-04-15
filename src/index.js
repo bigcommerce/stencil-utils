@@ -3,7 +3,7 @@ import Product from './events/product';
 import Account from './events/account';
 
 var internals = {
-    events:{
+    events: {
         product: new Product(),
         cart: new Cart(),
         Account: new Account()
@@ -11,7 +11,7 @@ var internals = {
 };
 
 export default class StencilUtils {
-    constructor(){
+    constructor() {
         this.events = internals.events;
     }
 }

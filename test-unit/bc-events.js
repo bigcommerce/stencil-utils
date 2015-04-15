@@ -1,7 +1,10 @@
-import {BcEvents} from '../src/events/bc-events';
+import Events from '../src/events/index';
 import $ from 'jquery';
 
-describe('BcEvents', ()=> {
+//TODO Fix this after I file a big against karma-jspm
+var BcEvents = Events.default;
+
+describe('BcEvents', () => {
     it('should return false if emitter emits without listener', () => {
         var events = new BcEvents();
         expect(events.emit('new-event')).toBeFalsy();
@@ -9,7 +12,8 @@ describe('BcEvents', ()=> {
 
     it('should return true when there is a listener for an emitter', () => {
         var events = new BcEvents();
-        events.on('new-item', () => {});
+        events.on('new-item', () => {
+        });
         expect(events.emit('new-item')).toBeTruthy();
     });
 
@@ -28,7 +32,7 @@ describe('BcEvents', ()=> {
         var myListener = (event) => {
             console.log('test');
         };
-        var eventHandler = events.on('new-event', myListener );
+        var eventHandler = events.on('new-event', myListener);
 
         expect(eventHandler._events['new-event']).toBeDefined();
 
@@ -39,11 +43,20 @@ describe('BcEvents', ()=> {
 
     it('should initialize the emitters', () => {
         var mockedDocument = document.createElement('body');
-        mockedDocument.innerHTML = '<button data-cart-add-item>My Button</button>';
+        mockedDocument.innerHTML =
+            '<button data-cart-add-item>My Button</button>' +
+            '<button data-cart-remove-item></button>';
 
         var mockData = {
             dataMap: {
-                '[data-cart-add-item]': 'cart-add-item'
+                '[data-cart-add]': {
+                    eventName: 'cart-add-item',
+                    trigger: ['click', 'mouseover']
+                },
+                '[data-cart-remove]': {
+                    eventName: 'cart-remove-item',
+                    trigger: ['click']
+                }
             }
         };
         var events = new BcEvents();
@@ -51,12 +64,14 @@ describe('BcEvents', ()=> {
         spyOn(document, 'querySelector').and.returnValue(mockedDocument);
         spyOn($.fn, 'on');
 
-        events.emitterInit.apply(mockData,[]);
+        events.emitterInit.apply(mockData, []);
 
         expect(document.querySelector).toHaveBeenCalled();
         expect($.fn.on).toHaveBeenCalled();
-        expect($.fn.on.calls.argsFor(0)[0]).toEqual('click');
-        expect($.fn.on.calls.argsFor(0)[1]).toEqual('[data-cart-add-item]');
+        expect($.fn.on.calls.argsFor(0)[0]).toEqual('click mouseover');
+        expect($.fn.on.calls.argsFor(0)[1]).toEqual('[data-cart-add]');
+        expect($.fn.on.calls.argsFor(1)[0]).toEqual('click');
+        expect($.fn.on.calls.argsFor(1)[1]).toEqual('[data-cart-remove]');
 
     });
 

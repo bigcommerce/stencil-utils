@@ -15,7 +15,7 @@ module.exports = function (config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'verbose', 'coverage'],
+        reporters: ['progress', 'verbose'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -52,13 +52,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'test-unit/**/*.js': ['babel', 'coverage']
-        },
-
-        // optionally, configure the reporter
-        coverageReporter: {
-            type: 'html',
-            dir: 'coverage/'
+            'test-unit/**/*.js': ['babel']
         }
 
     });

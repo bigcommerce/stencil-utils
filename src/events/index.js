@@ -2,7 +2,7 @@ import EventEmitter from 'asyncly/EventEmitter2';
 import $ from 'jquery';
 import _ from 'lodash';
 
-export class BcEvents extends EventEmitter {
+export default class BcEvents extends EventEmitter {
 
     /**
      *
@@ -39,11 +39,11 @@ export class BcEvents extends EventEmitter {
      * Attaches emitter to required data-tags located in the document
      */
     emitterInit() {
-        _.forIn(this.dataMap, (eventName, eventTag) => {
+        _.forIn(this.dataMap, (eventDesc, eventTag) => {
             let ele = document.querySelector(eventTag);
             if (ele) {
-                $('body').on('click', eventTag, (event) => {
-                    this.emit(eventName, event, ele);
+                $('body').on(eventDesc.trigger.join(' '), eventTag, (event) => {
+                    this.emit(eventDesc.eventName, event, ele);
                 });
             }
         });

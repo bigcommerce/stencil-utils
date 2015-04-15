@@ -1,4 +1,4 @@
-import BcEvents from './bc-events';
+import BcEvents from './index';
 import _ from 'lodash';
 
 export default class CartEvents extends BcEvents {
@@ -7,11 +7,17 @@ export default class CartEvents extends BcEvents {
      *
      * @param {object} options
      */
-    constructor(options){
+    constructor(options) {
         this.options = options || {};
         this.dataMap = {
-            '[data-cart-add]': 'cart-item-add',
-            '[data-cart-remove]': 'cart-item-remove'
+            '[data-cart-add]': {
+                eventName: 'cart-item-add',
+                trigger: ['click', 'mouseover']
+            },
+            '[data-cart-remove]': {
+                eventName: 'cart-item-remove',
+                trigger: ['click']
+            }
         }
     }
 }
