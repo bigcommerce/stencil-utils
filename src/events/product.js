@@ -1,10 +1,10 @@
 import BcEvents from './index';
 import _ from 'lodash';
 
-export  default class ProductEvents extends BcEvents {
+export default class ProductEvents extends BcEvents {
 
     /**
-     *
+     * @Constructor
      * @param {object} options
      */
     constructor(options) {
