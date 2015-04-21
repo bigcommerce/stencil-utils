@@ -1,24 +1,24 @@
-import Events from '../src/events/index';
+import Events from '../src/events/base';
 import $ from 'jquery';
 
 //TODO Fix this after I file a big against karma-jspm
-var BcEvents = Events.default;
+var BaseEvents = Events.default;
 
-describe('BcEvents', () => {
+describe('BaseEvents', () => {
     it('should return false if emitter emits without listener', () => {
-        var events = new BcEvents();
+        var events = new BaseEvents();
         expect(events.emit('new-event')).toBeFalsy();
     });
 
     it('should return true when there is a listener for an emitter', () => {
-        var events = new BcEvents();
+        var events = new BaseEvents();
         events.on('new-item', () => {
         });
         expect(events.emit('new-item')).toBeTruthy();
     });
 
     it('should add eventHandler to event handler object using on', () => {
-        var events = new BcEvents();
+        var events = new BaseEvents();
         var eventHandler = events.on('new-event', (event)=> console.log(event));
 
         expect(eventHandler._events['new-event']).toBeDefined();
@@ -26,7 +26,7 @@ describe('BcEvents', () => {
     });
 
     it('should remove an eventHandler from the handler object', () => {
-        var events = new BcEvents();
+        var events = new BaseEvents();
 
         //Needs to be a reference to the actual handler and not a new handler.
         var myListener = (event) => {
@@ -59,7 +59,7 @@ describe('BcEvents', () => {
                 }
             }
         };
-        var events = new BcEvents();
+        var events = new BaseEvents();
 
         spyOn(document, 'querySelector').and.returnValue(mockedDocument);
         spyOn($.fn, 'on');

@@ -1,10 +1,9 @@
-import BcEvents from './index';
-import _ from 'lodash';
+import BaseEvents from './base';
 
-export default class AccountEvents extends BcEvents {
+export default class AccountEvents extends BaseEvents {
 
     /**
-     *
+     * @Constructor
      * @param {object} options
      */
     constructor(options) {
