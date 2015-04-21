@@ -1,15 +1,17 @@
-import Cart from './events/cart';
-import Product from './events/product';
-import Account from './events/account';
-import CurrencySelector from './events/currency-selector';
+import {
+    AccountEvents,
+    CartEvents,
+    CurrencySelectorEvents,
+    ProductEvents
+} from './events/index';
 import { RemoteCountry } from './remote/index';
 
 var internals = {
     events: {
-        product: new Product(),
-        cart: new Cart(),
-        account: new Account(),
-        currencySelector: new CurrencySelector()
+        account: new AccountEvents(),
+        cart: new CartEvents(),
+        currencySelector: new CurrencySelectorEvents(),
+        product: new ProductEvents()
     },
     remote: {
         country: new RemoteCountry()
