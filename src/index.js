@@ -4,7 +4,10 @@ import {
     CurrencySelectorEvents,
     ProductEvents
     } from './events/index';
-import { RemoteCountry } from './remote/index';
+import {
+    RemoteCountry,
+    RemoteProductAttributes
+    } from './remote/index';
 
 let internals = {
         eventTypes: {}
@@ -49,9 +52,8 @@ internals.events = function (eventTypes) {
 
 internals.remote = function () {
     return {
-        remote: {
-            country: new RemoteCountry()
-        }
+        country: new RemoteCountry(),
+        productAttributes: new RemoteProductAttributes()
     }
 };
 

@@ -16,6 +16,10 @@ export default class ProductEvents extends BaseEvents {
             '[data-product-remove]': {
                 eventName: 'product-item-remove',
                 trigger: ['click']
+            },
+            '[data-product-options-change]': {
+                eventName: 'product-options-change',
+                trigger: ['click']
             }
         }
     }
