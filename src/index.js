@@ -6,7 +6,7 @@ import {
     } from './events/index';
 import { RemoteCountry } from './remote/index';
 
-var events = {
+const events = {
     account: new AccountEvents(),
     cart: new CartEvents(),
     currencySelector: new CurrencySelectorEvents(),
