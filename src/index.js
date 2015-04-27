@@ -6,17 +6,20 @@ import {
     } from './events/index';
 import { RemoteCountry } from './remote/index';
 
-let internals = {};
+let internals = {
+        eventTypes: {}
+    };
 
-internals.eventTypes = {
-    account: new AccountEvents(),
-    cart: new CartEvents(),
-    currencySelector: new CurrencySelectorEvents(),
-    product: new ProductEvents()
+internals.eventClasses = {
+    account: AccountEvents,
+    cart: CartEvents,
+    currencySelector: CurrencySelectorEvents,
+    product: ProductEvents
 };
 
 internals.init = function (events) {
     Object.keys(events).forEach((event) => {
+        internals.eventTypes[event] = new internals.eventClasses[event]();
         internals.eventTypes[event].emitterInit();
     });
 };
@@ -52,7 +55,7 @@ internals.remote = function () {
     }
 };
 
-internals.init(internals.eventTypes);
+internals.init(internals.eventClasses);
 
 export default {
     events: internals.events(internals.eventTypes),
