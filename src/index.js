@@ -3,47 +3,61 @@ import {
     CartEvents,
     CurrencySelectorEvents,
     ProductEvents
-} from './events/index';
+    } from './events/index';
 import { RemoteCountry } from './remote/index';
 
-var internals = {
-    events: {
-        init() {
-            Object.keys(this).forEach((key) => {
-                if ((key !== 'on') && (key !== 'init')){
-                    this[key].emitterInit();
-                }
-            });
-        },
+let internals = {
+        eventTypes: {}
+    };
+
+internals.eventClasses = {
+    account: AccountEvents,
+    cart: CartEvents,
+    currencySelector: CurrencySelectorEvents,
+    product: ProductEvents
+};
+
+internals.init = function (events) {
+    Object.keys(events).forEach((event) => {
+        internals.eventTypes[event] = new internals.eventClasses[event]();
+        internals.eventTypes[event].emitterInit();
+    });
+};
+
+internals.events = function (eventTypes) {
+    return {
         on(event, callback) {
             let eventType = event.split('-')[0];
 
-            if (this[eventType] === undefined) {
+            if (eventTypes[eventType] === undefined) {
                 throw new Error(eventType + ' is not a valid eventType');
             }
 
-            return this[eventType].on(event, callback);
+            return eventTypes[eventType].on(event, callback);
         },
         off(event, callback){
             let eventType = event.split('-')[0];
 
-            if (this[eventType] === undefined) {
-                throw new Error(eventType + 'is not a valid eventType');
+            if (eventTypes[eventType] === undefined) {
+                throw new Error(eventType + ' is not a valid eventType');
             }
 
-            return this[eventType].on(event, callback);
-        },
-        account: new AccountEvents(),
-        cart: new CartEvents(),
-        currencySelector: new CurrencySelectorEvents(),
-        product: new ProductEvents()
-    },
-    remote: {
-        country: new RemoteCountry()
+            return eventTypes[eventType].off(event, callback);
+        }
     }
 };
 
+internals.remote = function () {
+    return {
+        remote: {
+            country: new RemoteCountry()
+        }
+    }
+};
+
+internals.init(internals.eventClasses);
+
 export default {
-    events: internals.events,
-    remote: internals.remote
+    events: internals.events(internals.eventTypes),
+    remote: internals.remote()
 }

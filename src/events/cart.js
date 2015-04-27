@@ -11,7 +11,7 @@ export default class CartEvents extends BaseEvents {
         this.dataMap = {
             '[data-cart-add]': {
                 eventName: 'cart-item-add',
-                trigger: ['click', 'mouseover']
+                trigger: ['click']
             },
             '[data-cart-remove]': {
                 eventName: 'cart-item-remove',
