@@ -62,7 +62,8 @@ export default class RemoteBC extends jQuery
             method: method,
             url: remoteUrl,
             success: success,
-            error: error
+            error: error,
+            data: params
         });
     }
 }
