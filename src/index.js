@@ -2,11 +2,14 @@ import {
     AccountEvents,
     CartEvents,
     CurrencySelectorEvents,
-    ProductEvents
+    ProductEvents,
+    SearchEvents
     } from './events/index';
 import {
     RemoteCountry,
-    RemoteProductAttributes
+    RemoteProduct,
+    RemoteProductAttributes,
+    Search
     } from './remote/index';
 
 let internals = {
@@ -17,7 +20,8 @@ internals.eventClasses = {
     account: AccountEvents,
     cart: CartEvents,
     currencySelector: CurrencySelectorEvents,
-    product: ProductEvents
+    product: ProductEvents,
+    search: SearchEvents
 };
 
 internals.init = function (events) {
@@ -53,7 +57,9 @@ internals.events = function (eventTypes) {
 internals.remote = function () {
     return {
         country: new RemoteCountry(),
-        productAttributes: new RemoteProductAttributes()
+        productAttributes: new RemoteProductAttributes(),
+        product: new RemoteProduct(),
+        search: new Search()
     }
 };
 
