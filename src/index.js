@@ -9,7 +9,8 @@ import {
     RemoteCountry,
     RemoteProduct,
     RemoteProductAttributes,
-    Search
+    Search,
+    Cart
     } from './remote/index';
 
 let internals = {
@@ -59,7 +60,8 @@ internals.remote = function () {
         country: new RemoteCountry(),
         productAttributes: new RemoteProductAttributes(),
         product: new RemoteProduct(),
-        search: new Search()
+        search: new Search(),
+        cart: new Cart()
     }
 };
 

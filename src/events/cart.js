@@ -16,6 +16,10 @@ export default class CartEvents extends BaseEvents {
             '[data-cart-remove]': {
                 eventName: 'cart-item-remove',
                 trigger: ['click']
+            },
+            '[data-cart-update]': {
+                eventName: 'cart-item-update',
+                trigger: ['click']
             }
         }
     }
