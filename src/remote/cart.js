@@ -11,7 +11,7 @@ export default class Cart extends RemoteBC
      */
     itemUpdate(itemId, qty, callback) {
         let items = [
-            {id:itemId, quantity: qty}
+            {id: itemId, quantity: qty}
         ];
         this.update(items, callback);
     }
@@ -24,7 +24,7 @@ export default class Cart extends RemoteBC
      */
     itemRemove(itemId, callback) {
         let items = [
-            {id:itemId, quantity: 0}
+            {id: itemId, quantity: 0}
         ];
         this.update(items, callback);
     }
