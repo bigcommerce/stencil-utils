@@ -1,7 +1,22 @@
+import _ from 'lodash';
 import RemoteBC from './remote';
 
 export default class Cart extends RemoteBC
 {
+    itemAdd(productId, qty, options, callback) {
+        let payload = {
+            product_id: productId,
+            qty: qty
+        };
+
+        // add the attributes
+        _.forEach(options, (val, key) => {
+            payload[key] = val;
+        });
+
+        this.makeRequest('/cart/add', 'POST', payload, callback);
+    }
+
     /**
      * Update cart item quantity
      *
