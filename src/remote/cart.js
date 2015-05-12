@@ -3,6 +3,14 @@ import RemoteBC from './remote';
 
 export default class Cart extends RemoteBC
 {
+    /**
+     * Add item to cart with options (variants)
+     *
+     * @param {Number} productId
+     * @param {Number} qty
+     * @param {Object} options
+     * @param {Function} callback
+     */
     itemAdd(productId, qty, options, callback) {
         let payload = {
             product_id: productId,
