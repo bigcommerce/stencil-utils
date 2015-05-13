@@ -10,9 +10,8 @@ export default class SearchEvents extends BaseEvents {
         this.options = options || {};
 
         this.dataMap = {
-            '[data-quick-search]': {
-                eventName: 'search-quick',
-                trigger: ['input']
+            'search-quick': {
+                eventTag: '[data-quick-search]'
             }
         };
     }
