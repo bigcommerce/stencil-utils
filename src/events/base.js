@@ -15,37 +15,58 @@ export default class BaseEvents extends EventEmitter {
     }
 
     /**
-     *
+     * @param {string|array} events
      * @param {string} eventName
      * @param {function} callback
      * @returns {*}
      */
-    on(eventName, callback) {
-        return super.on(eventName, callback);
-    }
+    on(events, eventName, callback) {
+        let eventsParse = this.parseEvent(events, eventName);
 
-    /**
-     *
-     * @param {string} eventName
-     * @param {function} callback
-     * @returns {*}
-     */
-    off(eventName, callback) {
-        return super.off(eventName, callback);
-    }
-
-    /**
-     * Attaches emitter to required data-tags located in the document
-     */
-    emitterInit() {
-        _.forIn(this.dataMap, (eventDesc, eventTag) => {
-            let ele = document.querySelector(eventTag);
-            if (ele) {
-                $('body').on(eventDesc.trigger.join(' '), eventTag, (event) => {
-                    ele = document.querySelector(eventTag);
-                    this.emit(eventDesc.eventName, event, ele);
-                });
-            }
+        $('body').on(eventsParse.eventsString, eventsParse.eventTag, (event) => {
+            let ele = document.querySelector(eventsParse.eventTag);
+            this.emit(eventsParse.eventNamespace, event, ele);
         });
+
+        return super.on(eventsParse.eventNamespace, callback);
+    }
+
+    /**
+     * @param {string|array} events
+     * @param {string} eventName
+     * @param {function} callback
+     * @returns {*}
+     */
+    off(events, eventName, callback) {
+        let eventsParse = this.parseEvent(events, eventName);
+        $('body').off(eventsParse.eventsString, eventsParse.eventTag);
+        return super.off(eventsParse.eventNamespace, callback);
+    }
+
+    /**
+     * Parses the event and the event name
+     *
+     * @param {string|array} events
+     * @param {string} eventName
+     * @returns {*}
+     */
+    parseEvent(events, eventName) {
+        let eventTag = this.dataMap[eventName].eventTag,
+            eventNamespace,
+            eventsString;
+
+        // convert to array if string is passed
+        if (_.isString(events)) {
+            events = [events];
+        }
+
+        eventsString = events.join(' ');
+        eventNamespace = eventName + eventsString;
+
+        return {
+            eventTag: eventTag,
+            eventsString: eventsString,
+            eventNamespace: eventNamespace
+        }
     }
 }

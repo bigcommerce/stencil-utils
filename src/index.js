@@ -28,29 +28,28 @@ internals.eventClasses = {
 internals.init = function (events) {
     Object.keys(events).forEach((event) => {
         internals.eventTypes[event] = new internals.eventClasses[event]();
-        internals.eventTypes[event].emitterInit();
     });
 };
 
 internals.events = function (eventTypes) {
     return {
-        on(event, callback) {
-            let eventType = event.split('-')[0];
+        on(events, eventName, callback) {
+            let eventType = eventName.split('-')[0];
 
             if (eventTypes[eventType] === undefined) {
                 throw new Error(eventType + ' is not a valid eventType');
             }
 
-            return eventTypes[eventType].on(event, callback);
+            return eventTypes[eventType].on(events, eventName, callback);
         },
-        off(event, callback){
-            let eventType = event.split('-')[0];
+        off(events, eventName, callback){
+            let eventType = eventName.split('-')[0];
 
             if (eventTypes[eventType] === undefined) {
                 throw new Error(eventType + ' is not a valid eventType');
             }
 
-            return eventTypes[eventType].off(event, callback);
+            return eventTypes[eventType].off(events, eventName, callback);
         }
     }
 };
