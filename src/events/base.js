@@ -42,6 +42,7 @@ export default class BaseEvents extends EventEmitter {
             let ele = document.querySelector(eventTag);
             if (ele) {
                 $('body').on(eventDesc.trigger.join(' '), eventTag, (event) => {
+                    ele = document.querySelector(eventTag);
                     this.emit(eventDesc.eventName, event, ele);
                 });
             }
