@@ -9,16 +9,16 @@ export default class CartEvents extends BaseEvents {
     constructor(options) {
         this.options = options || {};
         this.dataMap = {
-            '[data-cart-add]': {
-                eventName: 'cart-item-add',
+            'cart-item-add': {
+                eventTag: '[data-cart-item-add]',
                 trigger: ['click']
             },
-            '[data-cart-remove]': {
-                eventName: 'cart-item-remove',
+            'cart-item-remove': {
+                eventTag: '[data-cart-item-remove]',
                 trigger: ['click']
             },
-            '[data-cart-update]': {
-                eventName: 'cart-item-update',
+            'cart-item-update': {
+                eventTag: '[data-cart-item-update]',
                 trigger: ['click']
             }
         }

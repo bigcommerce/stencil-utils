@@ -15,37 +15,38 @@ export default class BaseEvents extends EventEmitter {
     }
 
     /**
-     *
+     * @param {string|array} events
      * @param {string} eventName
      * @param {function} callback
      * @returns {*}
      */
     on(eventName, callback) {
+        let eventTag = this.dataMap[eventName].eventTag;
+
+        if (eventTag) {
+            let trigger = this.dataMap[eventName].trigger.join(' ');
+
+            $('body').on(trigger, eventTag, (event) => {
+                let ele = document.querySelector(eventTag);
+                this.emit(eventName, event, ele);
+            });
+        }
+
         return super.on(eventName, callback);
     }
 
     /**
-     *
+     * @param {string|array} events
      * @param {string} eventName
      * @param {function} callback
      * @returns {*}
      */
-    off(eventName, callback) {
-        return super.off(eventName, callback);
-    }
+    off(events, eventName, callback) {
+        let eventTag = this.dataMap[eventName].eventTag,
+            trigger = this.dataMap[eventName].trigger.join(' ');
 
-    /**
-     * Attaches emitter to required data-tags located in the document
-     */
-    emitterInit() {
-        _.forIn(this.dataMap, (eventDesc, eventTag) => {
-            let ele = document.querySelector(eventTag);
-            if (ele) {
-                $('body').on(eventDesc.trigger.join(' '), eventTag, (event) => {
-                    ele = document.querySelector(eventTag);
-                    this.emit(eventDesc.eventName, event, ele);
-                });
-            }
-        });
+        $('body').off(trigger, eventTag);
+
+        return super.off(eventName, callback);
     }
 }

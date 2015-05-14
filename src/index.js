@@ -15,7 +15,8 @@ import {
 
 let internals = {
         eventTypes: {}
-    };
+    },
+    implementation;
 
 internals.eventClasses = {
     account: AccountEvents,
@@ -28,31 +29,37 @@ internals.eventClasses = {
 internals.init = function (events) {
     Object.keys(events).forEach((event) => {
         internals.eventTypes[event] = new internals.eventClasses[event]();
-        internals.eventTypes[event].emitterInit();
     });
 };
 
 internals.events = function (eventTypes) {
-    return {
-        on(event, callback) {
-            let eventType = event.split('-')[0];
+    function parseEvent(eventName) {
+        let eventType = eventName.split('-')[0];
 
-            if (eventTypes[eventType] === undefined) {
-                throw new Error(eventType + ' is not a valid eventType');
-            }
-
-            return eventTypes[eventType].on(event, callback);
-        },
-        off(event, callback){
-            let eventType = event.split('-')[0];
-
-            if (eventTypes[eventType] === undefined) {
-                throw new Error(eventType + ' is not a valid eventType');
-            }
-
-            return eventTypes[eventType].off(event, callback);
+        if (eventTypes[eventType] === undefined) {
+            throw new Error(eventType + ' is not a valid eventType');
         }
+
+        return eventTypes[eventType];
     }
+
+    return {
+        on(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.on(eventName, callback);
+        },
+        off(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.off(eventName, callback);
+        },
+        emit(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.emit(eventName, callback);
+        }
+    };
 };
 
 internals.remote = function () {
@@ -67,7 +74,7 @@ internals.remote = function () {
 
 internals.init(internals.eventClasses);
 
-export default {
-    events: internals.events(internals.eventTypes),
-    remote: internals.remote()
-}
+implementation = internals.remote();
+implementation.events = internals.events(internals.eventTypes);
+
+export default implementation;

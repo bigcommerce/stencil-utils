@@ -10,28 +10,28 @@ export default class AccountEvents extends BaseEvents {
         this.options = options || {};
 
         this.dataMap = {
-            '[data-account-add]': {
-                eventName: 'account-item-add',
+            'account-item-add': {
+                eventTag: '[data-account-add]',
                 trigger: ['click']
             },
-            '[data-account-remove]': {
-                eventName: 'account-item-remove',
+            'account-item-remove': {
+                eventTag: '[data-account-remove]',
                 trigger: ['click']
             },
-            '[data-account-sign-in]': {
-                eventName: 'account-sign-in',
+            'account-sign-in': {
+                eventTag: '[data-account-sign-in]',
                 trigger: ['click']
             },
-            '[data-account-sign-out]': {
-                eventName: 'account-sign-out',
+            'account-sign-out': {
+                eventTag: '[data-account-sign-out]',
                 trigger: ['click']
             },
-            '[data-account-create-start]': {
-                eventName: 'account-create-start',
+            'account-create-start': {
+                eventTag: '[data-account-create-start]',
                 trigger: ['click']
             },
-            '[data-account-create]': {
-                eventName: 'account-create',
+            'account-create': {
+                eventTag: '[data-account-create]',
                 trigger: ['click']
             }
         };
