@@ -11,22 +11,31 @@ export default class ProductEvents extends BaseEvents {
 
         this.dataMap = {
             'product-item-add': {
-                eventTag: '[data-product-add]'
+                eventTag: '[data-product-item-add]',
+                trigger: ['click']
             },
             'product-item-remove': {
-                eventTag: '[data-product-remove]'
+                eventTag: '[data-product-item-remove]',
+                trigger: ['click']
             },
             'product-options-change': {
-                eventTag: '[data-product-options-change]'
+                eventTag: '[data-product-options-change]',
+                trigger: ['change']
+            },
+            'product-options-change-remote': {
+
             },
             'product-wishlist': {
-                eventTag: '[data-product-wishlist]'
+                eventTag: '[data-product-wishlist]',
+                trigger: ['click']
             },
             'product-quantity-change': {
-                eventTag: '[data-product-quantity-change]'
+                eventTag: '[data-product-quantity-change]',
+                trigger: ['click', 'change']
             },
             'product-share': {
-                eventTag: '[data-product-share]'
+                eventTag: '[data-product-share]',
+                trigger: ['click']
             }
         }
     }

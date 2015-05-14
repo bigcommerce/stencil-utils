@@ -20,15 +20,19 @@ export default class BaseEvents extends EventEmitter {
      * @param {function} callback
      * @returns {*}
      */
-    on(events, eventName, callback) {
-        let eventsParse = this.parseEvent(events, eventName);
+    on(eventName, callback) {
+        let eventTag = this.dataMap[eventName].eventTag;
 
-        $('body').on(eventsParse.eventsString, eventsParse.eventTag, (event) => {
-            let ele = document.querySelector(eventsParse.eventTag);
-            this.emit(eventsParse.eventNamespace, event, ele);
-        });
+        if (eventTag) {
+            let trigger = this.dataMap[eventName].trigger.join(' ');
 
-        return super.on(eventsParse.eventNamespace, callback);
+            $('body').on(trigger, eventTag, (event) => {
+                let ele = document.querySelector(eventTag);
+                this.emit(eventName, event, ele);
+            });
+        }
+
+        return super.on(eventName, callback);
     }
 
     /**
@@ -38,35 +42,11 @@ export default class BaseEvents extends EventEmitter {
      * @returns {*}
      */
     off(events, eventName, callback) {
-        let eventsParse = this.parseEvent(events, eventName);
-        $('body').off(eventsParse.eventsString, eventsParse.eventTag);
-        return super.off(eventsParse.eventNamespace, callback);
-    }
-
-    /**
-     * Parses the event and the event name
-     *
-     * @param {string|array} events
-     * @param {string} eventName
-     * @returns {*}
-     */
-    parseEvent(events, eventName) {
         let eventTag = this.dataMap[eventName].eventTag,
-            eventNamespace,
-            eventsString;
+            trigger = this.dataMap[eventName].trigger.join(' ');
 
-        // convert to array if string is passed
-        if (_.isString(events)) {
-            events = [events];
-        }
+        $('body').off(trigger, eventTag);
 
-        eventsString = events.join(' ');
-        eventNamespace = eventName + eventsString;
-
-        return {
-            eventTag: eventTag,
-            eventsString: eventsString,
-            eventNamespace: eventNamespace
-        }
+        return super.off(eventName, callback);
     }
 }

@@ -11,7 +11,8 @@ export default class CurrencySelectorEvents extends BaseEvents {
 
         this.dataMap = {
             'currencySelector-toggle': {
-                eventTag: '[data-currency-selector-toggle]'
+                eventTag: '[data-currency-selector-toggle]',
+                trigger: ['click']
             }
         };
     }

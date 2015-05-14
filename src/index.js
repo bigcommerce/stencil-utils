@@ -15,7 +15,8 @@ import {
 
 let internals = {
         eventTypes: {}
-    };
+    },
+    implementation;
 
 internals.eventClasses = {
     account: AccountEvents,
@@ -32,26 +33,33 @@ internals.init = function (events) {
 };
 
 internals.events = function (eventTypes) {
-    return {
-        on(events, eventName, callback) {
-            let eventType = eventName.split('-')[0];
+    function parseEvent(eventName) {
+        let eventType = eventName.split('-')[0];
 
-            if (eventTypes[eventType] === undefined) {
-                throw new Error(eventType + ' is not a valid eventType');
-            }
-
-            return eventTypes[eventType].on(events, eventName, callback);
-        },
-        off(events, eventName, callback){
-            let eventType = eventName.split('-')[0];
-
-            if (eventTypes[eventType] === undefined) {
-                throw new Error(eventType + ' is not a valid eventType');
-            }
-
-            return eventTypes[eventType].off(events, eventName, callback);
+        if (eventTypes[eventType] === undefined) {
+            throw new Error(eventType + ' is not a valid eventType');
         }
+
+        return eventTypes[eventType];
     }
+
+    return {
+        on(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.on(eventName, callback);
+        },
+        off(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.off(eventName, callback);
+        },
+        emit(eventName, callback) {
+            let event = parseEvent(eventName);
+
+            return event.emit(eventName, callback);
+        }
+    };
 };
 
 internals.remote = function () {
@@ -66,7 +74,7 @@ internals.remote = function () {
 
 internals.init(internals.eventClasses);
 
-export default {
-    events: internals.events(internals.eventTypes),
-    remote: internals.remote()
-}
+implementation = internals.remote();
+implementation.events = internals.events(internals.eventTypes);
+
+export default implementation;
