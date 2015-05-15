@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import RemoteBC from './remote';
+import Utils from '../index';
 
 export default class Cart extends RemoteBC
 {
@@ -22,7 +23,16 @@ export default class Cart extends RemoteBC
             payload[key] = val;
         });
 
-        this.makeRequest('/cart/add', 'POST', payload, callback);
+        this.makeRequest('/cart/add', 'POST', payload, (err, data) => {
+            let emitData = {
+                item: payload,
+                err: err,
+                data: data
+            };
+
+            Utils.hooks.emit('cart-item-add-remote', emitData);
+            callback(err, data);
+        });
     }
 
     /**
@@ -36,11 +46,21 @@ export default class Cart extends RemoteBC
         let items = [
             {id: itemId, quantity: qty}
         ];
-        this.update(items, callback);
+
+        this.update(items, (err, data) => {
+            let emitData = {
+                items: items,
+                err: err,
+                data: data
+            };
+
+            Utils.hooks.emit('cart-item-update-remote', emitData);
+            callback(err, data);
+        });
     }
 
     /**
-     * Remove cart item
+     * Remove cart items
      *
      * @param {String} itemId
      * @param {Function} callback
@@ -49,7 +69,16 @@ export default class Cart extends RemoteBC
         let items = [
             {id: itemId, quantity: 0}
         ];
-        this.update(items, callback);
+        this.update(items, (err, data) => {
+            let emitData = {
+                items: items,
+                err: err,
+                data: data
+            };
+
+            Utils.hooks.emit('cart-item-remove-remote', emitData);
+            callback(err, data);
+        });
     }
 
     /**

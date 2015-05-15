@@ -26,7 +26,7 @@ export default class RemoteProductAttributes extends RemoteBC
         let url = this.endPoint + productId,
             params = options;
 
-        Utils.events.emit('product-options-change-remote', productId);
+        Utils.hooks.emit('product-options-change-remote', productId);
         this.makeRequest(url, 'POST', params, callback);
     }
 }

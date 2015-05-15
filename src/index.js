@@ -1,10 +1,10 @@
 import {
-    AccountEvents,
-    CartEvents,
-    CurrencySelectorEvents,
-    ProductEvents,
-    SearchEvents
-    } from './events/index';
+    AccountHooks,
+    CartHooks,
+    CurrencySelectorHooks,
+    ProductHooks,
+    SearchHooks
+    } from './hooks/index';
 import {
     RemoteCountry,
     RemoteProduct,
@@ -14,50 +14,50 @@ import {
     } from './remote/index';
 
 let internals = {
-        eventTypes: {}
+        hookTypes: {}
     },
     implementation;
 
-internals.eventClasses = {
-    account: AccountEvents,
-    cart: CartEvents,
-    currencySelector: CurrencySelectorEvents,
-    product: ProductEvents,
-    search: SearchEvents
+internals.hookClasses = {
+    account: AccountHooks,
+    cart: CartHooks,
+    currencySelector: CurrencySelectorHooks,
+    product: ProductHooks,
+    search: SearchHooks
 };
 
-internals.init = function (events) {
-    Object.keys(events).forEach((event) => {
-        internals.eventTypes[event] = new internals.eventClasses[event]();
+internals.init = function (hooks) {
+    Object.keys(hooks).forEach((hook) => {
+        internals.hookTypes[hook] = new internals.hookClasses[hook]();
     });
 };
 
-internals.events = function (eventTypes) {
-    function parseEvent(eventName) {
-        let eventType = eventName.split('-')[0];
+internals.hooks = function (hookTypes) {
+    function parseHooks(hookName) {
+        let hookType = hookName.split('-')[0];
 
-        if (eventTypes[eventType] === undefined) {
-            throw new Error(eventType + ' is not a valid eventType');
+        if (hookTypes[hookType] === undefined) {
+            throw new Error(hookType + ' is not a valid hookType');
         }
 
-        return eventTypes[eventType];
+        return hookTypes[hookType];
     }
 
     return {
-        on(eventName, callback) {
-            let event = parseEvent(eventName);
+        on(hookName, callback) {
+            let hook = parseHooks(hookName);
 
-            return event.on(eventName, callback);
+            return hook.on(hookName, callback);
         },
-        off(eventName, callback) {
-            let event = parseEvent(eventName);
+        off(hookName, callback) {
+            let hook = parseHooks(hookName);
 
-            return event.off(eventName, callback);
+            return hook.off(hookName, callback);
         },
-        emit(eventName, callback) {
-            let event = parseEvent(eventName);
+        emit(hookName, data) {
+            let hook = parseHooks(hookName);
 
-            return event.emit(eventName, callback);
+            return hook.emit(hookName, data);
         }
     };
 };
@@ -72,9 +72,9 @@ internals.remote = function () {
     }
 };
 
-internals.init(internals.eventClasses);
+internals.init(internals.hookClasses);
 
 implementation = internals.remote();
-implementation.events = internals.events(internals.eventTypes);
+implementation.hooks = internals.hooks(internals.hookTypes);
 
 export default implementation;

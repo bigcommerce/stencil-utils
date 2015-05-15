@@ -1,5 +1,6 @@
 import RemoteBC from './remote';
 import _ from 'lodash';
+import Utils from '../index';
 
 export default class Search extends RemoteBC
 {
@@ -23,6 +24,7 @@ export default class Search extends RemoteBC
     search(query, params, callback) {
         params.search_query = encodeURIComponent(query);
 
+        Utils.hooks.emit('search-quick', params);
         this.makeRequest(this.endPoint, 'GET', params, callback);
     }
 }
