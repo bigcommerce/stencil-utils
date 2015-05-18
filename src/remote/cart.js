@@ -23,15 +23,15 @@ export default class Cart extends RemoteBC
             payload[key] = val;
         });
 
-        this.makeRequest('/cart/add', 'POST', payload, (err, data) => {
+        this.makeRequest('/cart/add', 'POST', payload, (err, response) => {
             let emitData = {
                 item: payload,
                 err: err,
-                data: data
+                response: response
             };
 
             Utils.hooks.emit('cart-item-add-remote', emitData);
-            callback(err, data);
+            callback(err, response);
         });
     }
 
@@ -47,15 +47,15 @@ export default class Cart extends RemoteBC
             {id: itemId, quantity: qty}
         ];
 
-        this.update(items, (err, data) => {
+        this.update(items, (err, response) => {
             let emitData = {
                 items: items,
                 err: err,
-                data: data
+                response: response
             };
 
             Utils.hooks.emit('cart-item-update-remote', emitData);
-            callback(err, data);
+            callback(err, response);
         });
     }
 
@@ -69,15 +69,15 @@ export default class Cart extends RemoteBC
         let items = [
             {id: itemId, quantity: 0}
         ];
-        this.update(items, (err, data) => {
+        this.update(items, (err, response) => {
             let emitData = {
                 items: items,
                 err: err,
-                data: data
+                response: response
             };
 
             Utils.hooks.emit('cart-item-remove-remote', emitData);
-            callback(err, data);
+            callback(err, response);
         });
     }
 
