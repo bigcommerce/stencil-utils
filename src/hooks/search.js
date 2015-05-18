@@ -15,9 +15,8 @@ export default class SearchHooks extends BaseHooks {
     }
 
     quickSearch() {
-        let self = this;
-        $('body').on('input', '[data-quick-search]', function(event) {
-            self.emit('quick-search', event, this);
+        $('body').on('input', '[data-search-quick]', (event) => {
+            this.emit('search-quick', event);
         });
     }
 }
