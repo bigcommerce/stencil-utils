@@ -1,5 +1,6 @@
 import RemoteBC from './remote';
 import $ from 'jquery';
+import Utils from '../index';
 
 export default class RemoteProductAttributes extends RemoteBC
 {
@@ -25,6 +26,7 @@ export default class RemoteProductAttributes extends RemoteBC
         let url = this.endPoint + productId,
             params = options;
 
+        Utils.hooks.emit('product-options-change-remote', productId);
         this.makeRequest(url, 'POST', params, callback);
     }
 }

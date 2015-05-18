@@ -23,6 +23,8 @@ export default class RemoteCountries extends RemoteBC
      */
     getById(countryId, callback) {
         let url = this.endPoint + countryId;
+
+        Utils.hooks.emit('country-remote', countryId);
         this.makeRequest(url, 'GET', {}, callback);
     }
 }
