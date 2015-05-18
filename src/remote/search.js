@@ -24,7 +24,7 @@ export default class Search extends RemoteBC
     search(query, params, callback) {
         params.search_query = encodeURIComponent(query);
 
-        Utils.hooks.emit('search-quick', params);
+        Utils.hooks.emit('search-quick-remote', params);
         this.makeRequest(this.endPoint, 'GET', params, callback);
     }
 }
