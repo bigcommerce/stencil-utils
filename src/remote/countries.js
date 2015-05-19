@@ -1,5 +1,6 @@
 import RemoteBC from './remote';
 import _ from 'lodash';
+import Utils from '../index';
 
 export default class RemoteCountries extends RemoteBC
 {
@@ -25,6 +26,13 @@ export default class RemoteCountries extends RemoteBC
         let url = this.endPoint + countryId;
 
         Utils.hooks.emit('country-remote', countryId);
+        this.makeRequest(url, 'GET', {}, callback);
+    }
+
+    getByName(countryName, callback) {
+        let url = this.endPoint + countryName;
+
+        Utils.hooks.emit('country-remote', countryName);
         this.makeRequest(url, 'GET', {}, callback);
     }
 }
