@@ -3,7 +3,8 @@ import {
     CartHooks,
     CurrencySelectorHooks,
     ProductHooks,
-    SearchHooks
+    SearchHooks,
+    CountryHooks
     } from './hooks/index';
 import {
     RemoteCountry,
@@ -23,7 +24,8 @@ internals.hookClasses = {
     cart: CartHooks,
     currencySelector: CurrencySelectorHooks,
     product: ProductHooks,
-    search: SearchHooks
+    search: SearchHooks,
+    country: CountryHooks
 };
 
 internals.init = function (hooks) {
