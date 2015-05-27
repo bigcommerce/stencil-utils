@@ -11,9 +11,8 @@ export default class extends BaseHooks {
     }
 
     itemAdd() {
-        let self = this;
-        $('body').on('submit', '[data-cart-item-add]', function(event) {
-            self.emit('cart-item-add', event, this);
+        $('body').on('submit', '[data-cart-item-add]', (event) => {
+            this.emit('cart-item-add', event);
         });
     }
 }

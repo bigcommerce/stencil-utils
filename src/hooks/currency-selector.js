@@ -11,9 +11,8 @@ export default class extends BaseHooks {
     }
 
     currencySelector() {
-        let self = this;
-        $('body').on('input', '[data-currency-selector-toggle]', function(event) {
-            self.emit('currencySelector-toggle', event, this);
+        $('body').on('input', '[data-currency-selector-toggle]', (event) => {
+            this.emit('currencySelector-toggle', event);
         });
     }
 }
