@@ -1,8 +1,7 @@
-import RemoteBC from './remote';
-import _ from 'lodash';
-import Utils from '../index';
+import Base from './base';
+import Hooks from '../hooks';
 
-export default class Search extends RemoteBC
+export default class extends Base
 {
     /**
      * @Constructor
@@ -24,7 +23,7 @@ export default class Search extends RemoteBC
     search(query, params, callback) {
         params.search_query = encodeURIComponent(query);
 
-        Utils.hooks.emit('search-quick-remote', params);
+        Hooks.emit('search-quick-remote', params);
         this.makeRequest(this.endPoint, 'GET', params, callback);
     }
 }

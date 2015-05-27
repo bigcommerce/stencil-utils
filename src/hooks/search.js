@@ -1,22 +1,19 @@
 import BaseHooks from './base';
 import $ from 'jquery';
 
-export default class SearchHooks extends BaseHooks {
+export default class extends BaseHooks {
 
     /**
      * @Constructor
-     * @param {object} options
      */
-    constructor(options) {
-        this.options = options || {};
-
+    constructor() {
         this.quickSearch();
-
     }
 
     quickSearch() {
-        $('body').on('input', '[data-search-quick]', (event) => {
-            this.emit('search-quick', event);
+        let self = this;
+        $('body').on('input', '[data-search-quick]', function (event) {
+            self.emit('search-quick', event, this);
         });
     }
 }

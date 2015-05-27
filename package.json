@@ -2,7 +2,7 @@
   "name": "stencil-utils",
   "version": "0.0.2",
   "jspm": {
-    "main": "index",
+    "main": "main",
     "directories": {
       "lib": "src",
       "packages": "jspm_packages"

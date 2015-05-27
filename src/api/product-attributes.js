@@ -1,8 +1,8 @@
-import RemoteBC from './remote';
+import Base from './base';
 import $ from 'jquery';
-import Utils from '../index';
+import Hooks from '../hooks';
 
-export default class RemoteProductAttributes extends RemoteBC
+export default class extends Base
 {
     /**
      * @Constructor
@@ -26,7 +26,7 @@ export default class RemoteProductAttributes extends RemoteBC
         let url = this.endPoint + productId,
             params = options;
 
-        Utils.hooks.emit('product-options-change-remote', productId);
+        Hooks.emit('product-options-change-remote', productId);
         this.makeRequest(url, 'POST', params, callback);
     }
 }

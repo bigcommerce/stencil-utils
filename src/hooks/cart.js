@@ -1,15 +1,12 @@
 import BaseHooks from './base';
 import $ from 'jquery';
 
-export default class CartHooks extends BaseHooks {
+export default class extends BaseHooks {
 
     /**
      * @Constructor
-     * @param {object} options
      */
-    constructor(options) {
-        this.options = options || {};
-
+    constructor() {
         this.itemAdd();
     }
 
@@ -19,5 +16,4 @@ export default class CartHooks extends BaseHooks {
             self.emit('cart-item-add', event, this);
         });
     }
-
 }

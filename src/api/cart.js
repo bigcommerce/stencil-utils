@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import RemoteBC from './remote';
-import Utils from '../index';
+import Base from './base';
+import Hooks from '../hooks';
 
-export default class Cart extends RemoteBC
+export default class extends Base
 {
     /**
      * Add item to cart with options (variants)
@@ -30,7 +30,7 @@ export default class Cart extends RemoteBC
                 response: response
             };
 
-            Utils.hooks.emit('cart-item-add-remote', emitData);
+            Hooks.emit('cart-item-add-remote', emitData);
             callback(err, response);
         });
     }
@@ -54,7 +54,7 @@ export default class Cart extends RemoteBC
                 response: response
             };
 
-            Utils.hooks.emit('cart-item-update-remote', emitData);
+            Hooks.emit('cart-item-update-remote', emitData);
             callback(err, response);
         });
     }
@@ -76,7 +76,7 @@ export default class Cart extends RemoteBC
                 response: response
             };
 
-            Utils.hooks.emit('cart-item-remove-remote', emitData);
+            Hooks.emit('cart-item-remove-remote', emitData);
             callback(err, response);
         });
     }
