@@ -1,21 +1,18 @@
 import BaseHooks from './base';
 import $ from 'jquery';
 
-export default class CurrencySelectorHooks extends BaseHooks {
+export default class extends BaseHooks {
 
     /**
      * @Constructor
-     * @param {object} options
      */
-    constructor(options) {
-        this.options = options || {};
-
+    constructor() {
         this.currencySelector();
     }
 
     currencySelector() {
-        $('body').on('input', '[data-currency-selector-toggle]', function(event) {
-            this.emit('currencySelector-toggle', event, this);
+        $('body').on('input', '[data-currency-selector-toggle]', (event) => {
+            this.emit('currencySelector-toggle', event);
         });
     }
 }

@@ -1,10 +1,10 @@
-import jQuery from 'jquery';
+import $ from 'jquery';
 
-const allowable = ['GET', 'POST', 'PUT', 'DELETE'];
+const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
 
 let internals = {};
 
-export default class RemoteBC extends jQuery
+export default class
 {
     /**
      * @Constructor
@@ -58,7 +58,7 @@ export default class RemoteBC extends jQuery
         }
 
         // make ajax request using jquery
-        jQuery.ajax({
+        $.ajax({
             method: method,
             url: remoteUrl,
             success: success,
@@ -75,5 +75,5 @@ export default class RemoteBC extends jQuery
  * @returns {boolean}
  */
 internals.isValidHTTPMethod = (method) => {
-    return allowable.indexOf(method) !== -1;
+    return allowedMethods.indexOf(method) !== -1;
 };

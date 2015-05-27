@@ -1,17 +1,13 @@
 import BaseHooks from './base';
 import $ from 'jquery';
 
-export default class SearchHooks extends BaseHooks {
+export default class extends BaseHooks {
 
     /**
      * @Constructor
-     * @param {object} options
      */
-    constructor(options) {
-        this.options = options || {};
-
+    constructor() {
         this.quickSearch();
-
     }
 
     quickSearch() {

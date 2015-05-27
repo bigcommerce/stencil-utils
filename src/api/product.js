@@ -1,7 +1,7 @@
-import RemoteBC from './remote';
+import Base from './base';
 import $ from 'jquery';
 
-export default class RemoteProduct extends RemoteBC
+export default class extends Base
 {
     /**
      * @Constructor
