@@ -4,6 +4,8 @@ import CurrencySelectorHooks from './hooks/currency-selector';
 import ProductHooks from './hooks/product';
 import SearchHooks from './hooks/search';
 import CountryHooks from './hooks/country';
+import FacetedSearchHooks from './hooks/faceted-search';
+import SortByHooks from './hooks/sort-by';
 
 let internals = {};
 
@@ -13,7 +15,9 @@ internals.classes = {
     currencySelector: new CurrencySelectorHooks(),
     product: new ProductHooks(),
     search: new SearchHooks(),
-    country: new CountryHooks()
+    country: new CountryHooks(),
+    facetedSearch: new FacetedSearchHooks(),
+    sortBy: new SortByHooks()
 };
 
 internals.parseHooks = function (hookName) {
