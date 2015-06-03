@@ -23,7 +23,7 @@ export default class extends Base
             payload[key] = val;
         });
 
-        this.makeRequest('/cart/add', 'POST', payload, (err, response) => {
+        this.makeRequest('/cart/add', 'POST', {params: payload}, (err, response) => {
             let emitData = {
                 item: payload,
                 err: err,
@@ -91,16 +91,16 @@ export default class extends Base
         let payload = {
             items: items
         };
-        this.makeRequest('/cart/update', 'POST', payload, callback);
+        this.makeRequest('/cart/update', 'POST', {params: payload}, callback);
     }
 
     /**
      * Get cart content
      *
-     * @param {Object} params
+     * @param {Object} options
      * @param {Function} callback
      */
-    getContent(params, callback) {
-        this.makeRequest('/cart/content', 'GET', params, callback);
+    getContent(options, callback) {
+        this.makeRequest('/cart/content', 'GET', options, callback);
     }
 }

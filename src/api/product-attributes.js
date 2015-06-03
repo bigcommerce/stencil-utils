@@ -27,6 +27,6 @@ export default class extends Base
             params = options;
 
         Hooks.emit('product-options-change-remote', productId);
-        this.makeRequest(url, 'POST', params, callback);
+        this.makeRequest(url, 'POST', {params: params}, callback);
     }
 }

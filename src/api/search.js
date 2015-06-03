@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Base from './base';
 import Hooks from '../hooks';
 
@@ -17,13 +18,19 @@ export default class extends Base
     /**
      * Get search results
      * @param {String} query
-     * @param {Object} params
+     * @param {Object} options
      * @param {Function} callback
      */
-    search(query, params, callback) {
-        params.search_query = encodeURIComponent(query);
+    search(query, options, callback) {
+        let defaultOptions = {
+            params: {},
+            headers: {}
+        };
 
-        Hooks.emit('search-quick-remote', params);
-        this.makeRequest(this.endPoint, 'GET', params, callback);
+        options = _.assign({}, defaultOptions, options);
+        options.params.search_query = encodeURIComponent(query);
+
+        Hooks.emit('search-quick-remote', options);
+        this.makeRequest(this.endPoint, 'GET', options, callback);
     }
 }
