@@ -28,6 +28,6 @@ export default class extends Base
             params = {};
         }
 
-        this.makeRequest(url, 'GET', params, callback);
+        this.makeRequest(url, 'GET', {params: params}, callback);
     }
 }

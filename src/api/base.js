@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import _ from 'lodash';
 
 const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
 
@@ -36,12 +37,12 @@ export default class
 
     /**
      *
-     * @param {string} url
-     * @param {string} method ['GET', 'POST', 'PUT', 'DELETE']
-     * @param {Object} params
-     * @param callback
+     * @param {String} url
+     * @param {String} method ['GET', 'POST', 'PUT', 'DELETE']
+     * @param {Object} options
+     * @param {Function} callback
      */
-    makeRequest(url, method, params, callback) {
+    makeRequest(url, method, options, callback) {
         let remoteUrl = this.baseEndPoint + this.getRemoteVersion() + url,
             // success
             success = (data) => {
@@ -50,7 +51,13 @@ export default class
             // error
             error = (XHR, textStatus, err) => {
                 callback(err);
+            },
+            defaultOptions = {
+                params: {},
+                headers: {}
             };
+
+        options = _.assign({}, defaultOptions, options);
 
         // Not a valid method
         if (!internals.isValidHTTPMethod(method)) {
@@ -63,7 +70,8 @@ export default class
             url: remoteUrl,
             success: success,
             error: error,
-            data: params
+            data: options.params,
+            headers: options.headers
         });
     }
 }
