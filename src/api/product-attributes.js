@@ -12,7 +12,7 @@ export default class extends Base
         super();
 
         // set up class variables
-        this.endPoint = '/product-attributes/';
+        this.endpoint = '/product-attributes/';
     }
 
     /**
@@ -23,7 +23,7 @@ export default class extends Base
      */
     optionChange(options, productId, callback)
     {
-        let url = this.endPoint + productId,
+        let url = this.endpoint + productId,
             params = options;
 
         Hooks.emit('product-options-change-remote', productId);

@@ -7,6 +7,9 @@ export default class extends BaseHooks {
      * @Constructor
      */
     constructor() {
+        // call parent
+        super();
+
         this.itemAdd();
     }
 

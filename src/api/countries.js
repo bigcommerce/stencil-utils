@@ -11,7 +11,7 @@ export default class extends Base
         super();
 
         // set up class variables
-        this.endPoint = '/country-states/';
+        this.endpoint = '/country-states/';
     }
 
     /**
@@ -22,14 +22,14 @@ export default class extends Base
      * @param {Function} callback
      */
     getById(countryId, callback) {
-        let url = this.endPoint + countryId;
+        let url = this.endpoint + countryId;
 
         Hooks.emit('country-remote', {id: countryId});
         this.makeRequest(url, 'GET', {}, callback);
     }
 
     getByName(countryName, callback) {
-        let url = this.endPoint + countryName;
+        let url = this.endpoint + countryName;
 
         Hooks.emit('country-remote', {name: countryName});
         this.makeRequest(url, 'GET', {}, callback);
