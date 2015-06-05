@@ -1,9 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
-
-const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
-
-let internals = {};
+import request from '../lib/request';
 
 export default class
 {
@@ -13,75 +10,23 @@ export default class
      */
     constructor(version) {
         this.remoteVersion = version || 'v1';
-        this.baseEndPoint = '/remote/';
-        this.endPoint = '/';
-    }
-
-    /**
-     * Gets the current remote version
-     *
-     * @returns {string}
-     */
-    getRemoteVersion() {
-        return this.remoteVersion;
-    }
-
-    /**
-     * Set a different remote version
-     *
-     * @param {string} version
-     */
-    setRemoteVersion(version) {
-        this.remoteVersion = version
+        this.baseEndpoint = '/remote/';
     }
 
     /**
      *
-     * @param {String} url
+     * @param {String} endpoint
      * @param {String} method ['GET', 'POST', 'PUT', 'DELETE']
      * @param {Object} options
      * @param {Function} callback
      */
-    makeRequest(url, method, options, callback) {
-        let remoteUrl = this.baseEndPoint + this.getRemoteVersion() + url,
-            // success
-            success = (data) => {
-                callback(null, data);
-            },
-            // error
-            error = (XHR, textStatus, err) => {
-                callback(err);
-            },
-            defaultOptions = {
-                params: {},
-                headers: {}
-            };
+    makeRequest(endpoint, method, options, callback) {
+        let remoteUrl = this.baseEndpoint + this.remoteVersion + endpoint;
 
-        options = _.assign({}, defaultOptions, options);
-
-        // Not a valid method
-        if (!internals.isValidHTTPMethod(method)) {
-            return callback('Not a valid HTTP method');
-        }
-
-        // make ajax request using jquery
-        $.ajax({
+        request(remoteUrl, {
             method: method,
-            url: remoteUrl,
-            success: success,
-            error: error,
-            data: options.params,
-            headers: options.headers
-        });
+            remote: true,
+            requestOptions: options
+        }, callback);
     }
 }
-
-/**
- * Checks whether or not the current method passed in is valid
- *
- * @param {string} method
- * @returns {boolean}
- */
-internals.isValidHTTPMethod = (method) => {
-    return allowedMethods.indexOf(method) !== -1;
-};

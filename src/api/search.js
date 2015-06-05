@@ -12,7 +12,7 @@ export default class extends Base
         super();
 
         // set up class variables
-        this.endPoint = '/search';
+        this.endpoint = '/search';
     }
 
     /**
@@ -31,6 +31,6 @@ export default class extends Base
         options.params.search_query = encodeURIComponent(query);
 
         Hooks.emit('search-quick-remote', options);
-        this.makeRequest(this.endPoint, 'GET', options, callback);
+        this.makeRequest(this.endpoint, 'GET', options, callback);
     }
 }

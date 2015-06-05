@@ -10,7 +10,7 @@ export default class extends Base
         // call parent
         super();
 
-        this.endPoint = '/product/';
+        this.endpoint = '/product/';
     }
 
     /**
@@ -21,7 +21,7 @@ export default class extends Base
      */
     getById(productId, params, callback)
     {
-        let url = this.endPoint + productId;
+        let url = this.endpoint + productId;
 
         if (typeof params === 'function') {
             callback = params;
