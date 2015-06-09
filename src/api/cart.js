@@ -69,6 +69,7 @@ export default class extends Base
         let items = [
             {id: itemId, quantity: 0}
         ];
+
         this.update(items, (err, response) => {
             let emitData = {
                 items: items,
@@ -97,10 +98,61 @@ export default class extends Base
     /**
      * Get cart content
      *
-     * @param {Object} options
+     * @param {String|Array|Object} renderWith
      * @param {Function} callback
      */
-    getContent(options, callback) {
+    getContent(renderWith, callback) {
+        let options = {};
+        
+        if (typeof callback !== 'function') {
+            callback = renderWith;
+            renderWith = null;
+        }
+
+        if (renderWith) {
+            options.template: renderWith;
+        }
+
         this.makeRequest('/cart/content', 'GET', options, callback);
+    }
+    
+    /**
+     * Get cart shipping quote
+     *
+     * @param {Object} params
+     * @param {String|Array|Object} renderWith
+     * @param {Function} callback
+     */
+    getShippingQuotes(params, renderWith, callback) {
+        let options = {
+            params: params
+        };
+
+        if (typeof callback !== 'function') {
+            callback = renderWith;
+            renderWith = null;
+        }
+
+        if (renderWith) {
+            options.template = renderWith;
+        }
+
+        this.makeRequest('/shipping-quote', 'GET', options, callback);
+    }
+
+    /**
+     * Update cart items
+     *
+     * @param {Number} quoteId
+     * @param {Function} callback
+     */
+    submitShippingQuote(quoteId, callback) {
+        let options = {
+            params: {
+                shipping_method: quoteId
+            }
+        };
+
+        this.makeRequest('/shipping-quote', 'POST', options, callback);
     }
 }
