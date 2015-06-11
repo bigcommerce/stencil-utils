@@ -110,7 +110,7 @@ export default class extends Base
         }
 
         if (renderWith) {
-            options.template: renderWith;
+            options.template = renderWith;
         }
 
         this.makeRequest('/cart/content', 'GET', options, callback);
