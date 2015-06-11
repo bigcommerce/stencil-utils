@@ -1,8 +1,8 @@
-import Base from './base';
+import Remote from './remote';
 import $ from 'jquery';
 import Hooks from '../hooks';
 
-export default class extends Base
+export default class extends Remote
 {
     /**
      * @Constructor
