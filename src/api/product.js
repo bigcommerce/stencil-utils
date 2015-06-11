@@ -10,7 +10,8 @@ export default class extends Base
         // call parent
         super();
 
-        this.endpoint = '/product/';
+        // set up class variables
+        this.endpoint = '/products.php?productId=';
     }
 
     /**
@@ -28,6 +29,6 @@ export default class extends Base
             params = {};
         }
 
-        this.makeRequest(url, 'GET', {params: params}, callback);
+        this.makeRequest(url, 'GET', params, false, callback);
     }
 }
