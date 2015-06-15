@@ -162,13 +162,13 @@ export default class extends Remote
      * @param {Number} quoteId
      * @param {Function} callback
      */
-    applyPromoCode(code, callback) {
+    applyCode(code, callback) {
         let options = {
             params: {
                 code: code
             }
         };
 
-        this.makeRequest('/promo-code', 'POST', options, callback);
+        this.makeRequest('/apply-code', 'POST', options, callback);
     }
 }
