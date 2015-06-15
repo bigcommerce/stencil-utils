@@ -155,4 +155,20 @@ export default class extends Remote
 
         this.makeRequest('/shipping-quote', 'POST', options, callback);
     }
+    
+    /**
+     * Apply a coupon code or gift certificate to the cart
+     *
+     * @param {Number} quoteId
+     * @param {Function} callback
+     */
+    applyCode(code, callback) {
+        let options = {
+            params: {
+                code: code
+            }
+        };
+
+        this.makeRequest('/apply-code', 'POST', options, callback);
+    }
 }
