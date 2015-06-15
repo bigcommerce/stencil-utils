@@ -1,8 +1,7 @@
-import _ from 'lodash';
-import Remote from './remote';
 import Hooks from '../hooks';
+import Base from './base';
 
-export default class extends Remote
+export default class extends Base
 {
     /**
      * @Constructor
@@ -12,25 +11,24 @@ export default class extends Remote
         super();
 
         // set up class variables
-        this.endpoint = '/search';
+        this.endpoint = '/search.php?search_query=';
     }
 
     /**
      * Get search results
      * @param {String} query
-     * @param {Object} options
+     * @param {Object} params
      * @param {Function} callback
      */
-    search(query, options, callback) {
-        let defaultOptions = {
-            params: {},
-            headers: {}
-        };
+    search(query, params, callback) {
+        let url = this.endpoint + encodeURIComponent(query);
 
-        options = _.assign({}, defaultOptions, options);
-        options.params.search_query = encodeURIComponent(query);
+        if (typeof params === 'function') {
+            callback = params;
+            params = {};
+        }
 
-        Hooks.emit('search-quick-remote', options);
-        this.makeRequest(this.endpoint, 'GET', options, callback);
+        Hooks.emit('search-quick-remote', query);
+        this.makeRequest(url, 'GET', params, false, callback);
     }
 }
