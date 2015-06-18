@@ -98,24 +98,20 @@ export default class extends Remote
     /**
      * Get cart content
      *
-     * @param {String|Array|Object} renderWith
+     * @param {Object} options
      * @param {Function} callback
      */
-    getContent(renderWith, callback) {
-        let options = {};
-        
-        if (typeof callback !== 'function') {
-            callback = renderWith;
-            renderWith = null;
-        }
+    getContent(options, callback) {
+        options = options || {};
 
-        if (renderWith) {
-            options.template = renderWith;
+        if (typeof callback !== 'function') {
+            callback = options;
+            options = {};
         }
 
         this.makeRequest('/cart/content', 'GET', options, callback);
     }
-    
+
     /**
      * Get cart shipping quote
      *
@@ -155,7 +151,7 @@ export default class extends Remote
 
         this.makeRequest('/shipping-quote', 'POST', options, callback);
     }
-    
+
     /**
      * Apply a coupon code or gift certificate to the cart
      *

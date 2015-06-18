@@ -1,10 +1,8 @@
 import hooks from './hooks';
 import api from './api';
-import forms from './forms';
 
-export {hooks, api, forms};
+export {hooks, api};
 export default {
     hooks: hooks,
-    api: api,
-    forms: forms
+    api: api
 };
