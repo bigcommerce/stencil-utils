@@ -4,6 +4,7 @@ import CurrencySelectorHooks from './hooks/currency-selector';
 import ProductHooks from './hooks/product';
 import SearchHooks from './hooks/search';
 import CountryHooks from './hooks/country';
+import CookieHooks from './hooks/cookie';
 import FacetedSearchHooks from './hooks/faceted-search';
 import SortByHooks from './hooks/sort-by';
 
@@ -16,6 +17,7 @@ internals.classes = {
     product: new ProductHooks(),
     search: new SearchHooks(),
     country: new CountryHooks(),
+    cookie: new CookieHooks(),
     facetedSearch: new FacetedSearchHooks(),
     sortBy: new SortByHooks()
 };
