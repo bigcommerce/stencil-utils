@@ -20,19 +20,34 @@ export default class extends Remote
      * Checks whether or not the control panel privacy cookie is enabled and gets the response to show
      */
     privacyNotificationCheck() {
-        this.makeRequest('/cookieNotification', 'GET', {}, (err, response) => {
+        let alreadyAcceptedCookies = document.cookie.indexOf('ACCEPT_COOKIE_USAGE') !== -1;
+        if (alreadyAcceptedCookies) {
+            return;
+        }
+
+        this.makeRequest('/cookie-notification', 'GET', {}, (err, response) => {
             if (!err) {
                 let notifyShopper = response.data.PrivacyCookieEnabled,
-                    alreadyAcceptedCookies = document.cookie.indexOf('ACCEPT_COOKIE_USAGE') !== -1;
+                    date = new Date(),
+                    event = {
+                        defaultPrevented: false,
+                        preventDefault: function() {
+                            this.defaultPrevented = true;
+                        }
+                    };
 
-                if (notifyShopper && !alreadyAcceptedCookies) {
-                    let date = new Date();
-                    date.setDate(date.getDate() + 365);
-                    document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
+                if (!notifyShopper) {
+                    return false;
+                }
 
-                    if (!Hooks.emit('cookie-privacy-notification', response.data.PrivacyCookieNotification)) {
-                        alert(response.data.PrivacyCookieNotification);
-                    }
+                date.setDate(date.getDate() + 365);
+
+                document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
+
+                Hooks.emit('cookie-privacy-notification', event, response.data.PrivacyCookieNotification);
+
+                if (!event.defaultPrevented) {
+                    alert(response.data.PrivacyCookieNotification);
                 }
             }
         });
