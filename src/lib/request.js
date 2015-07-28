@@ -10,6 +10,7 @@ export default function (url, options, callback) {
             method: 'GET',
             remote: false,
             requestOptions: {
+                formData: null,
                 params: {},
                 config: {},
                 template: []
@@ -54,6 +55,8 @@ export default function (url, options, callback) {
     $.ajax({
         method: options.method,
         url: url,
+        contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData: options.requestOptions.formData ? false : true,
         success: (response) => {
             let ret,
                 content = options.remote ? response.content : response;
@@ -90,7 +93,7 @@ export default function (url, options, callback) {
         error: (XHR, textStatus, err) => {
             callback(err);
         },
-        data: options.requestOptions.params,
+        data: options.requestOptions.formData ? options.requestOptions.formData : options.requestOptions.params,
         headers: headers
     });
 }

@@ -13,16 +13,14 @@ export default class
 
     /**
      *
-     * @param {String} endpoint
+     * @param {String} url
      * @param {String} method ['GET', 'POST', 'PUT', 'DELETE']
      * @param {Object} options
      * @param {Boolean} remote
      * @param {Function} callback
      */
-    makeRequest(endpoint, method, options, remote, callback) {
-        let remoteUrl = endpoint;
-
-        request(remoteUrl, {
+    makeRequest(url, method, options, remote, callback) {
+        request(url, {
             method: method,
             remote: remote,
             requestOptions: options

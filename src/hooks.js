@@ -45,10 +45,12 @@ class Hooks {
         return hook.off(hookName, callback);
     }
 
-    emit(hookName, data) {
+    emit(hookName, ...args) {
         let hook = internals.parseHooks(hookName);
 
-        return hook.emit(hookName, data);
+        args.unshift(hookName);
+
+        return hook.emit(...args);
     }
 }
 
