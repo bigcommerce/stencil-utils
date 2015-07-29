@@ -16,17 +16,20 @@ export default class extends Remote
     }
 
     /**
-     *
-     * @param {Object} options
      * @param {Number} productId
+     * @param {FormData} formData
      * @param callback
      */
-    optionChange(options, productId, callback)
+    optionChange(productId, formData, callback)
     {
-        let url = this.endpoint + productId,
-            params = options;
+        this.makeRequest(this.endpoint + productId, 'POST', {formData: formData}, (err, response) => {
+            let emitData = {
+                err: err,
+                response: response
+            };
 
-        Hooks.emit('product-options-change-remote', productId);
-        this.makeRequest(url, 'POST', {params: params}, callback);
+            Hooks.emit('product-options-change-remote', emitData);
+            callback(err, response);
+        });
     }
 }

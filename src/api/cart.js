@@ -7,25 +7,13 @@ export default class extends Remote
     /**
      * Add item to cart with options (variants)
      *
-     * @param {Number} productId
-     * @param {Number} qty
-     * @param {Object} options
+     * @param {FormData} formData
      * @param {Function} callback
      */
-    itemAdd(productId, qty, options, callback) {
-        let payload = {
-            product_id: productId,
-            qty: qty
-        };
+    itemAdd(formData, callback) {
 
-        // add the attributes
-        _.forEach(options, (val, key) => {
-            payload[key] = val;
-        });
-
-        this.makeRequest('/cart/add', 'POST', {params: payload}, (err, response) => {
+        this.makeRequest('/cart/add', 'POST', {formData: formData}, (err, response) => {
             let emitData = {
-                item: payload,
                 err: err,
                 response: response
             };
