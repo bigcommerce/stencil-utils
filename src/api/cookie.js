@@ -1,8 +1,8 @@
 import $ from 'jquery'
-import Remote from './remote';
+import Base from './base';
 import Hooks from '../hooks';
 
-export default class extends Remote
+export default class extends Base
 {
     /**
      * @Constructor
@@ -25,7 +25,7 @@ export default class extends Remote
             return;
         }
 
-        this.makeRequest('/cookie-notification', 'GET', {}, (err, response) => {
+        this.remoteRequest('/cookie-notification', 'GET', {}, (err, response) => {
             if (!err) {
                 let notifyShopper = response.data.PrivacyCookieEnabled,
                     date = new Date(),

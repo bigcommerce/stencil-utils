@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import Remote from './remote';
+import Base from './base';
 import Hooks from '../hooks';
 
-export default class extends Remote
+export default class extends Base
 {
     /**
      * Add item to cart with options (variants)
@@ -12,7 +12,7 @@ export default class extends Remote
      */
     itemAdd(formData, callback) {
 
-        this.makeRequest('/cart/add', 'POST', {formData: formData}, (err, response) => {
+        this.remoteRequest('/cart/add', 'POST', {formData: formData}, (err, response) => {
             let emitData = {
                 err: err,
                 response: response
@@ -71,6 +71,33 @@ export default class extends Remote
     }
 
     /**
+     * Remove cart items
+     *
+     * @param {String} itemId
+     * @param {Function} callback
+     */
+    getItemGiftWrappingOptions(itemId, options, callback) {
+        options = options || {};
+
+        if (typeof options === 'function') {
+            callback = options;
+            options = {};
+        }
+
+        this.remoteRequest('/gift-wrapping/' + itemId, 'GET', options, callback);
+    }
+
+    /**
+     * Remove cart items
+     *
+     * @param {String} itemId
+     * @param {Function} callback
+     */
+    submitItemGiftWrappingOption(itemId, params, callback) {
+        this.remoteRequest('/gift-wrapping/' + itemId, 'POST', {params: params}, callback);
+    }
+
+    /**
      * Update cart items
      *
      * @param {Array} items
@@ -80,7 +107,7 @@ export default class extends Remote
         let payload = {
             items: items
         };
-        this.makeRequest('/cart/update', 'POST', {params: payload}, callback);
+        this.remoteRequest('/cart/update', 'POST', {params: payload}, callback);
     }
 
     /**
@@ -92,12 +119,12 @@ export default class extends Remote
     getContent(options, callback) {
         options = options || {};
 
-        if (typeof callback !== 'function') {
+        if (typeof options === 'function') {
             callback = options;
             options = {};
         }
 
-        this.makeRequest('/cart/content', 'GET', options, callback);
+        this.makeRequest('/cart.php', 'GET', options, false, callback);
     }
 
     /**
@@ -121,7 +148,7 @@ export default class extends Remote
             options.template = renderWith;
         }
 
-        this.makeRequest('/shipping-quote', 'GET', options, callback);
+        this.remoteRequest('/shipping-quote', 'GET', options, callback);
     }
 
     /**
@@ -137,7 +164,7 @@ export default class extends Remote
             }
         };
 
-        this.makeRequest('/shipping-quote', 'POST', options, callback);
+        this.remoteRequest('/shipping-quote', 'POST', options, callback);
     }
 
     /**
@@ -153,6 +180,6 @@ export default class extends Remote
             }
         };
 
-        this.makeRequest('/apply-code', 'POST', options, callback);
+        this.remoteRequest('/apply-code', 'POST', options, callback);
     }
 }
