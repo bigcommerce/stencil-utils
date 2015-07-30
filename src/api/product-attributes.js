@@ -1,15 +1,15 @@
-import Remote from './remote';
+import Base from './base';
 import $ from 'jquery';
 import Hooks from '../hooks';
 
-export default class extends Remote
+export default class extends Base
 {
     /**
      * @Constructor
      */
-    constructor() {
+    constructor(version) {
         // call parent
-        super();
+        super(version);
 
         // set up class variables
         this.endpoint = '/product-attributes/';
@@ -22,7 +22,7 @@ export default class extends Remote
      */
     optionChange(productId, formData, callback)
     {
-        this.makeRequest(this.endpoint + productId, 'POST', {formData: formData}, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', {formData: formData}, (err, response) => {
             let emitData = {
                 err: err,
                 response: response

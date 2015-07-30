@@ -7,8 +7,9 @@ export default class
     /**
      * @Constructor
      */
-    constructor() {
-
+    constructor(version) {
+        this.remoteVersion = version || 'v1';
+        this.remoteBaseEndpoint = '/remote/';
     }
 
     /**
@@ -25,5 +26,18 @@ export default class
             remote: remote,
             requestOptions: options
         }, callback);
+    }
+
+    /**
+     *
+     * @param {String} endpoint
+     * @param {String} method ['GET', 'POST', 'PUT', 'DELETE']
+     * @param {Object} options
+     * @param {Function} callback
+     */
+    remoteRequest(endpoint, method, options, callback) {
+        let remoteUrl = this.remoteBaseEndpoint + this.remoteVersion + endpoint;
+
+        this.makeRequest(remoteUrl, method, options, true, callback);
     }
 }

@@ -1,14 +1,14 @@
-import Remote from './remote';
+import Base from './base';
 import Hooks from '../hooks';
 
-export default class extends Remote
+export default class extends Base
 {
     /**
      * @Constructor
      */
-    constructor() {
+    constructor(version) {
         // call parent
-        super();
+        super(version);
 
         // set up class variables
         this.endpoint = '/country-states/';
@@ -25,13 +25,13 @@ export default class extends Remote
         let url = this.endpoint + countryId;
 
         Hooks.emit('country-remote', {id: countryId});
-        this.makeRequest(url, 'GET', {}, callback);
+        this.remoteRequest(url, 'GET', {}, callback);
     }
 
     getByName(countryName, callback) {
         let url = this.endpoint + countryName;
 
         Hooks.emit('country-remote', {name: countryName});
-        this.makeRequest(url, 'GET', {}, callback);
+        this.remoteRequest(url, 'GET', {}, callback);
     }
 }
