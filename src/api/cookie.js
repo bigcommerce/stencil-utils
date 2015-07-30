@@ -7,9 +7,9 @@ export default class extends Base
     /**
      * @Constructor
      */
-    constructor() {
+    constructor(version) {
         // call parent
-        super();
+        super(version);
 
         $(document).ready(() => {
             this.privacyNotificationCheck();

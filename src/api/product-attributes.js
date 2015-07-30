@@ -7,9 +7,9 @@ export default class extends Base
     /**
      * @Constructor
      */
-    constructor() {
+    constructor(version) {
         // call parent
-        super();
+        super(version);
 
         // set up class variables
         this.endpoint = '/product-attributes/';

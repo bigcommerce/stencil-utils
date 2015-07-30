@@ -7,8 +7,9 @@ export default class
     /**
      * @Constructor
      */
-    constructor() {
-        this.remoteBaseEndpoint = '/remote/v1';
+    constructor(version) {
+        this.remoteVersion = version || 'v1';
+        this.remoteBaseEndpoint = '/remote/';
     }
 
     /**
@@ -35,7 +36,7 @@ export default class
      * @param {Function} callback
      */
     remoteRequest(endpoint, method, options, callback) {
-        let remoteUrl = this.remoteBaseEndpoint + endpoint;
+        let remoteUrl = this.remoteBaseEndpoint + this.remoteVersion + endpoint;
 
         this.makeRequest(remoteUrl, method, options, true, callback);
     }
