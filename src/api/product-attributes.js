@@ -17,12 +17,12 @@ export default class extends Base
 
     /**
      * @param {Number} productId
-     * @param {FormData} formData
+     * @param {String} params
      * @param callback
      */
-    optionChange(productId, formData, callback)
+    optionChange(productId, params, callback)
     {
-        this.remoteRequest(this.endpoint + productId, 'POST', {formData: formData}, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', {params: params}, (err, response) => {
             let emitData = {
                 err: err,
                 response: response
