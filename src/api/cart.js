@@ -50,6 +50,8 @@ export default class extends Base
     /**
      * Remove cart items
      *
+     * Calls the internal update function with quantity: 0
+     *
      * @param {String} itemId
      * @param {Function} callback
      */
@@ -71,7 +73,7 @@ export default class extends Base
     }
 
     /**
-     * Remove cart items
+     * Get giftwrapping options
      *
      * @param {String} itemId
      * @param {Function} callback
@@ -88,7 +90,7 @@ export default class extends Base
     }
 
     /**
-     * Remove cart items
+     * Submit giftwrapping options
      *
      * @param {String} itemId
      * @param {Function} callback
@@ -152,7 +154,7 @@ export default class extends Base
     }
 
     /**
-     * Update cart items
+     * Submit shipping quote based on quoteId
      *
      * @param {Number} quoteId
      * @param {Function} callback
