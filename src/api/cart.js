@@ -170,7 +170,7 @@ export default class extends Base
     /**
      * Apply a coupon code or gift certificate to the cart
      *
-     * @param {Number} quoteId
+     * @param {String} code
      * @param {Function} callback
      */
     applyCode(code, callback) {

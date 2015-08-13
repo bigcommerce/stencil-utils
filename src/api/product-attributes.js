@@ -17,7 +17,7 @@ export default class extends Base
 
     /**
      * @param {Number} productId
-     * @param {String} params
+     * @param {Object} params
      * @param callback
      */
     optionChange(productId, params, callback)

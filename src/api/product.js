@@ -16,9 +16,9 @@ export default class extends Base
 
     /**
      *
-     * @param productId
-     * @param params
-     * @param callback
+     * @param {Number} productId
+     * @param {Object} params
+     * @param {Function} callback
      */
     getById(productId, params, callback)
     {
