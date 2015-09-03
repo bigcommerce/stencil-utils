@@ -184,4 +184,20 @@ export default class extends Base
 
         this.remoteRequest('/apply-code', 'POST', options, callback);
     }
+
+    /**
+     * Apply a coupon code or gift certificate to the cart
+     *
+     * @param {Number} code
+     * @param {Function} callback
+     */
+    applyGiftCertificate(code, callback) {
+        let options = {
+            params: {
+                code: code
+            }
+        };
+
+        this.remoteRequest('/gift-certificates', 'POST', options, callback);
+    }
 }
