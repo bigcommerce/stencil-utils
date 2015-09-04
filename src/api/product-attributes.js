@@ -13,6 +13,7 @@ export default class extends Base
 
         // set up class variables
         this.endpoint = '/product-attributes/';
+        this.inCartEndpoint = '/configure-options/';
     }
 
     /**
@@ -29,6 +30,18 @@ export default class extends Base
             };
 
             Hooks.emit('product-options-change-remote', emitData);
+            callback(err, response);
+        });
+    }
+
+    /**
+     * @param {Number} itemId
+     * @param {Object} params
+     * @param callback
+     */
+    configureInCart(itemId, params, callback)
+    {
+        this.remoteRequest(this.inCartEndpoint + itemId, 'GET', params, (err, response) => {
             callback(err, response);
         });
     }
