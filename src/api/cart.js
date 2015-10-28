@@ -26,14 +26,25 @@ export default class extends Base
     /**
      * Update cart item quantity
      *
-     * @param {String} itemId
-     * @param {Number} qty
-     * @param {Function} callback
+     * @param {String|Object} itemId
+     * @param {Number|Function} qty
+     * @param {Function|null} callback
      */
     itemUpdate(itemId, qty, callback) {
-        let items = [
-            {id: itemId, quantity: qty}
-        ];
+        let callbackArg = callback;
+        let items;
+
+        if (typeof itemId === 'array' && typeof qty === 'function') {
+            callbackArg = qty;
+            items = itemId;
+        } else {
+            items = [
+                {
+                    id: itemId,
+                    quantity: qty,
+                }
+            ];
+        }
 
         this.update(items, (err, response) => {
             let emitData = {
@@ -43,7 +54,7 @@ export default class extends Base
             };
 
             Hooks.emit('cart-item-update-remote', emitData);
-            callback(err, response);
+            callbackArg(err, response);
         });
     }
 
