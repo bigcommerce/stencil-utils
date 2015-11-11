@@ -6,20 +6,20 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jspm', 'jasmine'],
+        frameworks: ['jspm', 'jasmine', 'es6-shim'],
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS2'],
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'verbose'],
+        reporters: ['dots'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        //singleRun: true,
+        singleRun: true,
 
         // enable / disable colors in the output (reporters and logs)
         colors: true,
@@ -29,31 +29,40 @@ module.exports = function (config) {
 
         jspm: {
             // Edit this to your needs
-            config: 'config.js',
-            loadFiles: ['test-unit/**/*.js'],
+            config: 'src/config.js',
+            loadFiles: [
+                'src/test-unit/**/*.spec.js'
+            ],
             serveFiles: [
-                'src/**/**.js',
-                'jspm_packages/*'
+                'src/api.js',
+                'src/main.js',
+                'src/tools.js',
+                'src/hooks.js',
+                'src/**/*.js'
             ]
         },
 
-        //proxies: {
-        //    '/base/client/': '/client/assets/',
-        //    '/base/jspm_packages/': '/base/public/assets/jspm_packages/'
-        //},
+        proxies: {
+            '/base/jspm_packages/': '/base/src/jspm_packages/'
+        },
 
         // list of files to exclude
         exclude: [],
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_ERROR,
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'test-unit/**/*.js': ['babel']
-        }
+        },
 
+        babelPreprocessor: {
+            options: {
+                modules: 'ignore'
+            }
+        }
     });
 };
