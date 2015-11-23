@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Base from './base';
 import Hooks from '../hooks';
 
@@ -11,11 +10,10 @@ export default class extends Base
      * @param {Function} callback
      */
     itemAdd(formData, callback) {
-
         this.remoteRequest('/cart/add', 'POST', {formData: formData}, (err, response) => {
-            let emitData = {
+            const emitData = {
                 err: err,
-                response: response
+                response: response,
             };
 
             Hooks.emit('cart-item-add-remote', emitData);
@@ -34,7 +32,7 @@ export default class extends Base
         let callbackArg = callback;
         let items;
 
-        if (typeof itemId === 'array' && typeof qty === 'function') {
+        if (Array.isArray(itemId) && typeof qty === 'function') {
             callbackArg = qty;
             items = itemId;
         } else {
@@ -42,15 +40,15 @@ export default class extends Base
                 {
                     id: itemId,
                     quantity: qty,
-                }
+                },
             ];
         }
 
         this.update(items, (err, response) => {
-            let emitData = {
+            const emitData = {
                 items: items,
                 err: err,
-                response: response
+                response: response,
             };
 
             Hooks.emit('cart-item-update-remote', emitData);
@@ -67,15 +65,18 @@ export default class extends Base
      * @param {Function} callback
      */
     itemRemove(itemId, callback) {
-        let items = [
-            {id: itemId, quantity: 0}
+        const items = [
+            {
+                id: itemId,
+                quantity: 0,
+            },
         ];
 
         this.update(items, (err, response) => {
-            let emitData = {
+            const emitData = {
                 items: items,
                 err: err,
-                response: response
+                response: response,
             };
 
             Hooks.emit('cart-item-remove-remote', emitData);
@@ -85,19 +86,20 @@ export default class extends Base
 
     /**
      * Get giftwrapping options
-     *
      * @param {String} itemId
-     * @param {Function} callback
+     * @param {Object|Function} options
+     * @param {Function|null} callback
      */
     getItemGiftWrappingOptions(itemId, options, callback) {
-        options = options || {};
+        let opts = options || {};
+        let callbackArg = callback;
 
-        if (typeof options === 'function') {
-            callback = options;
-            options = {};
+        if (typeof opts === 'function') {
+            callbackArg = opts;
+            opts = {};
         }
 
-        this.remoteRequest('/gift-wrapping/' + itemId, 'GET', options, callback);
+        this.remoteRequest('/gift-wrapping/' + itemId, 'GET', opts, callbackArg);
     }
 
     /**
@@ -117,9 +119,10 @@ export default class extends Base
      * @param {Function} callback
      */
     update(items, callback) {
-        let payload = {
-            items: items
+        const payload = {
+            items: items,
         };
+
         this.remoteRequest('/cart/update', 'POST', {params: payload}, callback);
     }
 
@@ -130,14 +133,15 @@ export default class extends Base
      * @param {Function} callback
      */
     getContent(options, callback) {
-        options = options || {};
+        let opts = options || {};
+        let callbackArg = callback;
 
-        if (typeof options === 'function') {
-            callback = options;
-            options = {};
+        if (typeof opts === 'function') {
+            callbackArg = opts;
+            opts = {};
         }
 
-        this.makeRequest('/cart.php', 'GET', options, false, callback);
+        this.makeRequest('/cart.php', 'GET', opts, false, callbackArg);
     }
 
     /**
@@ -148,20 +152,22 @@ export default class extends Base
      * @param {Function} callback
      */
     getShippingQuotes(params, renderWith, callback) {
-        let options = {
-            params: params
+        const options = {
+            params: params,
         };
+        let callbackArg = callback;
+        let renderWithArg = renderWith;
 
-        if (typeof callback !== 'function') {
-            callback = renderWith;
-            renderWith = null;
+        if (typeof callbackArg !== 'function') {
+            callbackArg = renderWithArg;
+            renderWithArg = null;
         }
 
-        if (renderWith) {
-            options.template = renderWith;
+        if (renderWithArg) {
+            options.template = renderWithArg;
         }
 
-        this.remoteRequest('/shipping-quote', 'GET', options, callback);
+        this.remoteRequest('/shipping-quote', 'GET', options, callbackArg);
     }
 
     /**
@@ -171,10 +177,10 @@ export default class extends Base
      * @param {Function} callback
      */
     submitShippingQuote(quoteId, callback) {
-        let options = {
+        const options = {
             params: {
-                shipping_method: quoteId
-            }
+                shipping_method: quoteId,
+            },
         };
 
         this.remoteRequest('/shipping-quote', 'POST', options, callback);
@@ -187,10 +193,10 @@ export default class extends Base
      * @param {Function} callback
      */
     applyCode(code, callback) {
-        let options = {
+        const options = {
             params: {
-                code: code
-            }
+                code: code,
+            },
         };
 
         this.remoteRequest('/apply-code', 'POST', options, callback);
@@ -203,10 +209,10 @@ export default class extends Base
      * @param {Function} callback
      */
     applyGiftCertificate(code, callback) {
-        let options = {
+        const options = {
             params: {
-                code: code
-            }
+                code: code,
+            },
         };
 
         this.remoteRequest('/gift-certificates', 'POST', options, callback);

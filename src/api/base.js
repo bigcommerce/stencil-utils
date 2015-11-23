@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import _ from 'lodash';
 import request from '../lib/request';
 
 export default class
@@ -24,7 +22,7 @@ export default class
         request(url, {
             method: method,
             remote: remote,
-            requestOptions: options
+            requestOptions: options,
         }, callback);
     }
 
@@ -36,7 +34,7 @@ export default class
      * @param {Function} callback
      */
     remoteRequest(endpoint, method, options, callback) {
-        let remoteUrl = this.remoteBaseEndpoint + this.remoteVersion + endpoint;
+        const remoteUrl = this.remoteBaseEndpoint + this.remoteVersion + endpoint;
 
         this.makeRequest(remoteUrl, method, options, true, callback);
     }

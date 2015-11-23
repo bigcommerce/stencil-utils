@@ -1,5 +1,4 @@
 import Base from './base';
-import $ from 'jquery';
 import Hooks from '../hooks';
 
 export default class extends Base
@@ -21,12 +20,11 @@ export default class extends Base
      * @param {Object} params
      * @param callback
      */
-    optionChange(productId, params, callback)
-    {
+    optionChange(productId, params, callback) {
         this.remoteRequest(this.endpoint + productId, 'POST', {params: params}, (err, response) => {
-            let emitData = {
+            const emitData = {
                 err: err,
-                response: response
+                response: response,
             };
 
             Hooks.emit('product-options-change-remote', emitData);
@@ -39,8 +37,7 @@ export default class extends Base
      * @param {Object} params
      * @param callback
      */
-    configureInCart(itemId, params, callback)
-    {
+    configureInCart(itemId, params, callback) {
         this.remoteRequest(this.inCartEndpoint + itemId, 'GET', params, (err, response) => {
             callback(err, response);
         });

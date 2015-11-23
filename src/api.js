@@ -7,7 +7,7 @@ import SearchApi from './api/search';
 import CartApi from './api/cart';
 import CookieApi from './api/cookie';
 
-let internals = {};
+const internals = {};
 
 /**
  * Convenience function to request a page via ajax
@@ -16,10 +16,10 @@ let internals = {};
  * @param options
  * @param callback
  */
-internals.getPage = function (url, options, callback) {
+internals.getPage = function(url, options, callback) {
     request(url, {
         method: 'GET',
-        requestOptions: options
+        requestOptions: options,
     }, callback);
 };
 
@@ -30,5 +30,5 @@ export default {
     search: new SearchApi(),
     cart: new CartApi(),
     cookie: new CookieApi(),
-    getPage: internals.getPage
+    getPage: internals.getPage,
 };

@@ -1,20 +1,26 @@
 # Stencil Utils
-Stencil utils is a JSPM module that contains the Bigcommerce Stencil Events system and other tools that will help and enhance the
+Stencil utils is a utility library that contains the Bigcommerce Stencil Events system and other tools that will help and enhance the
 experience of building a theme with the Stencil framework.
 
+### Documentation
+https://stencil.bigcommerce.com/docs/the-stencil-utils-package
+
 ### Getting Started
-To get started with JSPM and this module be sure to install `npm install -g jspm` and this will install JSPM on your 
-system. Check out the JSPM [documentation](https://github.com/jspm/jspm-cli) for more information
+Stencil Utils is written in ES6 and is currently transpiled to ES5 with babel for running client side within browsers.
+Stencil utils can either be imported to your theme by JSPM as a module for use with the SystemJS loader, or included as a standalone script.
 
-### JSPM Private Repos
-Create an access token [here](https://github.com/settings/applications) that will be used by JSPM to access the private Github repos.
-Once you have your token run `jspm registry config github` and input your credentials. This will create a Github jspm configuration.
-Once this is complete you are ready for the next step.
+### Installing Stencil Utils on your theme
 
-### Install stencil-utils
-Stencil-utils is meant to be utilized by the theme for javascript and will need to have the modules installed in the theme.
-* `git clone git@github.com:bigcommerce-labs/stencil.git` the stencil theme.
-* `cd` to the stencil theme directory.
-* Run `jspm install github:bigcommerce/stencil-utils` to install stencil-utils for use with jspm.
+#### Using JSPM
+If your theme takes advantage of the JSPM dependency manager you can simply:
+* `cd` to the theme directory.
+* Run `jspm install github:bigcommerce/stencil-utils` to install the latest tagged version of stencil-utils for use with your theme.
+* Import the library `import utils from 'bigcommerce/stencil-utils';` in modules that depend on it.
+
+#### Using standalone
+If you do not want to use JSPM, Stencil Utils can be included as a normal script:
+* Copy the bundled script from `dist/stencil-utils.min.js` to your theme.
+* Include the script in your HTML document
+* Access stencil utils from `window.stencilUtils`.
 
 Now you are playing with power!

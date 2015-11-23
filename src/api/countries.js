@@ -22,14 +22,19 @@ export default class extends Base
      * @param {Function} callback
      */
     getById(countryId, callback) {
-        let url = this.endpoint + countryId;
+        const url = this.endpoint + countryId;
 
         Hooks.emit('country-remote', {id: countryId});
         this.remoteRequest(url, 'GET', {}, callback);
     }
 
+    /**
+     * Get country data by country name
+     * @param countryName
+     * @param callback
+     */
     getByName(countryName, callback) {
-        let url = this.endpoint + countryName;
+        const url = this.endpoint + countryName;
 
         Hooks.emit('country-remote', {name: countryName});
         this.remoteRequest(url, 'GET', {}, callback);
