@@ -8,7 +8,7 @@ import CookieHooks from './hooks/cookie';
 import FacetedSearchHooks from './hooks/faceted-search';
 import SortByHooks from './hooks/sort-by';
 
-let internals = {};
+const internals = {};
 
 internals.classes = {
     account: new AccountHooks(),
@@ -19,11 +19,11 @@ internals.classes = {
     country: new CountryHooks(),
     cookie: new CookieHooks(),
     facetedSearch: new FacetedSearchHooks(),
-    sortBy: new SortByHooks()
+    sortBy: new SortByHooks(),
 };
 
-internals.parseHooks = function (hookName) {
-    let hookType = hookName.split('-')[0];
+internals.parseHooks = function(hookName) {
+    const hookType = hookName.split('-')[0];
 
     if (internals.classes[hookType] === undefined) {
         throw new Error(hookType + ' is not a valid hookType');
@@ -34,23 +34,21 @@ internals.parseHooks = function (hookName) {
 
 class Hooks {
     on(hookName, callback) {
-        let hook = internals.parseHooks(hookName);
+        const hook = internals.parseHooks(hookName);
 
         return hook.on(hookName, callback);
     }
 
     off(hookName, callback) {
-        let hook = internals.parseHooks(hookName);
+        const hook = internals.parseHooks(hookName);
 
         return hook.off(hookName, callback);
     }
 
-    emit(hookName, ...args) {
-        let hook = internals.parseHooks(hookName);
+    emit(hookName) {
+        const hook = internals.parseHooks(hookName);
 
-        args.unshift(hookName);
-
-        return hook.emit(...args);
+        return hook.emit.apply(arguments);
     }
 }
 

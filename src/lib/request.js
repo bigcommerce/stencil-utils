@@ -1,54 +1,61 @@
 import $ from 'jquery';
-import _ from 'lodash';
 
 const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+const internals = {};
 
-let internals = {};
-
-export default function (url, options, callback) {
-    let defaultOptions = {
-            method: 'GET',
-            remote: false,
-            requestOptions: {
-                formData: null,
-                params: {},
-                config: {},
-                template: []
-            }
+export default function(url, opts, callback) {
+    const defaultOptions = {
+        method: 'GET',
+        remote: false,
+        requestOptions: {
+            formData: null,
+            params: {},
+            config: {},
+            template: [],
         },
-        usingTemplates = false,
-        usingSections = false,
-        templates = [],
-        headers;
+    };
+    const options = Object.assign({}, defaultOptions, opts);
+    const data = options.requestOptions.formData ? options.requestOptions.formData : options.requestOptions.params;
+    const headers = {
+        'stencil-config': options.requestOptions.config ? JSON.stringify(options.requestOptions.config) : '{}',
+        'stencil-options': '{}',
+    };
+    const requestedTemplate = options.requestOptions.template;
 
-    options = _.assign({}, defaultOptions, options);
+    let usingTemplates = false;
+    let usingSections = false;
+    let templates = [];
+
 
     // Not a valid method
     if (!internals.isValidHTTPMethod(options.method)) {
         return callback(new Error('Not a valid HTTP method'));
     }
 
-    if (_.isPlainObject(options.requestOptions.template)) {
+
+    if (typeof(requestedTemplate) === 'object' && !Array.isArray(requestedTemplate)) {
+        let template;
+
         usingSections = true;
-        templates = _.reduce(options.requestOptions.template, (acc, template) => {
-            acc.push(template);
+        templates = [];
 
-            return acc;
-        }, []);
-    } else if (_.isString(options.requestOptions.template)) {
-        templates = [options.requestOptions.template]
-    } else if (_.isArray(options.requestOptions.template) && options.requestOptions.template.length > 0) {
-        templates = options.requestOptions.template;
+        for (template in requestedTemplate) {
+            if (requestedTemplate.hasOwnProperty(template)) {
+                templates.push(requestedTemplate[template]);
+            }
+        }
+    } else if (typeof(requestedTemplate) === 'string') {
+        templates = [requestedTemplate];
+    } else if (Array.isArray(requestedTemplate) && requestedTemplate.length > 0) {
+        templates = requestedTemplate;
     }
-
-    headers = {
-        'stencil-config': JSON.stringify(options.requestOptions.config)
-    };
 
     if (templates.length > 0) {
         usingTemplates = true;
 
-        headers['stencil-options'] = JSON.stringify({render_with: templates.join(',')})
+        headers['stencil-options'] = JSON.stringify({
+            render_with: templates.join(','),
+        });
     }
 
     // make ajax request using jquery
@@ -58,24 +65,31 @@ export default function (url, options, callback) {
         contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
         processData: options.requestOptions.formData ? false : true,
         success: (response) => {
-            let ret,
-                content = options.remote ? response.content : response;
+            let ret;
+            const content = options.remote ? response.content : response;
 
             if (usingTemplates) {
                 // Remove the `components` prefix from the response if it's an object
-                if (_.isObject(content)) {
-                    content = _.mapKeys(content, (val, key) => {
-                        return key.replace(/^components\//, '');
-                    });
+                if (typeof(content) === 'object') {
+                    const keys = Object.keys(content);
+                    let key;
+
+                    for (key of keys) {
+                        const cleanKey = key.replace(/^components\//, '');
+
+                        content[cleanKey] = content[key];
+                        delete(content[key]);
+                    }
                 }
 
                 // If using "sections", morph the content into the arbitrary keys => content object.
                 if (usingSections) {
-                    let flippedSections = _.invert(options.requestOptions.template);
-
-                    content = _.mapKeys(content, (val, key) => {
-                        return flippedSections[key];
-                    });
+                    const templateVariableNames = Object.keys(requestedTemplate);
+                    let templateVariable;
+                    for (templateVariable of templateVariableNames) {
+                        content[templateVariable] = content[requestedTemplate[templateVariable]];
+                        delete content[requestedTemplate[templateVariable]];
+                    }
                 }
 
                 if (options.remote) {
@@ -93,8 +107,8 @@ export default function (url, options, callback) {
         error: (XHR, textStatus, err) => {
             callback(err);
         },
-        data: options.requestOptions.formData ? options.requestOptions.formData : options.requestOptions.params,
-        headers: headers
+        data: data,
+        headers: headers,
     });
 }
 

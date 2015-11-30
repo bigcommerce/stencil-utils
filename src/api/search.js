@@ -21,14 +21,16 @@ export default class extends Base
      * @param {Function} callback
      */
     search(query, params, callback) {
-        let url = this.endpoint + encodeURIComponent(query);
+        const url = this.endpoint + encodeURIComponent(query);
+        let paramsArg = params;
+        let callbackArg = callback;
 
-        if (typeof params === 'function') {
-            callback = params;
-            params = {};
+        if (typeof paramsArg === 'function') {
+            callbackArg = paramsArg;
+            paramsArg = {};
         }
 
         Hooks.emit('search-quick-remote', query);
-        this.makeRequest(url, 'GET', params, false, callback);
+        this.makeRequest(url, 'GET', paramsArg, false, callbackArg);
     }
 }

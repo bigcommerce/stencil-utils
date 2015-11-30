@@ -29,7 +29,7 @@ module.exports = function (config) {
 
         jspm: {
             // Edit this to your needs
-            config: 'src/config.js',
+            config: 'config.js',
             loadFiles: [
                 'src/test-unit/**/*.spec.js'
             ],
@@ -43,7 +43,8 @@ module.exports = function (config) {
         },
 
         proxies: {
-            '/base/jspm_packages/': '/base/src/jspm_packages/'
+            '/src': '/base/src',
+            '/jspm_packages': '/base/jspm_packages/'
         },
 
         // list of files to exclude
@@ -56,13 +57,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'test-unit/**/*.js': ['babel']
-        },
-
-        babelPreprocessor: {
-            options: {
-                modules: 'ignore'
-            }
+            'src/**/*.js': ['babel']
         }
     });
 };

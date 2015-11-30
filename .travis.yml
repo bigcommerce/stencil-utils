@@ -12,4 +12,5 @@ install:
   - jspm install
 
 script:
+  - grunt eslint
   - grunt karma

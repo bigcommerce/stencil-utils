@@ -1,5 +1,4 @@
 import Base from './base';
-import $ from 'jquery';
 
 export default class extends Base
 {
@@ -20,15 +19,17 @@ export default class extends Base
      * @param {Object} params
      * @param {Function} callback
      */
-    getById(productId, params, callback)
-    {
-        let url = this.endpoint + productId;
+    getById(productId, params, callback) {
+        const url = this.endpoint + productId;
+        let paramsArg = params;
+        let callbackArg = callback;
 
-        if (typeof params === 'function') {
-            callback = params;
-            params = {};
+
+        if (typeof paramsArg === 'function') {
+            callbackArg = paramsArg;
+            paramsArg = {};
         }
 
-        this.makeRequest(url, 'GET', params, false, callback);
+        this.makeRequest(url, 'GET', paramsArg, false, callbackArg);
     }
 }
