@@ -21,6 +21,8 @@ export default class extends Base
      */
     privacyNotificationCheck() {
         const alreadyAcceptedCookies = document.cookie.indexOf('ACCEPT_COOKIE_USAGE') !== -1;
+        let cookieStr;
+
         if (alreadyAcceptedCookies) {
             return;
         }
@@ -31,7 +33,7 @@ export default class extends Base
                 const date = new Date();
                 const event = {
                     defaultPrevented: false,
-                    preventDefault: function() {
+                    preventDefault() {
                         this.defaultPrevented = true;
                     },
                 };
@@ -41,12 +43,16 @@ export default class extends Base
                 }
 
                 date.setDate(date.getDate() + 365);
-
-                document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
-
+                cookieStr = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
                 Hooks.emit('cookie-privacy-notification', event, response.data.PrivacyCookieNotification);
 
-                if (!event.defaultPrevented) {
+                // Set up handler to listen if the cookie was accepted.
+                if (event.defaultPrevented) {
+                    Hooks.on('cookie-privacy-accepted', () => {
+                        document.cookie = cookieStr;
+                    });
+                } else {
+                    document.cookie = cookieStr;
                     alert(response.data.PrivacyCookieNotification);
                 }
             }
