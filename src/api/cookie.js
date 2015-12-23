@@ -52,8 +52,10 @@ export default class extends Base
                         document.cookie = cookieStr;
                     });
                 } else {
-                    document.cookie = cookieStr;
-                    alert(response.data.PrivacyCookieNotification);
+                    const confirmed = confirm(response.data.PrivacyCookieNotification);
+                    if (confirmed) {
+                        document.cookie = cookieStr;
+                    }
                 }
             }
         });
