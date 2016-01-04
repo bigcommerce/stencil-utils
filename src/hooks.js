@@ -48,7 +48,7 @@ class Hooks {
     emit(hookName) {
         const hook = internals.parseHooks(hookName);
 
-        return hook.emit.apply(arguments);
+        return hook.emit.apply(hook, arguments);
     }
 }
 
