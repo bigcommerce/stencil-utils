@@ -21,7 +21,7 @@ export default StencilUtils;
     } else if (typeof module === 'object' && module.exports) {
         module.exports = StencilUtils;
     } else {
-        $.noConflict(true);
+        $.noConflict(false);
         window.stencilUtils = StencilUtils;
     }
 }(this));
