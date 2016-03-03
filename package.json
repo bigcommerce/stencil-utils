@@ -2,6 +2,8 @@
   "name": "stencil-utils",
   "version": "0.4.0",
   "main": "dist/stencil-utils.min.js",
+  "license": "BSD-4-Clause",
+  "author": "Bigcommerce",
   "jspm": {
     "main": "main",
     "directories": {

@@ -1,7 +1,6 @@
 import hooks from './hooks';
 import api from './api';
 import tools from './tools';
-import $ from 'jquery';
 
 const StencilUtils = {
     hooks: hooks,
