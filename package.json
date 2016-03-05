@@ -1,5 +1,5 @@
 {
-  "name": "@stencil-eng/stencil-utils",
+  "name": "@bigcommerce/stencil-utils",
   "version": "0.3.9",
   "main": "dist/stencil-utils.min.js",
   "license": "BSD-4-Clause",
