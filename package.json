@@ -10,7 +10,7 @@
       "lib": "src"
     },
     "dependencies": {
-      "asyncly/EventEmitter2": "github:asyncly/EventEmitter2@0.4.14",
+      "asyncly/EventEmitter2": "github:asyncly/EventEmitter2@^0.4.14",
       "jquery": "github:components/jquery@2.1.4"
     },
     "devDependencies": {
