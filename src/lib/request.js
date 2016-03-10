@@ -1,9 +1,19 @@
 import $ from 'jquery';
 
-const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
-const internals = {};
+/**
+ * Checks whether or not the current method passed in is valid
+ *
+ * @param {string} method
+ * @returns {boolean}
+ */
+function isValidHTTPMethod(method) {
+    const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-export default function(url, opts, callback) {
+    return allowedMethods.indexOf(method) !== -1;
+}
+
+
+export default function (url, opts, callback) {
     const defaultOptions = {
         method: 'GET',
         remote: false,
@@ -28,7 +38,7 @@ export default function(url, opts, callback) {
 
 
     // Not a valid method
-    if (!internals.isValidHTTPMethod(options.method)) {
+    if (!isValidHTTPMethod(options.method)) {
         return callback(new Error('Not a valid HTTP method'));
     }
 
@@ -61,9 +71,9 @@ export default function(url, opts, callback) {
     // make ajax request using jquery
     $.ajax({
         method: options.method,
-        url: url,
+        url,
         contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-        processData: options.requestOptions.formData ? false : true,
+        processData: !!options.requestOptions.formData,
         success: (response) => {
             let ret;
             const content = options.remote ? response.content : response;
@@ -107,17 +117,7 @@ export default function(url, opts, callback) {
         error: (XHR, textStatus, err) => {
             callback(err);
         },
-        data: data,
-        headers: headers,
+        data,
+        headers,
     });
 }
-
-/**
- * Checks whether or not the current method passed in is valid
- *
- * @param {string} method
- * @returns {boolean}
- */
-internals.isValidHTTPMethod = (method) => {
-    return allowedMethods.indexOf(method) !== -1;
-};

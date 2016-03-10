@@ -1,27 +1,44 @@
-var Jspm = require('jspm');
 var Fs  = require('fs');
 var Path = require('path');
+var config = require('../webpack.conf.js');
+var webpack = require('webpack');
 var options = {
-    entry: 'src/main',
-    dist: 'dist/stencil-utils.min.js',
-    minify: true,
-    sourceMaps: false
+    entry: './src/main.js',
+    output: {
+        path: Path.resolve(__dirname, '../dist'),
+        filename: 'stencil-utils.min.js',
+        library: ['stencilUtils']
+    },
+    devtool: false
 };
 
 module.exports = function(grunt) {
-    grunt.registerTask('build', 'Builds a self executing bundle with JSPM', function() {
+    grunt.registerTask('build', 'Builds a distributable bundle of stencil utils', function() {
         var done = this.async();
-        try{
-            Fs.statSync(Path.join(process.cwd(), 'jspm_packages'));
-        } catch(err) {
-            grunt.fail.fatal('Folder "jspm_packages" does not exist. Please run "jspm install" first');
-        }
+        var compiler;
 
-        Jspm.setPackagePath(process.cwd());
-        Jspm.bundleSFX(options.entry, options.dist, {minify: options.minify, sourceMaps: options.sourceMaps}).then(function () {
+        // Don't include source maps for a distributable package
+        config.devtool = options.devtool;
+        config.entry = options.entry;
+        config.output = options.output;
+        config.plugins = [
+            new webpack.optimize.UglifyJsPlugin({
+                output: {
+                    comments: false
+                }
+            })
+        ];
+
+        compiler = webpack(config);
+
+        compiler.run(function(err, stats) {
+            if (err) {
+                throw err;
+            }
+
+            console.log('Distributable bundle created at: ' + Path.join(options.output.path, options.output.filename));
+
             done();
-        }).catch(function(err, param2) {
-            grunt.fail.fatal(err);
         });
     });
 };
