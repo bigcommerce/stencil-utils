@@ -16,7 +16,7 @@ const internals = {};
  * @param options
  * @param callback
  */
-internals.getPage = function(url, options, callback) {
+internals.getPage = function (url, options, callback) {
     request(url, {
         method: 'GET',
         requestOptions: options,

@@ -1,15 +1,13 @@
 language: node_js
 
 node_js:
-  - 0.12
+  - 4.4.0
 
-sudo: required
-dist: trusty
+sudo: false
 
 install:
   - npm install -g grunt-cli
   - npm install
-  - jspm install
 
 script:
   - grunt eslint

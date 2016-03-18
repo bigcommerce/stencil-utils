@@ -21,7 +21,6 @@ export default class extends Base
      */
     privacyNotificationCheck() {
         const alreadyAcceptedCookies = document.cookie.indexOf('ACCEPT_COOKIE_USAGE') !== -1;
-        let cookieStr;
 
         if (alreadyAcceptedCookies) {
             return;
@@ -29,33 +28,33 @@ export default class extends Base
 
         this.remoteRequest('/cookie-notification', 'GET', {}, (err, response) => {
             if (!err) {
-                const notifyShopper = response.data.PrivacyCookieEnabled;
-                const date = new Date();
-                const event = {
-                    defaultPrevented: false,
-                    preventDefault() {
-                        this.defaultPrevented = true;
-                    },
-                };
+                return;
+            }
+            const notifyShopper = response.data.PrivacyCookieEnabled;
+            const date = new Date();
+            const event = {
+                defaultPrevented: false,
+                preventDefault() {
+                    this.defaultPrevented = true;
+                },
+            };
 
-                if (!notifyShopper) {
-                    return false;
-                }
+            if (!notifyShopper) {
+                return false;
+            }
 
-                date.setDate(date.getDate() + 365);
-                cookieStr = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
-                Hooks.emit('cookie-privacy-notification', event, response.data.PrivacyCookieNotification);
+            date.setDate(date.getDate() + 365);
+            Hooks.emit('cookie-privacy-notification', event, response.data.PrivacyCookieNotification);
 
-                // Set up handler to listen if the cookie was accepted.
-                if (event.defaultPrevented) {
-                    Hooks.on('cookie-privacy-accepted', () => {
-                        document.cookie = cookieStr;
-                    });
-                } else {
-                    const confirmed = confirm(response.data.PrivacyCookieNotification);
-                    if (confirmed) {
-                        document.cookie = cookieStr;
-                    }
+            // Set up handler to listen if the cookie was accepted.
+            if (event.defaultPrevented) {
+                Hooks.on('cookie-privacy-accepted', () => {
+                    document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
+                });
+            } else {
+                const confirmed = confirm(response.data.PrivacyCookieNotification);
+                if (confirmed) {
+                    document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
                 }
             }
         });

@@ -1,8 +1,7 @@
 import Base from './base';
 import Hooks from '../hooks';
 
-export default class extends Base
-{
+export default class extends Base {
     /**
      * Add item to cart with options (variants)
      *
@@ -10,10 +9,10 @@ export default class extends Base
      * @param {Function} callback
      */
     itemAdd(formData, callback) {
-        this.remoteRequest('/cart/add', 'POST', {formData: formData}, (err, response) => {
+        this.remoteRequest('/cart/add', 'POST', { formData }, (err, response) => {
             const emitData = {
-                err: err,
-                response: response,
+                err,
+                response,
             };
 
             Hooks.emit('cart-item-add-remote', emitData);
@@ -46,9 +45,9 @@ export default class extends Base
 
         this.update(items, (err, response) => {
             const emitData = {
-                items: items,
-                err: err,
-                response: response,
+                items,
+                err,
+                response,
             };
 
             Hooks.emit('cart-item-update-remote', emitData);
@@ -74,9 +73,9 @@ export default class extends Base
 
         this.update(items, (err, response) => {
             const emitData = {
-                items: items,
-                err: err,
-                response: response,
+                items,
+                err,
+                response,
             };
 
             Hooks.emit('cart-item-remove-remote', emitData);
@@ -99,7 +98,7 @@ export default class extends Base
             opts = {};
         }
 
-        this.remoteRequest('/gift-wrapping/' + itemId, 'GET', opts, callbackArg);
+        this.remoteRequest(`/gift-wrapping/${itemId}`, 'GET', opts, callbackArg);
     }
 
     /**
@@ -109,7 +108,7 @@ export default class extends Base
      * @param {Function} callback
      */
     submitItemGiftWrappingOption(itemId, params, callback) {
-        this.remoteRequest('/gift-wrapping/' + itemId, 'POST', {params: params}, callback);
+        this.remoteRequest(`/gift-wrapping/${itemId}`, 'POST', { params }, callback);
     }
 
     /**
@@ -120,10 +119,10 @@ export default class extends Base
      */
     update(items, callback) {
         const payload = {
-            items: items,
+            items,
         };
 
-        this.remoteRequest('/cart/update', 'POST', {params: payload}, callback);
+        this.remoteRequest('/cart/update', 'POST', { params: payload }, callback);
     }
 
     /**
@@ -153,7 +152,7 @@ export default class extends Base
      */
     getShippingQuotes(params, renderWith, callback) {
         const options = {
-            params: params,
+            params,
         };
         let callbackArg = callback;
         let renderWithArg = renderWith;
@@ -195,7 +194,7 @@ export default class extends Base
     applyCode(code, callback) {
         const options = {
             params: {
-                code: code,
+                code,
             },
         };
 
@@ -211,7 +210,7 @@ export default class extends Base
     applyGiftCertificate(code, callback) {
         const options = {
             params: {
-                code: code,
+                code,
             },
         };
 

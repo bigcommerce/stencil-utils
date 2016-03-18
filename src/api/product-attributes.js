@@ -21,10 +21,10 @@ export default class extends Base
      * @param callback
      */
     optionChange(productId, params, callback) {
-        this.remoteRequest(this.endpoint + productId, 'POST', {params: params}, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', { params }, (err, response) => {
             const emitData = {
-                err: err,
-                response: response,
+                err,
+                response,
             };
 
             Hooks.emit('product-options-change-remote', emitData);

@@ -1,4 +1,4 @@
-import EventEmitter from 'asyncly/EventEmitter2';
+import EventEmitter from 'eventemitter2';
 import $ from 'jquery';
 
 export default class extends EventEmitter {

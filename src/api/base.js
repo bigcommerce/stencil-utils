@@ -20,8 +20,8 @@ export default class
      */
     makeRequest(url, method, options, remote, callback) {
         request(url, {
-            method: method,
-            remote: remote,
+            method,
+            remote,
             requestOptions: options,
         }, callback);
     }
