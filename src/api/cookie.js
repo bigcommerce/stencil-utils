@@ -27,9 +27,10 @@ export default class extends Base
         }
 
         this.remoteRequest('/cookie-notification', 'GET', {}, (err, response) => {
-            if (!err) {
+            if (err || !response) {
                 return;
             }
+
             const notifyShopper = response.data.PrivacyCookieEnabled;
             const date = new Date();
             const event = {
