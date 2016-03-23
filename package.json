@@ -1,9 +1,18 @@
 {
   "name": "@bigcommerce/stencil-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
+  "description": "Utility library used by Bigcommerce Stencil Framework themes",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bigcommerce/stencil-utils.git"
+  },
+  "dependencies": {
+    "eventemitter2": "^0.4.14",
+    "jquery": "^2.2.1"
+  },
   "devDependencies": {
     "babel-core": "6.5.2",
     "babel-eslint": "4.1.0",
@@ -12,12 +21,10 @@
     "es6-shim": "^0.35.0",
     "eslint": "2.4.0",
     "eslint-config-airbnb": "6.0.2",
-    "eventemitter2": "^0.4.14",
     "grunt": "0.4.5",
     "grunt-eslint": "18.0.0",
     "grunt-karma": "0.12.2",
     "jasmine-core": "2.2.0",
-    "jquery": "^2.2.1",
     "karma": "0.13.22",
     "karma-babel-preprocessor": "6.0.1",
     "karma-coverage": "0.2.7",
