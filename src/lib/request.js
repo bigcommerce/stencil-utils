@@ -73,7 +73,7 @@ export default function (url, opts, callback) {
         method: options.method,
         url,
         contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-        processData: !!options.requestOptions.formData,
+        processData: !options.requestOptions.formData,
         success: (response) => {
             let ret;
             const content = options.remote ? response.content : response;
