@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-utils",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
