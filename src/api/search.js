@@ -11,7 +11,7 @@ export default class extends Base
         super(version);
 
         // set up class variables
-        this.endpoint = '/search.php?action=AjaxSearch&search_query=';
+        this.endpoint = '/search.php?search_query=';
     }
 
     /**
