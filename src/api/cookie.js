@@ -60,4 +60,37 @@ export default class extends Base
             }
         });
     }
+
+    maintenanceNotice(maintenanceMode) {
+        let scrollTop = 0,
+            header = maintenanceMode.header,
+            notice = maintenanceMode.notice,
+            $element;
+
+        if (!(header && notice)) {
+            return;
+        }
+
+        $element = $('<div>', {
+            'id': 'maintenance-notice',
+            'class': 'maintenance-mode-notice'
+        }).html(`<div class="maintenance-mode-header">${header}</div>${notice}`);
+        
+        $('body').append($element);
+
+        $(window)
+            .bind('scroll', () => {
+                $element.style.top = ($('body').scrollTop() + scrollTop) + "px";
+            })
+            .bind('resize', (event) => {
+                let menuWidth = $('#maintenance-notice').width();
+                if (menuWidth + $('#maintenance-notice').offset().left > $(window).width()) {
+                    let newLeft = ($(window).width() - menuWidth - 50) + 'px';
+                    $('#maintenance-notice').css('left', newLeft);
+                }
+            });
+
+        scrollTop = $('#maintenance-notice').scrollTop() - $('body').scrollTop();
+        $(window).trigger('resize');
+    }
 }
