@@ -1,5 +1,6 @@
 import Base from './base';
 import Hooks from '../hooks';
+import { normalizeQueryStringParams } from '../lib/utils';
 
 export default class extends Base
 {
@@ -21,7 +22,8 @@ export default class extends Base
      * @param callback
      */
     optionChange(productId, params, callback) {
-        this.remoteRequest(this.endpoint + productId, 'POST', { params }, (err, response) => {
+        const normalizedQs = normalizeQueryStringParams(params);
+        this.remoteRequest(this.endpoint + productId, 'POST', { normalizedQs }, (err, response) => {
             const emitData = {
                 err,
                 response,

@@ -1,7 +1,6 @@
 import api from '../api';
 
 describe('API', () => {
-
     beforeEach(() => {
     });
 
