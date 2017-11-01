@@ -23,7 +23,7 @@ export default class extends Base
      */
     optionChange(productId, params, callback) {
         const normalizedQs = normalizeQueryStringParams(params);
-        this.remoteRequest(this.endpoint + productId, 'POST', { normalizedQs }, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', { params: normalizedQs }, (err, response) => {
             const emitData = {
                 err,
                 response,
