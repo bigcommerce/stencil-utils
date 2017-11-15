@@ -1,7 +1,7 @@
 # Stencil Utils
 [![Build Status](https://travis-ci.org/bigcommerce/stencil-utils.svg?branch=master)](https://travis-ci.org/bigcommerce/stencil-utils) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-utils.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-utils)
 
-Stencil utils is a utility library that contains the Bigcommerce Stencil Events system and other tools that will help and enhance the
+Stencil utils is a utility library that contains the BigCommerce Stencil Events system and other tools that will help and enhance the
 experience of building a theme with the Stencil framework.
 
 ### Documentation
@@ -27,7 +27,7 @@ Now you are playing with power!
 
 #### License
 
-Copyright (c) 2015-2016, Bigcommerce Inc.
+Copyright (c) 2015-present, BigCommerce Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
