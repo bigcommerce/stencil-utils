@@ -4,14 +4,14 @@
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
-  "description": "Utility library used by Bigcommerce Stencil Framework themes",
+  "description": "Utility library used by BigCommerce Stencil Framework themes",
   "repository": {
     "type": "git",
     "url": "git://github.com/bigcommerce/stencil-utils.git"
   },
   "dependencies": {
     "eventemitter2": "^0.4.14",
-    "jquery": "^2.2.1",
+    "jquery": "^3.3.1",
     "query-string": "^5.0.0"
   },
   "devDependencies": {
