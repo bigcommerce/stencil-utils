@@ -21,16 +21,24 @@ export default class extends Base
      * @param {Object} params
      * @param callback
      */
-    optionChange(productId, params, callback) {
+    optionChange(productId, params, template = null, callback) {
+        let templateArg = template;
+        let callbackArg = callback;
+
+        if (typeof templateArg === 'function') {
+            callbackArg = templateArg;
+            templateArg = null;
+        }
+
         const normalizedQs = normalizeQueryStringParams(params);
-        this.remoteRequest(this.endpoint + productId, 'POST', { params: normalizedQs }, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', { params: normalizedQs, template: templateArg }, (err, response) => {
             const emitData = {
                 err,
                 response,
             };
 
             Hooks.emit('product-options-change-remote', emitData);
-            callback(err, response);
+            callbackArg(err, response);
         });
     }
 
