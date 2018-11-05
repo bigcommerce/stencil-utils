@@ -3,6 +3,46 @@ import Hooks from '../hooks';
 
 export default class extends Base {
     /**
+     * Get the current Cart's details, either with or without Product Option selections.
+     *
+     * @param options
+     * @param {Function} callback
+     */
+    getCart(options = {}, callback) {
+        let url = '/api/storefront/cart';
+        if (options.includeOptions) {
+            url = `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
+        }
+        this.makeRequest(url, 'GET', {}, true, (err, response) => {
+            callback(err, response);
+        });
+    }
+
+    /**
+     * Get a sum of the cart line item quantities
+     *
+     * @param {Function} callback
+     */
+    getCartQuantity(callback) {
+        this.getCart({}, (err, response) => {
+            let quantity = 0;
+            if (response.length) {
+                const cart = response[0];
+                const lineItemQuantities = [
+                    cart.lineItems.physicalItems,
+                    cart.lineItems.digitalItems,
+                    cart.lineItems.customItems,
+                ].reduce((a, b) => a.concat(b))
+                    .map(lineItem => lineItem.quantity)
+                    .reduce((accumulator, lineItemQuantity) => accumulator + lineItemQuantity);
+                const giftCertificateQuantity = cart.lineItems.giftCertificates.length;
+                quantity = lineItemQuantities + giftCertificateQuantity;
+            }
+            callback(quantity);
+        });
+    }
+
+    /**
      * Add item to cart with options (variants)
      *
      * @param {FormData} formData
