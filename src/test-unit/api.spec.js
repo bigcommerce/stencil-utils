@@ -12,7 +12,6 @@ describe('API', () => {
         expect(api.productAttributes).toBeDefined();
         expect(api.product).toBeDefined();
         expect(api.search).toBeDefined();
-        expect(api.cookie).toBeDefined();
         expect(api.getPage).toBeDefined();
     });
 });

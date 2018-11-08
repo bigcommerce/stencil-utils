@@ -5,7 +5,6 @@ import ProductApi from './api/product';
 import ProductAttributesApi from './api/product-attributes';
 import SearchApi from './api/search';
 import CartApi from './api/cart';
-import CookieApi from './api/cookie';
 
 const internals = {};
 
@@ -29,6 +28,5 @@ export default {
     product: new ProductApi(),
     search: new SearchApi(),
     cart: new CartApi(),
-    cookie: new CookieApi(),
     getPage: internals.getPage,
 };
