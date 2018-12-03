@@ -25,6 +25,9 @@ export default class extends Base {
      */
     getCartQuantity(callback) {
         this.getCart({}, (err, response) => {
+            if (err) {
+                return callback(err);
+            }
             let quantity = 0;
             if (response.length) {
                 const cart = response[0];
@@ -38,7 +41,7 @@ export default class extends Base {
                 const giftCertificateQuantity = cart.lineItems.giftCertificates.length;
                 quantity = lineItemQuantities + giftCertificateQuantity;
             }
-            callback(quantity);
+            callback(null, quantity);
         });
     }
 
