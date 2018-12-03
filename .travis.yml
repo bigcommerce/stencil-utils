@@ -1,16 +1,11 @@
 language: node_js
-
 node_js:
   - 6
   - 8
   - 10
-
 sudo: false
-
 install:
-  - npm install -g grunt-cli
   - npm install
-
 script:
-  - grunt eslint
-  - grunt karma
+  - npx grunt eslint
+  - npx grunt karma
