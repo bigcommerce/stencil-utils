@@ -10,6 +10,12 @@ export default class extends Base {
      */
     getCart(options = {}, callback) {
         let url = '/api/storefront/cart';
+
+        // Cart API requests should always be HTTPS. If the window has an HTTPS url to use, use it.
+        if (window.hasOwnProperty('secureBaseUrl')) {
+            url = window.secureBaseUrl + url;
+        }
+
         if (options.includeOptions) {
             url = `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
         }

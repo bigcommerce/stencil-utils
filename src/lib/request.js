@@ -72,6 +72,9 @@ export default function (url, opts, callback) {
     $.ajax({
         method: options.method,
         url,
+        xhrFields: {
+            withCredentials: true,
+        },
         contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
         processData: !options.requestOptions.formData,
         success: (response) => {
