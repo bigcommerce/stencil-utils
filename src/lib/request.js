@@ -13,11 +13,12 @@ function isValidHTTPMethod(method) {
 }
 
 
-export default function (url, opts, callback) {
+export default function (relativeUrl, opts, callback) {
     const defaultOptions = {
         method: 'GET',
         remote: false,
         requestOptions: {
+            baseUrl: null,
             formData: null,
             params: {},
             config: {},
@@ -68,10 +69,18 @@ export default function (url, opts, callback) {
         });
     }
 
+    let url = relativeUrl;
+    if (options.requestOptions.baseUrl) {
+        url = `${options.requestOptions.baseUrl}${url}`;
+    }
+
     // make ajax request using jquery
     $.ajax({
         method: options.method,
         url,
+        xhrFields: {
+            withCredentials: true,
+        },
         contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
         processData: !options.requestOptions.formData,
         success: (response) => {
