@@ -10,10 +10,11 @@ export default class extends Base {
      */
     getCart(options = {}, callback) {
         let url = '/api/storefront/cart';
+
         if (options.includeOptions) {
             url = `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
         }
-        this.makeRequest(url, 'GET', {}, true, (err, response) => {
+        this.makeRequest(url, 'GET', options, true, (err, response) => {
             callback(err, response);
         });
     }
@@ -21,10 +22,11 @@ export default class extends Base {
     /**
      * Get a sum of the cart line item quantities
      *
+     * @param options
      * @param {Function} callback
      */
-    getCartQuantity(callback) {
-        this.getCart({}, (err, response) => {
+    getCartQuantity(options = {}, callback) {
+        this.getCart(options, (err, response) => {
             if (err) {
                 return callback(err);
             }
