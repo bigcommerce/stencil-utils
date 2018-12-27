@@ -70,7 +70,7 @@ export default function (relativeUrl, opts, callback) {
     }
 
     let url = relativeUrl;
-    if (options.requestOptions.baseUrl) {
+    if (options.requestOptions.baseUrl.length > 0) {
         url = `${options.requestOptions.baseUrl}${url}`;
     }
 
