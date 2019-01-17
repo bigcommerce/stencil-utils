@@ -3,20 +3,54 @@ import Hooks from '../hooks';
 
 export default class extends Base {
     /**
+     * Get a collection of Carts. For now, this will only return an array of a single cart as multiple carts per session
+     * are not currently supported.
+     *
+     * @param options
+     * @param {Function} callback
+     */
+    getCarts(options = {}, callback) {
+        let url = '/api/storefront/carts';
+
+        if (options.includeOptions) {
+            url = this.includeOptions(url);
+        }
+
+        this.makeRequest(url, 'GET', options, true, (err, response) => {
+            callback(err, response);
+        });
+    }
+
+    /**
      * Get the current Cart's details, either with or without Product Option selections.
+     * Can also be used to get a particular cart provided a cartId in the options.
      *
      * @param options
      * @param {Function} callback
      */
     getCart(options = {}, callback) {
-        let url = '/api/storefront/cart';
+        /* If no cart ID is provided, get the collection of carts and return the first one */
+        if (!options.cartId) {
+            return this.getCarts(options, (err, response) => callback(err, response[0]));
+        }
+
+        let url = `/api/storefront/carts/${options.cartId}`;
 
         if (options.includeOptions) {
-            url = `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
+            url = this.includeOptions(url);
         }
+
         this.makeRequest(url, 'GET', options, true, (err, response) => {
             callback(err, response);
         });
+    }
+
+    /**
+     * Add the parameters to a URL needed to get product option details on cart line items
+     * @param url
+     */
+    includeOptions(url) {
+        return `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
     }
 
     /**
@@ -32,7 +66,7 @@ export default class extends Base {
             }
             let quantity = 0;
             if (response.length) {
-                const cart = response[0];
+                const cart = response;
                 const lineItemQuantities = [
                     cart.lineItems.physicalItems,
                     cart.lineItems.digitalItems,
