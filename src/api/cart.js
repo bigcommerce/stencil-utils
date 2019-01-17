@@ -11,6 +11,10 @@ export default class extends Base {
     getCart(options = {}, callback) {
         let url = '/api/storefront/cart';
 
+        if (options.cartId) {
+            url = `/api/storefront/carts/${options.cartId}`;
+        }
+
         if (options.includeOptions) {
             url = `${url}?include=lineItems.physicalItems.options,lineItems.digitalItems.options`;
         }
