@@ -30,6 +30,7 @@ export default function (relativeUrl, opts, callback) {
     const headers = {
         'stencil-config': options.requestOptions.config ? JSON.stringify(options.requestOptions.config) : '{}',
         'stencil-options': '{}',
+        'x-xsrf-token': window.BCData && window.BCData.csrf_token ? window.BCData.csrf_token : '',
     };
     const requestedTemplate = options.requestOptions.template;
 
