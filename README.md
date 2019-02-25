@@ -5,7 +5,7 @@ Stencil utils is a utility library that contains the BigCommerce Stencil Events 
 experience of building a theme with the Stencil framework.
 
 ### Documentation
-https://stencil.bigcommerce.com/docs/the-stencil-utils-package
+https://developer.bigcommerce.com/stencil-docs/adding-event-hooks-to-your-theme/stencil-utils-api-reference
 
 ### Getting Started
 Stencil Utils is written in ES6 and is currently transpiled to ES5 with babel for running client side within browsers.
