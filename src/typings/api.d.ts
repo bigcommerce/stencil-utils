@@ -167,7 +167,21 @@ export declare namespace Api {
 
     class CountryApi extends BaseApi {
         endpoint: string;
+
+        /**
+         *
+         * Get country data by id wrapper
+         *
+         * @param {Number} id
+         * @param {Function} callback
+         */
         getById(id: number, callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get country data by country name
+         * @param {String} name
+         * @param callback
+         */
         getByName(name: string, callback: TemplateRequestCallback<string>): void;
     }
 
@@ -175,45 +189,227 @@ export declare namespace Api {
         endpoint: string;
         inCartEndpoint: string;
 
+        /**
+         * Get product attributes from selected options
+         *
+         * @param {Number} productId
+         * @param {Object} params
+         * @param callback
+         */
         optionChange(productId: number, params: any, callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get product attributes from selected options
+         *
+         * @param {Number} productId
+         * @param {Object} params
+         * @param {String|Array|Object}
+         * @param callback
+         */
         optionChange<T extends Template>(productId: number, params: any, template: Template & T, callback: TemplateRequestCallback<T>): void;
+
+        /**
+         * Get product attributes from selected options while editing in cart
+         * @param {Number} itemId
+         * @param {Object} params
+         * @param callback
+         */
         configureInCart<O extends RequestOptions, T = RequestTemplate<O>>(itemId: number, params: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
     }
 
     class ProductApi extends BaseApi {
         endpoint: string;
+
+        /**
+         * Get product by ID
+         *
+         * @param {Number} productId
+         * @param {Function} callback
+         */
         getById(productId: number, callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get product by ID
+         *
+         * @param {Number} productId
+         * @param {Object} params
+         * @param {Function} callback
+         */
         getById<O extends RequestOptions, T = RequestTemplate<O>>(productId: number, params: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
     }
 
     class SearchApi extends BaseApi {
         endpoint: string;
+
+        /**
+         * Get search results
+         * @param {String} query
+         * @param {Function} callback
+         */
         search(query: string, callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get search results
+         * @param {String} query
+         * @param {Object} params
+         * @param {Function} callback
+         */
         search<O extends RequestOptions, T = RequestTemplate<O>>(query: string, params: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
     }
 
     class CartApi extends BaseApi {
+        /**
+         * Get the current Cart's details, either with or without Product Option selections.
+         *
+         * @param options
+         * @param {Function} callback
+         */
         getCart(options: RequestOptions, callback: JsonRequestCallback<Cart[]>): void;
+
+        /**
+         * Get a sum of the cart line item quantities
+         *
+         * @param options
+         * @param {Function} callback
+         */
         getCartQuantity(options: RequestOptions, callback: QuantityRequestCallback): void;
+
+        /**
+         * Add item to cart with options (variants)
+         *
+         * @param {FormData} formData
+         * @param {Function} callback
+         */
         itemAdd(formData: FormData, callback: JsonRequestCallback<{ data: { cart_item: AddedCartItem; }; }>): void;
+
+        /**
+         * Update cart item quantity
+         *
+         * @param {String} itemId
+         * @param {Number} qty
+         * @param {Function} callback
+         */
         itemUpdate(itemId: string, qty: number, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Update cart item quantity
+         *
+         * @param {Object} itemId
+         * @param {Function} callback
+         */
         itemUpdate(itemId: CartUpdateItem[], callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Remove cart items
+         *
+         * Calls the internal update function with quantity: 0
+         *
+         * @param {String} itemId
+         * @param {Function} callback
+         */
         itemRemove(itemId: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Get giftwrapping options
+         * @param {String} itemId
+         * @param {Function} callback
+         */
         getItemGiftWrappingOptions(itemId: string, callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get giftwrapping options
+         * @param {String} itemId
+         * @param {Object} options
+         * @param {Function} callback
+         */
         getItemGiftWrappingOptions<O extends RequestOptions, T = RequestTemplate<O>>(itemId: string, options: RequestOptions & O, callback: TemplateRequestCallback<O>): void;
+
+        /**
+         * Submit giftwrapping options
+         *
+         * @param {String} itemId
+         * @param {Function} callback
+         */
         submitItemGiftWrappingOption(itemId: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Submit giftwrapping options
+         *
+         * @param {String} itemId
+         * @param {Object} params
+         * @param {Function} callback
+         */
         submitItemGiftWrappingOption<O extends RequestOptions, T = RequestTemplate<O>>(itemId: string, params: RequestOptions & O, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Update cart items
+         *
+         * @param {Array} items
+         * @param {Function} callback
+         */
         update(items: CartUpdateItem[], callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Get cart content
+         *
+         * @param {Function} callback
+         */
         getContent(callback: TemplateRequestCallback<string>): void;
+
+        /**
+         * Get cart content
+         *
+         * @param {Object} options
+         * @param {Function} callback
+         */
         getContent<O extends RequestOptions, T = RequestTemplate<O>>(options: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
+
+        /**
+         * Get cart shipping quote
+         *
+         * @param {Object} params
+         * @param {Function} callback
+         */
         getShippingQuotes(params: any, callback: GetShippingQuoteRequestCallback<string>): void;
+
+        /**
+         * Get cart shipping quote
+         *
+         * @param {Object} params
+         * @param {String|Array|Object} renderWith
+         * @param {Function} callback
+         */
         getShippingQuotes<T extends Template>(params: any, renderWith: Template & T, callback: GetShippingQuoteRequestCallback<T>): void;
+
+        /**
+         * Submit shipping quote based on quoteId
+         *
+         * @param {Number} quoteId
+         * @param {Function} callback
+         */
         submitShippingQuote(quoteId: number, callback: (error: string, response: JsonRequestCallback<{ data: ApiStatusResponse; }>) => void): void;
+
+        /**
+         * Apply a coupon code or gift certificate to the cart
+         *
+         * @param {String} code
+         * @param {Function} callback
+         */
         applyCode(code: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+
+        /**
+         * Apply a coupon code or gift certificate to the cart
+         *
+         * @param {Number} code
+         * @param {Function} callback
+         */
         applyGiftCertificate(code: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
     }
 
     interface Internals {
+        /**
+         * Convenience function to request a page via ajax
+         */
         getPage<O extends RequestOptions, T = RequestTemplate<O>>(url: string, options: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
     }
 }
