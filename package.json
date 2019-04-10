@@ -10,6 +10,8 @@
     "url": "git://github.com/bigcommerce/stencil-utils.git"
   },
   "dependencies": {
+    "@types/eventemitter2": "^2.2.1",
+    "@types/jquery": "^3.3.29",
     "eventemitter2": "^0.4.14",
     "jquery": "^3.3.1",
     "query-string": "^5.0.0"
