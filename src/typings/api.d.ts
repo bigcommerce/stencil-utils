@@ -152,7 +152,7 @@ export declare namespace Api {
     }
 
     interface ApiStatusResponse {
-        errors: string[];
+        errors?: string[];
         status: string;
     }
 
@@ -199,12 +199,16 @@ export declare namespace Api {
         itemUpdate(itemId: string, qty: number, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
         itemUpdate(itemId: CartUpdateItem[], callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
         itemRemove(itemId: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+        getItemGiftWrappingOptions(itemId: string, callback: TemplateRequestCallback<string>): void;
+        getItemGiftWrappingOptions<O extends RequestOptions, T = RequestTemplate<O>>(itemId: string, options: RequestOptions & O, callback: TemplateRequestCallback<O>): void;
+        submitItemGiftWrappingOption(itemId: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
+        submitItemGiftWrappingOption<O extends RequestOptions, T = RequestTemplate<O>>(itemId: string, params: RequestOptions & O, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
         update(items: CartUpdateItem[], callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
         getContent(callback: TemplateRequestCallback<string>): void;
         getContent<O extends RequestOptions, T = RequestTemplate<O>>(options: RequestOptions & O, callback: TemplateRequestCallback<T>): void;
         getShippingQuotes(params: any, callback: GetShippingQuoteRequestCallback<string>): void;
         getShippingQuotes<T extends Template>(params: any, renderWith: Template & T, callback: GetShippingQuoteRequestCallback<T>): void;
-        submitShippingQuote(quoteId: number, callback: (error: string) => void): void;
+        submitShippingQuote(quoteId: number, callback: (error: string, response: JsonRequestCallback<{ data: ApiStatusResponse; }>) => void): void;
         applyCode(code: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
         applyGiftCertificate(code: string, callback: JsonRequestCallback<{ data: ApiStatusResponse; }>): void;
     }
