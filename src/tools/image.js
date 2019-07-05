@@ -1,6 +1,7 @@
 export default class {
     getSrc(path, dimensions) {
-        const sizeRegex = /^(\d+?)x(\d+?)$/g;
+        // Regex to test size string is of the form 123x123 or 100w
+        const sizeRegex = /(^\d+w$)|(^(\d+?)x(\d+?)$)/g;
         let size;
 
         if (typeof(dimensions) === 'object') {
