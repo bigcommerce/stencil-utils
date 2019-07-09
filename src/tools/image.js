@@ -10,7 +10,7 @@ export default class {
 
             size = `${width}x${height}`;
         } else if (typeof(dimensions) === 'string' && sizeRegex.test(dimensions)) {
-            // If dimensions is a string and match the NNNxNNN format
+            // If dimensions is a string and match the NNNxNNN or NNNw format
             size = dimensions;
         } else {
             // Use the original image size
