@@ -13,8 +13,12 @@ export default class extends BaseHooks {
     }
 
     optionsChange() {
-        this.$body.on('change', '[data-product-option-change]', (event) => {
-            this.emit('product-option-change', event, event.target);
-        });
+        const elements = document.querySelectorAll('[data-product-option-change]');
+
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('change', event => {
+                this.emit('product-option-change', event, event.target);
+            });
+        }
     }
 }

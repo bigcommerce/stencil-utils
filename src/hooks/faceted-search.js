@@ -13,12 +13,20 @@ export default class extends BaseHooks {
     }
 
     searchEvents() {
-        this.$body.on('click', '[data-faceted-search-facet]', (event) => {
-            this.emit('facetedSearch-facet-clicked', event);
-        });
+        const facetElements = document.querySelectorAll('[data-faceted-search-facet]');
 
-        this.$body.on('submit', '[data-faceted-search-range]', (event) => {
-            this.emit('facetedSearch-range-submitted', event);
-        });
+        for (let i = 0; i < facetElements.length; i++) {
+            facetElements[i].addEventListener('click', event => {
+                this.emit('facetedSearch-facet-clicked', event);
+            });
+        }
+
+        const rangeElements = document.querySelectorAll('[data-faceted-search-range]');
+
+        for (let i = 0; i < rangeElements.length; i++) {
+            rangeElements[i].addEventListener('submit', event => {
+                this.emit('facetedSearch-range-submitted', event);
+            });
+        }
     }
 }
