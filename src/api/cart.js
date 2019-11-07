@@ -65,13 +65,14 @@ export default class extends Base {
                 return callback(err);
             }
             let quantity = 0;
-            if (response.length) {
+            if (response) {
                 const cart = response;
                 const lineItemQuantities = [
                     cart.lineItems.physicalItems,
                     cart.lineItems.digitalItems,
                     cart.lineItems.customItems,
                 ].reduce((a, b) => a.concat(b))
+                    .filter(lineItem => !lineItem.parentId)
                     .map(lineItem => lineItem.quantity)
                     .reduce((accumulator, lineItemQuantity) => accumulator + lineItemQuantity);
                 const giftCertificateQuantity = cart.lineItems.giftCertificates.length;
