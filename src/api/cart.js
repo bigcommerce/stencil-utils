@@ -74,7 +74,7 @@ export default class extends Base {
                 ].reduce((a, b) => a.concat(b))
                     .filter(lineItem => !lineItem.parentId)
                     .map(lineItem => lineItem.quantity)
-                    .reduce((accumulator, lineItemQuantity) => accumulator + lineItemQuantity);
+                    .reduce((accumulator, lineItemQuantity) => accumulator + lineItemQuantity, 0);
                 const giftCertificateQuantity = cart.lineItems.giftCertificates.length;
                 quantity = lineItemQuantities + giftCertificateQuantity;
             }
