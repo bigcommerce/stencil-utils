@@ -13,12 +13,8 @@ export default class extends BaseHooks {
     }
 
     currencySelector() {
-        const elements = document.querySelectorAll('[data-currency-selector-toggle]');
-
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].addEventListener('input', event => {
-                this.emit('currencySelector-toggle', event);
-            });
-        }
+        this.$body.on('input', '[data-currency-selector-toggle]', (event) => {
+            this.emit('currencySelector-toggle', event);
+        });
     }
 }

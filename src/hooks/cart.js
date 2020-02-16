@@ -13,12 +13,8 @@ export default class extends BaseHooks {
     }
 
     itemAdd() {
-        const elements = document.querySelectorAll('[data-cart-item-add]');
-
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].addEventListener('submit', event => {
-                this.emit('cart-item-add', event, event.target);
-            });
-        }
+        this.$body.on('submit', '[data-cart-item-add]', (event) => {
+            this.emit('cart-item-add', event, event.target);
+        });
     }
 }
