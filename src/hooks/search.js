@@ -13,12 +13,8 @@ export default class extends BaseHooks {
     }
 
     quickSearch() {
-        const elements = document.querySelectorAll('[data-search-quick]');
-
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].addEventListener('input', event => {
-                this.emit('search-quick', event);
-            });
-        }
+        this.$body.on('input', '[data-search-quick]', (event) => {
+            this.emit('search-quick', event);
+        });
     }
 }

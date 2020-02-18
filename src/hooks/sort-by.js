@@ -1,16 +1,5 @@
 import BaseHooks from './base';
-import closest from '../lib/closest';
-
-// ie 11 does not support native closest
-
-if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector ||
-        Element.prototype.webkitMatchesSelector;
-}
-
-if (!Element.prototype.closest) {
-    Element.prototype.closest = closest;
-}
+import $ from 'jquery';
 
 export default class extends BaseHooks {
 
@@ -25,24 +14,16 @@ export default class extends BaseHooks {
     }
 
     sortByEvents() {
-        const sortByElements = document.querySelectorAll('[data-sort-by]');
+        this.$body.on('submit', '[data-sort-by]', (event) => {
+            this.emit('sortBy-submitted', event);
+        });
 
-        for (let i = 0; i < sortByElements.length; i++) {
-            sortByElements[i].addEventListener('submit', event => {
-                this.emit('sortBy-submitted', event);
-            });
-        }
+        this.$body.on('change', '[data-sort-by] select', (event) => {
+            this.emit('sortBy-select-changed', event);
 
-        const selectedElements = document.querySelectorAll('[data-sort-by] select');
-
-        for (let i = 0; i < selectedElements.length; i++) {
-            selectedElements[i].addEventListener('change', event => {
-                this.emit('sortBy-select-changed', event);
-
-                if (!event.defaultPrevented) {
-                    event.currentTarget.closest('form').submit();
-                }
-            });
-        }
+            if (! event.isDefaultPrevented()) {
+                $(event.currentTarget).closest('form').trigger('submit');
+            }
+        });
     }
 }
