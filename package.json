@@ -9,8 +9,11 @@
     "type": "git",
     "url": "git://github.com/bigcommerce/stencil-utils.git"
   },
+  "scripts": {
+    "test": "npx grunt eslint && npx grunt karma"
+  },
   "dependencies": {
-    "eventemitter2": "^0.4.14",
+    "eventemitter3": "^4.0.4",
     "jquery": "^3.4.1",
     "query-string": "^5.0.0"
   },

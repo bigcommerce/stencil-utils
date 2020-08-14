@@ -1,29 +1,39 @@
 # Stencil Utils
+
 [![Build Status](https://travis-ci.org/bigcommerce/stencil-utils.svg?branch=master)](https://travis-ci.org/bigcommerce/stencil-utils) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-utils.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-utils)
 
 Stencil utils is a utility library that contains the BigCommerce Stencil Events system and other tools that will help and enhance the
 experience of building a theme with the Stencil framework.
 
-### Documentation
+## Documentation
+
 https://developer.bigcommerce.com/stencil-docs/adding-event-hooks-to-your-theme/stencil-utils-api-reference
 
 ### Getting Started
+
 Stencil Utils is written in ES6 and is currently transpiled to ES5 with babel for running client side within browsers.
 Stencil utils can either be imported to your theme as a module, or included as a standalone script.
 
 ### Installing Stencil Utils on your theme
 
 #### As an ES6 module
+
 * Run `npm install @bigcommerce/stencil-utils` to install the latest tagged version of stencil-utils for use with your theme.
 * Import the library `import utils from 'bigcommerce/stencil-utils';` in modules that depend on it.
 
 #### Using standalone
+
 If you do not want to support es6 modules, Stencil Utils can be included as a normal script:
+
 * Copy the bundled script from `dist/stencil-utils.min.js` to your theme.
 * Include the script in your HTML document
 * Access stencil utils from `window.stencilUtils`.
 
 Now you are playing with power!
+
+#### Testing
+
+Just simply run `npm run test`
 
 #### License
 
@@ -32,6 +42,7 @@ All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
+
 1. Redistributions of source code must retain the above copyright
    notice, this list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright
