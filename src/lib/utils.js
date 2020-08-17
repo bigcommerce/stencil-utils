@@ -1,5 +1,4 @@
-// Utilities
-const queryString = require('query-string');
+const queryString = require('./query-string');
 
 /**
  * Normalize querystring params. Remove empty array values
@@ -8,22 +7,8 @@ const queryString = require('query-string');
  */
 export function normalizeQueryStringParams(params) {
     const qsParams = queryString.parse(params);
-
-    const isValidParam = (value) => (value !== '' && value !== undefined);
-
-    const optionsCollection = Object.keys(qsParams).reduce((normalized, key) => {
-        let param;
-
-        if (qsParams[key] instanceof Array) {
-            const filtered = qsParams[key].filter(isValidParam);
-            param = { [key]: filtered };
-        } else if (isValidParam(qsParams[key])) {
-            param = { [key]: qsParams[key] };
-        }
-
-        return Object.assign({}, normalized, param);
-    }, {});
-
-    const paramString = queryString.stringify(optionsCollection);
+    const paramString = queryString.stringify(qsParams, {
+        filterValues: true,
+    });
     return paramString;
 }
