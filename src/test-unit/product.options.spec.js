@@ -1,5 +1,4 @@
 import { normalizeQueryStringParams } from '../lib/utils';
-const queryString = require('query-string');
 
 describe('Product Attributes', () => {
     it('should leave normalized params intact', () => {
