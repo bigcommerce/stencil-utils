@@ -125,5 +125,31 @@ describe('queryString', () => {
             expect(stringify({foo: '\'bar\''})).toEqual('foo=%27bar%27');
             expect(stringify({foo: ['\'bar\'', '!baz']})).toEqual('foo=%27bar%27&foo=%21baz');
         });
+
+        it('should strinfigy array of ojects', () => {
+            expect(stringify({
+                items: [{id: '7cdfa4c9', quantity: 2}]
+            }, {
+                includeArrayIndex: true,
+            })).toEqual('items[0][id]=7cdfa4c9&items[0][quantity]=2');
+
+            expect(stringify({
+                foo: 'bar',
+                items: [{id: '7cdfa4c9', quantity: 2}],
+                baz: 'bar',
+            }, {
+                includeArrayIndex: true,
+            })).toEqual('baz=bar&foo=bar&items[0][id]=7cdfa4c9&items[0][quantity]=2');
+
+            expect(stringify({
+                items: [
+                    {id: '7cdfa4c9', quantity: 2},
+                    {id: '1q2w2w', quantity: 3},
+                    {id: '5g2v6g', quantity: 1},
+                ]
+            }, {
+                includeArrayIndex: true,
+            })).toEqual('items[0][id]=7cdfa4c9&items[0][quantity]=2&items[1][id]=1q2w2w&items[1][quantity]=3&items[2][id]=5g2v6g&items[2][quantity]=1');
+        });
     });
 });

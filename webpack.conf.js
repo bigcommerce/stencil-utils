@@ -11,7 +11,7 @@ module.exports = {
                     compact: false,
                     cacheDirectory: true,
                     presets: ['es2015']
-                }
+                },
             }
         ]
     },

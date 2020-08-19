@@ -1,10 +1,14 @@
 import EventEmitter from 'eventemitter3';
-import $ from 'jquery';
 
 export default class extends EventEmitter {
-    constructor() {
-        super();
-
-        this.$body = $('body');
+    on(eventName, elementSelector, handler) {
+        document.addEventListener(eventName, function (e) {
+            for (let target = e.target; target && target !== this; target = target.parentNode) {
+                if (target.matches(elementSelector)) {
+                    handler.call(target, e);
+                    break;
+                }
+            }
+        }, false);
     }
 }

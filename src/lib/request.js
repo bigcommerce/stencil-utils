@@ -1,17 +1,41 @@
-import $ from 'jquery';
-
+import 'whatwg-fetch';
+import { stringify } from './query-string';
 /**
  * Checks whether or not the current method passed in is valid
  *
- * @param {string} method
- * @returns {boolean}
+ * @param {String} method
+ * @returns {Boolean}
  */
-function isValidHTTPMethod(method) {
-    const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+const isValidHTTPMethod = (method) => ['GET', 'POST', 'PUT', 'DELETE'].indexOf(method) !== -1;
 
-    return allowedMethods.indexOf(method) !== -1;
-}
+/**
+ * Checks if requested template is using sections
+ *
+ * @param {Object|Array|String} requestedTemplate
+ */
+const isUsingSections = (requestedTemplate) => typeof(requestedTemplate) === 'object' && !Array.isArray(requestedTemplate);
 
+/**
+ * Returns templates array
+ *
+ * @param {Object|Array|String} requestedTemplate
+ * @returns {Array}
+ */
+const getTemplates = (requestedTemplate) => {
+    let templates = [];
+    if (isUsingSections(requestedTemplate)) {
+        for (const template in requestedTemplate) {
+            if (requestedTemplate.hasOwnProperty(template)) {
+                templates.push(requestedTemplate[template]);
+            }
+        }
+    } else if (typeof(requestedTemplate) === 'string') {
+        templates = [requestedTemplate];
+    } else if (Array.isArray(requestedTemplate) && requestedTemplate.length > 0) {
+        templates = requestedTemplate;
+    }
+    return templates;
+};
 
 export default function (relativeUrl, opts, callback) {
     const defaultOptions = {
@@ -32,102 +56,71 @@ export default function (relativeUrl, opts, callback) {
         'stencil-options': '{}',
         'x-xsrf-token': window.BCData && window.BCData.csrf_token ? window.BCData.csrf_token : '',
     };
-    const requestedTemplate = options.requestOptions.template;
 
-    let usingTemplates = false;
-    let usingSections = false;
-    let templates = [];
-
-
-    // Not a valid method
     if (!isValidHTTPMethod(options.method)) {
         return callback(new Error('Not a valid HTTP method'));
     }
 
+    const templates = getTemplates(options.requestOptions.template);
+    const usingSections = isUsingSections(options.requestOptions.template);
+    const usingTemplates = templates.length > 0;
 
-    if (typeof(requestedTemplate) === 'object' && !Array.isArray(requestedTemplate)) {
-        let template;
-
-        usingSections = true;
-        templates = [];
-
-        for (template in requestedTemplate) {
-            if (requestedTemplate.hasOwnProperty(template)) {
-                templates.push(requestedTemplate[template]);
-            }
-        }
-    } else if (typeof(requestedTemplate) === 'string') {
-        templates = [requestedTemplate];
-    } else if (Array.isArray(requestedTemplate) && requestedTemplate.length > 0) {
-        templates = requestedTemplate;
+    if (!options.requestOptions.formData) {
+        headers['content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     }
 
-    if (templates.length > 0) {
-        usingTemplates = true;
-
+    if (usingTemplates) {
         headers['stencil-options'] = JSON.stringify({
             render_with: templates.join(','),
         });
     }
 
-    let url = relativeUrl;
-    if (options.requestOptions.baseUrl) {
-        url = `${options.requestOptions.baseUrl}${url}`;
+    const config = {
+        method: options.method,
+        headers,
+        credentials: 'include',
+    };
+
+    let url = options.requestOptions.baseUrl ? `${options.requestOptions.baseUrl}${relativeUrl}` : relativeUrl;
+    if (['GET', 'HEAD'].indexOf(config.method) === -1) {
+        config.body = !options.requestOptions.formData ? stringify(data, { includeArrayIndex: true }) : data;
+    } else if (data) {
+        url += `?${stringify(data)}`;
     }
 
-    // make ajax request using jquery
-    $.ajax({
-        method: options.method,
-        url,
-        xhrFields: {
-            withCredentials: true,
-        },
-        contentType: options.requestOptions.formData ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-        processData: !options.requestOptions.formData,
-        success: (response) => {
-            let ret;
-            const content = options.remote ? response.content : response;
+    fetch(url, config).then(response => {
+        if (response.headers.get('content-type').indexOf('application/json') !== -1) {
+            return response.json();
+        }
+        return response.text();
+    }).then(response => {
+        const content = options.remote ? response.content : response;
+        let ret = response;
 
-            if (usingTemplates) {
-                // Remove the `components` prefix from the response if it's an object
-                if (typeof(content) === 'object') {
-                    const keys = Object.keys(content);
-                    let key;
+        if (usingTemplates) {
+            // Remove the `components` prefix from the response if it's an object
+            if (typeof(content) === 'object') {
+                for (const key of Object.keys(content)) {
+                    const cleanKey = key.replace(/^components\//, '');
 
-                    for (key of keys) {
-                        const cleanKey = key.replace(/^components\//, '');
-
-                        content[cleanKey] = content[key];
-                        delete(content[key]);
-                    }
+                    content[cleanKey] = content[key];
+                    delete(content[key]);
                 }
-
-                // If using "sections", morph the content into the arbitrary keys => content object.
-                if (usingSections) {
-                    const templateVariableNames = Object.keys(requestedTemplate);
-                    let templateVariable;
-                    for (templateVariable of templateVariableNames) {
-                        content[templateVariable] = content[requestedTemplate[templateVariable]];
-                        delete content[requestedTemplate[templateVariable]];
-                    }
-                }
-
-                if (options.remote) {
-                    ret = response;
-                    ret.content = content;
-                } else {
-                    ret = content;
-                }
-            } else {
-                ret = response;
             }
 
-            callback(null, ret);
-        },
-        error: (XHR, textStatus, err) => {
-            callback(err);
-        },
-        data,
-        headers,
-    });
+            // If using "sections", morph the content into the arbitrary keys => content object.
+            if (usingSections) {
+                const requestedTemplate = options.requestOptions.template;
+                for (const templateVariable of Object.keys(requestedTemplate)) {
+                    content[templateVariable] = content[requestedTemplate[templateVariable]];
+                    delete content[requestedTemplate[templateVariable]];
+                }
+            }
+
+            if (!options.remote) {
+                ret = content;
+            }
+        }
+        callback(null, ret);
+    }).catch(err => callback(err));
 }

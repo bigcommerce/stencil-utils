@@ -13,7 +13,7 @@ export default class extends BaseHooks {
     }
 
     currencySelector() {
-        this.$body.on('input', '[data-currency-selector-toggle]', (event) => {
+        this.on('input', '[data-currency-selector-toggle]', (event) => {
             this.emit('currencySelector-toggle', event);
         });
     }
