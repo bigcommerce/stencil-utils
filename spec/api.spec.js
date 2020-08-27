@@ -1,12 +1,6 @@
-import api from '../api';
+import api from '../src/api';
 
 describe('API', () => {
-    beforeEach(() => {
-    });
-
-    afterEach(() => {
-    });
-
     it('should check existance of country, productAttributes, product, search, cart, cookie, getPage', () => {
         expect(api.country).toBeDefined();
         expect(api.productAttributes).toBeDefined();

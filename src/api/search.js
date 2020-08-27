@@ -1,8 +1,7 @@
 import Hooks from '../hooks';
 import Base from './base';
 
-export default class extends Base
-{
+export default class extends Base {
     /**
      * @Constructor
      */

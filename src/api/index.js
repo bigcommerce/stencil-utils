@@ -1,10 +1,10 @@
-import request from './lib/request';
+import request from '../lib/request';
 
-import CountryApi from './api/countries';
-import ProductApi from './api/product';
-import ProductAttributesApi from './api/product-attributes';
-import SearchApi from './api/search';
-import CartApi from './api/cart';
+import CountryApi from './countries';
+import ProductApi from './product';
+import ProductAttributesApi from './product-attributes';
+import SearchApi from './search';
+import CartApi from './cart';
 
 const internals = {};
 

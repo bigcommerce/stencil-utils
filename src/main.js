@@ -7,7 +7,6 @@ const StencilUtils = {
     api,
     tools,
 };
-
 export { hooks, api, tools };
 export default StencilUtils;
 
