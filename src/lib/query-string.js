@@ -60,15 +60,35 @@ const getParsedValue = (key, value, accumulator) => {
 /**
  * Reducer that formats and combines key-value pair
  *
- * @param {String} key
+ * @param {String} options
  */
-const reduceByKey = key => (result, value) => {
+const reduceByKey = options => key => (result, value) => {
     if (value === undefined) {
         return result;
     }
 
     if (value === null) {
         return [...result, encode(key)];
+    }
+
+    if (options.includeArrayIndex) {
+        if (typeof value === 'object') {
+            const index = result.length / Object.keys(value).length;
+            return result.concat(
+                Object.keys(value).map(keyOfValue => ([
+                    encode(key),
+                    '[', encode(index), ']',
+                    '[', encode(keyOfValue), ']=',
+                    encode(value[keyOfValue]),
+                ].join('')))
+            );
+        }
+        const index = result.length;
+
+        return [
+            ...result,
+            [encode(key), '[', encode(index), ']=', encode(value)].join(''),
+        ];
     }
 
     return [...result, [encode(key), '=', encode(value)].join('')];
@@ -121,8 +141,12 @@ export function parse(input) {
  * @param {Object} object
  * @param {Object} options
  * @param {Boolean} [options.filterValues] - filters empty string or undefineds
+ * @param {Boolean} [options.includeArrayIndex] - includes array index in the query string
  */
-export function stringify(object, options = { filterValues: false }) {
+export function stringify(object, options = {
+    filterValues: false,
+    arrayIndex: false,
+}) {
     if (!object) {
         return '';
     }
@@ -155,7 +179,7 @@ export function stringify(object, options = { filterValues: false }) {
 
         if (Array.isArray(value)) {
             return value
-                .reduce(reduceByKey(key), [])
+                .reduce(reduceByKey(options)(key), [])
                 .join('&');
         }
 

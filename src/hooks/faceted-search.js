@@ -13,11 +13,11 @@ export default class extends BaseHooks {
     }
 
     searchEvents() {
-        this.$body.on('click', '[data-faceted-search-facet]', (event) => {
+        this.on('click', '[data-faceted-search-facet]', (event) => {
             this.emit('facetedSearch-facet-clicked', event);
         });
 
-        this.$body.on('submit', '[data-faceted-search-range]', (event) => {
+        this.on('submit', '[data-faceted-search-range]', (event) => {
             this.emit('facetedSearch-range-submitted', event);
         });
     }

@@ -13,7 +13,7 @@ export default class extends BaseHooks {
     }
 
     quickSearch() {
-        this.$body.on('input', '[data-search-quick]', (event) => {
+        this.on('input', '[data-search-quick]', (event) => {
             this.emit('search-quick', event);
         });
     }
