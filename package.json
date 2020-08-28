@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-utils",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
@@ -10,7 +10,9 @@
     "url": "git://github.com/bigcommerce/stencil-utils.git"
   },
   "scripts": {
-    "test": "npx grunt eslint && npx grunt karma"
+    "test": "npx grunt eslint && npx grunt karma",
+    "lint": "npx grunt lint",
+    "build": "npx grunt"
   },
   "dependencies": {
     "eventemitter3": "^4.0.4",
@@ -46,5 +48,8 @@
     "npx": "^10.2.0",
     "time-grunt": "1.4.0",
     "webpack": "^3.8.1"
+  },
+  "engines": {
+    "node": ">=10.0.0 <15.0.0"
   }
 }
