@@ -23,11 +23,11 @@ export default class extends BaseHooks {
     }
 
     sortByEvents() {
-        this.on('submit', '[data-sort-by]', (event) => {
+        this.subscribe('submit', '[data-sort-by]', (event) => {
             this.emit('sortBy-submitted', event);
         });
 
-        this.on('change', '[data-sort-by] select', (event) => {
+        this.subscribe('change', '[data-sort-by] select', (event) => {
             this.emit('sortBy-select-changed', event);
 
             if (!event.isDefaultPrevented()) {

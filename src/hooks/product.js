@@ -13,7 +13,7 @@ export default class extends BaseHooks {
     }
 
     optionsChange() {
-        this.on('change', '[data-product-option-change]', (event) => {
+        this.subscribe('change', '[data-product-option-change]', (event) => {
             this.emit('product-option-change', event, event.target);
         });
     }
