@@ -23,15 +23,15 @@ export default class extends BaseHooks {
     }
 
     sortByEvents() {
-        this.subscribe('submit', '[data-sort-by]', (event) => {
-            this.emit('sortBy-submitted', event);
+        this.subscribe('submit', '[data-sort-by]', (event, target) => {
+            this.emit('sortBy-submitted', event, target);
         });
 
-        this.subscribe('change', '[data-sort-by] select', (event) => {
-            this.emit('sortBy-select-changed', event);
+        this.subscribe('change', '[data-sort-by] select', (event, target) => {
+            this.emit('sortBy-select-changed', event, target);
 
-            if (!event.isDefaultPrevented()) {
-                event.currentTarget.closest('form').submit();
+            if (!event.isDefaultPrevented) {
+                target.closest('form').submit();
             }
         });
     }

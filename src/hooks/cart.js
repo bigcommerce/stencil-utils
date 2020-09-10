@@ -13,8 +13,8 @@ export default class extends BaseHooks {
     }
 
     itemAdd() {
-        this.subscribe('submit', '[data-cart-item-add]', (event) => {
-            this.emit('cart-item-add', event, event.target);
+        this.subscribe('submit', '[data-cart-item-add]', (event, target) => {
+            this.emit('cart-item-add', event, target);
         });
     }
 }
