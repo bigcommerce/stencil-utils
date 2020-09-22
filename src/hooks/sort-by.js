@@ -11,7 +11,6 @@ if (!Element.prototype.closest) {
 }
 
 export default class extends BaseHooks {
-
     /**
      * @Constructor
      */

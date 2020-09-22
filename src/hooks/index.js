@@ -1,10 +1,10 @@
-import CartHooks from './hooks/cart';
-import CookieHooks from './hooks/cookie';
-import CurrencySelectorHooks from './hooks/currency-selector';
-import ProductHooks from './hooks/product';
-import SearchHooks from './hooks/search';
-import FacetedSearchHooks from './hooks/faceted-search';
-import SortByHooks from './hooks/sort-by';
+import CartHooks from './cart';
+import CookieHooks from './cookie';
+import CurrencySelectorHooks from './currency-selector';
+import ProductHooks from './product';
+import SearchHooks from './search';
+import FacetedSearchHooks from './faceted-search';
+import SortByHooks from './sort-by';
 
 const internals = {};
 
@@ -44,7 +44,7 @@ class Hooks {
     emit(hookName) {
         const hook = internals.parseHooks(hookName);
 
-        return hook.emit.apply(hook, arguments);
+        return hook.emit(...arguments);
     }
 }
 

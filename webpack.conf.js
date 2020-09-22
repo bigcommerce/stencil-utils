@@ -1,19 +1,40 @@
+const path = require('path');
+
 module.exports = {
-    devtool: 'inline-source-map',
+    mode: 'production',
+    entry: './src/main.js',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'stencil-utils.min.js',
+        library: ['stencilUtils'],
+    },
+    optimization: {
+        minimize: true,
+    },
+    devtool: false,
     bail: true,
+    watch: false,
     module: {
-        loaders: [
+        rules: [
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                enforce: 'pre',
+                use: {
+                    loader: 'eslint-loader',
+                },
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    compact: false,
-                    cacheDirectory: true,
-                    presets: ['es2015']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        compact: false,
+                        comments: false,
+                    },
                 },
-            }
-        ]
+            },
+        ],
     },
-    watch: false
 };

@@ -4,7 +4,7 @@
  *
  * @param {String} string
  */
-const encode = string => encodeURIComponent(string).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
+const encode = (string) => encodeURIComponent(string).replace(/[!'()*]/g, (x) => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
 
 /**
  * Returns an array, where first element is the slice till separator and the second is the rest.
@@ -36,7 +36,7 @@ const sortByKeys = (input) => {
     if (typeof input === 'object') {
         return sortByKeys(Object.keys(input))
             .sort((a, b) => Number(a) - Number(b))
-            .map(key => input[key]);
+            .map((key) => input[key]);
     }
 
     return input;
@@ -62,7 +62,7 @@ const getParsedValue = (key, value, accumulator) => {
  *
  * @param {String} options
  */
-const reduceByKey = options => key => (result, value) => {
+const reduceByKey = (options) => (key) => (result, value) => {
     if (value === undefined) {
         return result;
     }
@@ -75,12 +75,12 @@ const reduceByKey = options => key => (result, value) => {
         if (typeof value === 'object') {
             const index = result.length / Object.keys(value).length;
             return result.concat(
-                Object.keys(value).map(keyOfValue => ([
+                Object.keys(value).map((keyOfValue) => ([
                     encode(key),
                     '[', encode(index), ']',
                     '[', encode(keyOfValue), ']=',
                     encode(value[keyOfValue]),
-                ].join('')))
+                ].join(''))),
             );
         }
         const index = result.length;
@@ -112,7 +112,7 @@ export function parse(input) {
         return ret;
     }
 
-    inputParsed.split('&').forEach(param => {
+    inputParsed.split('&').forEach((param) => {
         /* eslint-disable prefer-const */
         let [key, value] = splitOnFirst(param.replace(/\+/g, ' '), '=');
 
@@ -152,12 +152,12 @@ export function stringify(object, options = {
     }
 
     const objectCopy = {};
-    const shouldFilter = key => (
-        options.filterValues &&
-        (object[key] === '' || object[key] === undefined)
+    const shouldFilter = (key) => (
+        options.filterValues
+        && (object[key] === '' || object[key] === undefined)
     );
 
-    Object.keys(object).forEach(key => {
+    Object.keys(object).forEach((key) => {
         if (!shouldFilter(key)) {
             objectCopy[key] = object[key];
         }
@@ -166,7 +166,7 @@ export function stringify(object, options = {
     const keys = Object.keys(objectCopy);
     keys.sort();
 
-    return keys.map(key => {
+    return keys.map((key) => {
         const value = object[key];
 
         if (value === undefined) {
@@ -184,5 +184,5 @@ export function stringify(object, options = {
         }
 
         return `${encode(key)}=${encode(value)}`;
-    }).filter(x => x.length > 0).join('&');
+    }).filter((x) => x.length > 0).join('&');
 }

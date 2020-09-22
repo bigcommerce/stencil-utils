@@ -1,7 +1,6 @@
 import Base from './base';
 
-export default class extends Base
-{
+export default class extends Base {
     /**
      * @Constructor
      */
@@ -23,7 +22,6 @@ export default class extends Base
         const url = this.endpoint + productId;
         let paramsArg = params;
         let callbackArg = callback;
-
 
         if (typeof paramsArg === 'function') {
             callbackArg = paramsArg;

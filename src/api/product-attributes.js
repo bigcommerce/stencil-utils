@@ -2,8 +2,7 @@ import Base from './base';
 import Hooks from '../hooks';
 import { normalizeQueryStringParams } from '../lib/utils';
 
-export default class extends Base
-{
+export default class extends Base {
     /**
      * @Constructor
      */

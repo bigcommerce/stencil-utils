@@ -1,7 +1,6 @@
 import request from '../lib/request';
 
-export default class
-{
+export default class {
     /**
      * @Constructor
      */
