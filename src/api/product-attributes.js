@@ -1,6 +1,6 @@
 import Base from './base';
 import Hooks from '../hooks';
-import { normalizeQueryStringParams } from '../lib/utils';
+import { parse } from '../lib/query-string';
 
 export default class extends Base {
     /**
@@ -29,8 +29,7 @@ export default class extends Base {
             templateArg = null;
         }
 
-        const normalizedQs = normalizeQueryStringParams(params);
-        this.remoteRequest(this.endpoint + productId, 'POST', { params: normalizedQs, template: templateArg }, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', { params: parse(params), template: templateArg }, (err, response) => {
             const emitData = {
                 err,
                 response,
