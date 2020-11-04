@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-utils",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git://github.com/bigcommerce/stencil-utils.git"
   },
+  "files": [
+    "src/",
+    "dist/"
+  ],
   "scripts": {
     "build": "webpack --config webpack.conf.js",
     "test": "jest",
