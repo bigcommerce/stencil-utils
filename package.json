@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/stencil-utils",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "main": "src/main.js",
   "license": "BSD-4-Clause",
   "author": "Bigcommerce",
@@ -14,7 +14,8 @@
     "test": "jest",
     "test-with-coverage": "jest --coverage --verbose",
     "lint": "eslint .",
-    "lint--fix": "eslint . --fix"
+    "lint--fix": "eslint . --fix",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "eventemitter3": "^4.0.4",
