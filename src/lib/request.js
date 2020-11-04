@@ -51,6 +51,7 @@ export default function (relativeUrl, opts, callback) {
         'stencil-config': options.requestOptions.config ? JSON.stringify(options.requestOptions.config) : '{}',
         'stencil-options': '{}',
         'x-xsrf-token': window.BCData && window.BCData.csrf_token ? window.BCData.csrf_token : '',
+        'x-requested-with': 'stencil-utils',
     };
 
     if (!isValidHTTPMethod(options.method)) {
