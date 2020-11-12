@@ -65,7 +65,7 @@ export default class extends Base {
                 return callback(err);
             }
             let quantity = 0;
-            if (response) {
+            if (response && response.status !== 404) {
                 const cart = response;
                 const lineItemQuantities = [
                     cart.lineItems.physicalItems,
