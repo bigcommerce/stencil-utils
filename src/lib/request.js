@@ -82,42 +82,46 @@ export default function (relativeUrl, opts, callback) {
     if (['GET', 'HEAD'].indexOf(config.method) === -1) {
         config.body = !options.requestOptions.formData ? stringify(data, { includeArrayIndex: true }) : data;
     } else if (data) {
-        url += `?${stringify(data)}`;
+        const delimiter = !url.includes('?') ? '?' : '&';
+        url += `${delimiter}${stringify(data)}`;
     }
 
-    fetch(url, config).then((response) => {
-        if (response.headers.get('content-type').indexOf('application/json') !== -1) {
-            return response.json();
-        }
-        return response.text();
-    }).then((response) => {
-        const content = options.remote ? response.content : response;
-        let ret = response;
-
-        if (usingTemplates) {
-            // Remove the `components` prefix from the response if it's an object
-            if (typeof (content) === 'object') {
-                Object.keys(content).forEach((key) => {
-                    const cleanKey = key.replace(/^components\//, '');
-
-                    content[cleanKey] = content[key];
-                    delete (content[key]);
-                });
+    return fetch(url, config)
+        .then((response) => {
+            if (response.headers.get('content-type').indexOf('application/json') !== -1) {
+                return response.json();
             }
+            return response.text();
+        })
+        .then((response) => {
+            const content = options.remote ? response.content : response;
+            let ret = response;
 
-            // If using "sections", morph the content into the arbitrary keys => content object.
-            if (usingSections) {
-                const requestedTemplate = options.requestOptions.template;
-                Object.keys(requestedTemplate).forEach((templateVariable) => {
-                    content[templateVariable] = content[requestedTemplate[templateVariable]];
-                    delete content[requestedTemplate[templateVariable]];
-                });
-            }
+            if (usingTemplates) {
+                // Remove the `components` prefix from the response if it's an object
+                if (typeof (content) === 'object') {
+                    Object.keys(content).forEach((key) => {
+                        const cleanKey = key.replace(/^components\//, '');
 
-            if (!options.remote) {
-                ret = content;
+                        content[cleanKey] = content[key];
+                        delete (content[key]);
+                    });
+                }
+
+                // If using "sections", morph the content into the arbitrary keys => content object.
+                if (usingSections) {
+                    const requestedTemplate = options.requestOptions.template;
+                    Object.keys(requestedTemplate).forEach((templateVariable) => {
+                        content[templateVariable] = content[requestedTemplate[templateVariable]];
+                        delete content[requestedTemplate[templateVariable]];
+                    });
+                }
+
+                if (!options.remote) {
+                    ret = content;
+                }
             }
-        }
-        callback(null, ret);
-    }).catch((err) => callback(err));
+            callback(null, ret);
+        })
+        .catch((err) => callback(err));
 }
