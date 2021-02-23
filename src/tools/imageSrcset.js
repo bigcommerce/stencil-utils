@@ -19,9 +19,7 @@ export default class {
                 '1920w': '1920w',
                 '2560w': '2560w',
             };
-        } else if ((sizes === Object(sizes)) && !Object.keys(sizes).some(descriptor =>
-            !(descriptorRegex.test(descriptor) && sizeRegex.test(sizes[descriptor]))
-        )) {
+        } else if ((sizes === Object(sizes)) && !Object.keys(sizes).some((descriptor) => !(descriptorRegex.test(descriptor) && sizeRegex.test(sizes[descriptor])))) {
             // If object consists of valid srcsets, use it instead
             srcsets = sizes;
             // If there's only one argument, return a `src` only (also works for `srcset`)
@@ -33,8 +31,6 @@ export default class {
         }
 
         // eslint-disable-next-line new-cap
-        return Object.keys(srcsets).map(descriptor =>
-            [url.replace('{:size}', srcsets[descriptor]), descriptor].join(' ')
-        ).join(', ');
+        return Object.keys(srcsets).map((descriptor) => [url.replace('{:size}', srcsets[descriptor]), descriptor].join(' ')).join(', ');
     }
 }

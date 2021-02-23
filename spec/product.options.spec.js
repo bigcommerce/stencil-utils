@@ -1,4 +1,4 @@
-import { normalizeQueryStringParams } from '../lib/utils';
+import { normalizeQueryStringParams } from '../src/lib/utils';
 
 describe('Product Attributes', () => {
     it('should leave normalized params intact', () => {
@@ -18,7 +18,7 @@ describe('Product Attributes', () => {
     it('should preserve array indexes on a valid querystring', () => {
         const qs = 'action=add&product_id=753&attribute%5B714%5D=833&attribute%5B714%5D=123&qty%5B%5D=1';
         const normalized = decodeURIComponent(normalizeQueryStringParams(qs));
-        
+
         expect(normalized).toEqual('action=add&attribute[714]=833&attribute[714]=123&product_id=753&qty[]=1');
-    })
+    });
 });

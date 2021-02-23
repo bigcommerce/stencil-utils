@@ -1,7 +1,6 @@
 import BaseHooks from './base';
 
 export default class extends BaseHooks {
-
     /**
      * @Constructor
      */
@@ -13,8 +12,8 @@ export default class extends BaseHooks {
     }
 
     itemAdd() {
-        this.on('submit', '[data-cart-item-add]', (event) => {
-            this.emit('cart-item-add', event, event.target);
+        this.subscribe('submit', '[data-cart-item-add]', (event, target) => {
+            this.emit('cart-item-add', event, target);
         });
     }
 }

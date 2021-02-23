@@ -1,7 +1,6 @@
 import BaseHooks from './base';
 
 export default class extends BaseHooks {
-
     /**
      * @Constructor
      */
@@ -13,8 +12,8 @@ export default class extends BaseHooks {
     }
 
     quickSearch() {
-        this.on('input', '[data-search-quick]', (event) => {
-            this.emit('search-quick', event);
+        this.subscribe('input', '[data-search-quick]', (event, target) => {
+            this.emit('search-quick', event, target);
         });
     }
 }

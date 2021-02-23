@@ -5,10 +5,14 @@ const queryString = require('./query-string');
  * @param {string} params
  * @returns {string} Normalized querystring
  */
-export function normalizeQueryStringParams(params) {
+export const normalizeQueryStringParams = (params) => {
     const qsParams = queryString.parse(params);
     const paramString = queryString.stringify(qsParams, {
         filterValues: true,
     });
     return paramString;
-}
+};
+
+export default {
+    normalizeQueryStringParams,
+};
