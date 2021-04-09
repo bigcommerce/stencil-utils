@@ -46,6 +46,21 @@ export default class extends Base {
     }
 
     /**
+     * Get the summary for the current primary cart. This summary does not include the full details of the cart, but
+     * the response time is much faster and it's appropriate for summary use cases.
+     *
+     * @param options
+     * @param {Function} callback
+     */
+    getCartSummary(options = {}, callback) {
+        const url = '/api/storefront/cart-summary';
+
+        this.makeRequest(url, 'GET', options, true, (err, response) => {
+            callback(err, response);
+        });
+    }
+
+    /**
      * Add the parameters to a URL needed to get product option details on cart line items
      * @param url
      */
@@ -60,23 +75,15 @@ export default class extends Base {
      * @param {Function} callback
      */
     getCartQuantity(options = {}, callback) {
-        this.getCart(options, (err, response) => {
+        this.getCartSummary(options, (err, response) => {
             if (err) {
                 return callback(err);
             }
             let quantity = 0;
-            if (response && response.status !== 404) {
-                const cart = response;
-                const lineItemQuantities = [
-                    cart.lineItems.physicalItems,
-                    cart.lineItems.digitalItems,
-                    cart.lineItems.customItems,
-                ].reduce((a, b) => a.concat(b))
-                    .filter((lineItem) => !lineItem.parentId)
-                    .map((lineItem) => lineItem.quantity)
-                    .reduce((accumulator, lineItemQuantity) => accumulator + lineItemQuantity, 0);
-                const giftCertificateQuantity = cart.lineItems.giftCertificates.length;
-                quantity = lineItemQuantities + giftCertificateQuantity;
+            if (response
+                && response.status !== 204
+                && response.total_quantity) {
+                quantity = response.total_quantity;
             }
             callback(null, quantity);
         });
