@@ -13,7 +13,7 @@ const isValidHTTPMethod = (method) => ['GET', 'POST', 'PUT', 'DELETE'].indexOf(m
  *
  * @param {Object|Array|String} requestedTemplate
  */
-const isUsingSections = (requestedTemplate) => typeof (requestedTemplate) === 'object' && !Array.isArray(requestedTemplate);
+const isUsingSections = (requestedTemplate) => requestedTemplate !== null && typeof (requestedTemplate) === 'object' && !Array.isArray(requestedTemplate);
 
 /**
  * Returns templates array
