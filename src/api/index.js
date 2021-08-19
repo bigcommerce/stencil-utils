@@ -5,6 +5,7 @@ import ProductApi from './product';
 import ProductAttributesApi from './product-attributes';
 import SearchApi from './search';
 import CartApi from './cart';
+import Wishlist from './wishlist';
 
 const internals = {};
 
@@ -28,5 +29,6 @@ export default {
     product: new ProductApi(),
     search: new SearchApi(),
     cart: new CartApi(),
+    wishlist: new Wishlist(),
     getPage: internals.getPage,
 };
