@@ -22,6 +22,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "@bigcommerce/bodl-events": "^1.0.2",
     "eventemitter3": "^4.0.4",
     "whatwg-fetch": "^3.4.0"
   },
