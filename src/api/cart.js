@@ -91,7 +91,7 @@ export default class extends Base {
     }
 
     /**
-     * Enhace with Bodl Events
+     * Enhance with Big Open Data Layer events
      *
      * @param {FormData} formData
      * @param {Function} callback
