@@ -26,6 +26,7 @@ jobs:
 
       # for private libraries
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_ONLY }}" >> ~/.npmrc
+      - run: npm i npm@latest
     
       - name: Install Dependencies
         run: npm i
