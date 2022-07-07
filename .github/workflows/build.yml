@@ -33,7 +33,7 @@ jobs:
             ${{ runner.os }}-node-
 
       # for private libraries
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_ONLY }}" >> ~/.npmrc
     
       - name: Install Dependencies
         run: npm i
