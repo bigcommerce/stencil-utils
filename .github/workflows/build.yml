@@ -24,14 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: npm cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       # for private libraries
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_ONLY }}" >> ~/.npmrc
     
