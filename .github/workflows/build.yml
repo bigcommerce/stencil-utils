@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       # for private libraries
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_ONLY }}" >> ~/.npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       
       - run: npm i -g npm@latest
       - run: npm whoami
