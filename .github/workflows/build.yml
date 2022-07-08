@@ -15,6 +15,9 @@ jobs:
       matrix:
         node: [14.x]
 
+    env:
+      # for private libraries. Note: only if PR is created in same repo
+      NPM_TOKEN: secrets.NPM_TOKEN_READ_ONLY
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,13 +27,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      # for private libraries
-      - run: echo "123 = {{ secrets.NPM_TOKEN }}"
-      - run: echo "123 = {{ secrets.NPM_TOKEN_READ_ONLY }}"
-      - run: echo secrets.NPM_TOKEN
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      
-      - run: npm i -g npm@latest
       - run: npm whoami
     
       - name: Install Dependencies
