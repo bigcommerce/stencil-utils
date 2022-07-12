@@ -1,3 +1,4 @@
+import BodlEvents, { AddCartItemEvent, RemoveCartItemEvent } from '@bigcommerce/bodl-events';
 import Base from './base';
 import Hooks from '../hooks';
 
@@ -90,12 +91,25 @@ export default class extends Base {
     }
 
     /**
-     * Add item to cart with options (variants)
+     * Enhance with Big Open Data Layer events
      *
      * @param {FormData} formData
      * @param {Function} callback
      */
     itemAdd(formData, callback) {
+        BodlEvents.cart.emit(AddCartItemEvent.CREATE, {
+            data: formData,
+            callback,
+        });
+    }
+
+    /**
+     * Add item to cart with options (variants)
+     *
+     * @param {FormData} formData
+     * @param {Function} callback
+     */
+    handleItemAdd(formData, callback) {
         this.remoteRequest('/cart/add', 'POST', { formData }, (err, response) => {
             const emitData = {
                 err,
@@ -143,6 +157,19 @@ export default class extends Base {
     }
 
     /**
+     * Enhance with Big Open Data Layer events
+     *
+     * @param {String} itemId
+     * @param {Function} callback
+     */
+    itemRemove(itemId, callback) {
+        BodlEvents.cart.emit(RemoveCartItemEvent.CREATE, {
+            data: itemId,
+            callback,
+        });
+    }
+
+    /**
      * Remove cart items
      *
      * Calls the internal update function with quantity: 0
@@ -150,7 +177,7 @@ export default class extends Base {
      * @param {String} itemId
      * @param {Function} callback
      */
-    itemRemove(itemId, callback) {
+    handleItemRemove(itemId, callback) {
         const items = [
             {
                 id: itemId,
