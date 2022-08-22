@@ -1,14 +1,14 @@
-import BodlEvents, { AddCartItemEvent, RemoveCartItemEvent } from '@bigcommerce/bodl-events';
-
-import CartHandler from '../../src/bodl/cart';
+import CartHandler from '../../src/bodl/handlers/cart';
+import { getBODLEvents, isBODLEnabled } from '../../src/bodl/helpers';
 
 describe('Bodl Cart Class', () => {
-    let handleItemAdd; let handleItemRemove; let
+    let handleItemAdd; let handleItemRemove; let bodlEvents; let
         cartHandler;
 
     beforeEach(() => {
         handleItemAdd = jest.fn();
         handleItemRemove = jest.fn();
+        bodlEvents = getBODLEvents();
         const cart = {
             handleItemAdd,
             handleItemRemove,
@@ -20,12 +20,16 @@ describe('Bodl Cart Class', () => {
         expect(cartHandler).toBeDefined();
     });
 
+    it('should validte that BODL is enabled', () => {
+        expect(isBODLEnabled()).toBeTruthy();
+    });
+
     it('should be able to handle add item event', () => {
         const data = {
             itemId: 1,
         };
         const callback = jest.fn();
-        BodlEvents.cart.emit(AddCartItemEvent.CREATE, { data, callback });
+        bodlEvents.cart.emit(bodlEvents.AddCartItemEvent.CREATE, { data, callback });
         expect(handleItemAdd).toHaveBeenCalledWith(data, callback);
     });
 
@@ -33,7 +37,7 @@ describe('Bodl Cart Class', () => {
         const itemId = 1;
         const callback = jest.fn();
 
-        BodlEvents.cart.emit(RemoveCartItemEvent.CREATE, { data: itemId, callback });
+        bodlEvents.cart.emit(bodlEvents.RemoveCartItemEvent.CREATE, { data: itemId, callback });
         expect(handleItemRemove).toHaveBeenCalledWith(itemId, callback);
     });
 });

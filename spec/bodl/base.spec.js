@@ -1,4 +1,4 @@
-import Base from '../../src/bodl/base';
+import Base from '../../src/bodl/handlers/base';
 
 describe('Bodl Base Class', () => {
     it('should throw an error creating a new instance', () => {

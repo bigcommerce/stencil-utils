@@ -17,15 +17,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
 
-      # for private libraries. Note: only if PR is created in same repo
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - name: Set npm registry
+        run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+      - name: Set npm secrets
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
     
       - name: Install Dependencies
         run: npm i

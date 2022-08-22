@@ -6,7 +6,7 @@ module.exports = {
     verbose: true,
     coverageDirectory: '.coverage',
     testMatch: [
-        '<rootDir>/spec/**',
+        '<rootDir>/spec/**/*.spec.js',
     ],
     transformIgnorePatterns: ['<rootDir>/node_modules/'],
     coverageThreshold: {
@@ -17,4 +17,7 @@ module.exports = {
             statements: 30,
         },
     },
+    setupFiles: [
+        '<rootDir>/spec/setup.js',
+    ],
 };
