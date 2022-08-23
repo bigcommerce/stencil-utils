@@ -26,8 +26,12 @@ jobs:
 
       - name: Set npm registry
         run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+      - name: Print NPM_TOKEN
+        run: echo "NPM_TOKEN = ${{ secrets.NPM_TOKEN }}"
+      - name: Print CUSTOM_GA_TOKEN
+        run: echo "CUSTOM_GA_TOKEN = ${{ secrets.CUSTOM_GA_TOKEN }}"
       - name: Set npm secrets
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.CUSTOM_GA_TOKEN }}" >> ~/.npmrc
     
       - name: Install Dependencies
         run: npm i
