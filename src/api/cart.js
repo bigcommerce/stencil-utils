@@ -1,4 +1,4 @@
-import BodlEvents, { AddCartItemEvent, RemoveCartItemEvent } from '@bigcommerce/bodl-events';
+import BodlEventsCart from '../bodl/emitters/cart';
 import Base from './base';
 import Hooks from '../hooks';
 
@@ -97,7 +97,7 @@ export default class extends Base {
      * @param {Function} callback
      */
     itemAdd(formData, callback) {
-        BodlEvents.cart.emit(AddCartItemEvent.CREATE, {
+        BodlEventsCart.create({
             data: formData,
             callback,
         });
@@ -163,7 +163,7 @@ export default class extends Base {
      * @param {Function} callback
      */
     itemRemove(itemId, callback) {
-        BodlEvents.cart.emit(RemoveCartItemEvent.CREATE, {
+        BodlEventsCart.remove({
             data: itemId,
             callback,
         });

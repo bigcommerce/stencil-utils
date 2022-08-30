@@ -1,6 +1,5 @@
-import BodlEvents from '@bigcommerce/bodl-events';
-
 import Base from './base';
+import { getBODLEvents } from '../helpers';
 
 export default class extends Base {
     attachHandlers() {
@@ -9,13 +8,15 @@ export default class extends Base {
     }
 
     attachAddToCartHandler() {
-        BodlEvents.cart.addItem((payload) => {
+        const bodlEvents = getBODLEvents();
+        bodlEvents.cart.addItem((payload) => {
             this.api.handleItemAdd(payload.data, payload.callback);
         });
     }
 
     attachRemoveFromCartHandler() {
-        BodlEvents.cart.removeItem((payload) => {
+        const bodlEvents = getBODLEvents();
+        bodlEvents.cart.removeItem((payload) => {
             this.api.handleItemRemove(payload.data, payload.callback);
         });
     }

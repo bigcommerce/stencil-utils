@@ -7,7 +7,7 @@ import SearchApi from './search';
 import CartApi from './cart';
 import Wishlist from './wishlist';
 
-import BodlCartHandler from '../bodl/cart';
+import BodlCartHandler from '../bodl/handlers/cart';
 
 const internals = {};
 

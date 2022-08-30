@@ -1,9 +1,11 @@
-import BodlEvents from '@bigcommerce/bodl-events';
 import CartApi from '../../src/api/cart';
+import { getBODLEvents } from '../../src/bodl/helpers';
 
 describe('Cart Api Class', () => {
-    let cart;
+    let cart; let
+        bodlEvents;
     beforeEach(() => {
+        bodlEvents = getBODLEvents();
         cart = new CartApi();
     });
     it('should be able to initialize', () => {
@@ -12,7 +14,7 @@ describe('Cart Api Class', () => {
 
     it('should be able to emit event on item add', () => {
         const addItem = jest.fn();
-        BodlEvents.cart.addItem(addItem);
+        bodlEvents.cart.addItem(addItem);
         cart.itemAdd({}, jest.fn());
 
         expect(addItem).toHaveBeenCalled();
@@ -20,7 +22,7 @@ describe('Cart Api Class', () => {
 
     it('should be able to emit event on item remove', () => {
         const removeItem = jest.fn();
-        BodlEvents.cart.removeItem(removeItem);
+        bodlEvents.cart.removeItem(removeItem);
         cart.itemRemove(1, jest.fn());
 
         expect(removeItem).toHaveBeenCalled();
