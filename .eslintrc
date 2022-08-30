@@ -10,7 +10,8 @@
         "consistent-return": 0,
         "max-len": 0,
         "prefer-rest-params": 0,
-        "class-methods-use-this": 0
+        "class-methods-use-this": 0,
+        "func-names": 0
     },
     "env": {
         "es6": true,

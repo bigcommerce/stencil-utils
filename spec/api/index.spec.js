@@ -1,4 +1,4 @@
-import api from '../src/api';
+import api from '../../src/api';
 
 describe('API', () => {
     it('should check existance of country, productAttributes, product, search, cart, wishlist, cookie, getPage', () => {

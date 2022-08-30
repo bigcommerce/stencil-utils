@@ -1,7 +1,7 @@
-import Base from '../src/api/base';
-import Country from '../src/api/countries';
+import Base from '../../src/api/base';
+import Country from '../../src/api/countries';
 
-jest.mock('../src/api/base');
+jest.mock('../../src/api/base');
 
 describe('Countries', () => {
     test('should use getById and return a number', () => {

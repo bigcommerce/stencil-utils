@@ -29,6 +29,7 @@
     "@babel/core": "^7.11.4",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.11.0",
+    "@bigcommerce-labs/bodl-events": "1.4.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
@@ -41,6 +42,6 @@
     "webpack-cli": "^3.3.12"
   },
   "engines": {
-    "node": ">=10.0.0 <15.0.0"
+    "node": ">=14.0.0 <15.0.0"
   }
 }
