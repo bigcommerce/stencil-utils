@@ -13,7 +13,7 @@ jobs:
       - name: Set npm registry
         run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
       - name: Set npm secrets
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DEPENDABOT_GITHUB_TOKEN }}" >> ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.CUSTOM_GA_TOKEN }}" >> ~/.npmrc
       - run: npm i
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - run: npm publish
