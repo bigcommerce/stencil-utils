@@ -97,9 +97,9 @@ export default class extends Base {
      * @param {Function} callback
      */
     itemAdd(formData, callback) {
-        BodlEventsCart.create({
-            data: formData,
-            callback,
+        this.handleItemAdd(formData, (err, response) => {
+            BodlEventsCart.create({ data: formData });
+            callback(err, response);
         });
     }
 
@@ -163,9 +163,9 @@ export default class extends Base {
      * @param {Function} callback
      */
     itemRemove(itemId, callback) {
-        BodlEventsCart.remove({
-            data: itemId,
-            callback,
+        this.handleItemRemove(itemId, (err, response) => {
+            BodlEventsCart.remove({ data: itemId });
+            callback(err, response);
         });
     }
 
