@@ -25,6 +25,17 @@ internals.getPage = function (url, options, callback) {
     }, callback);
 };
 
+internals.getPageByGQL = function (page, callback) {
+    request('/graphql-render', {
+        method: 'GET',
+        requestOptions: {
+            params: {
+                template_name: page,
+            },
+        },
+    }, callback);
+};
+
 const cart = new CartApi();
 // eslint-disable-next-line no-new
 new BodlCartHandler(cart);
@@ -37,4 +48,5 @@ export default {
     cart,
     wishlist: new Wishlist(),
     getPage: internals.getPage,
+    getPageByGQL: internals.getPageByGQL,
 };
