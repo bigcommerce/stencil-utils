@@ -3,6 +3,18 @@ import Base from './base';
 import Hooks from '../hooks';
 
 export default class extends Base {
+    constructor(version) {
+        super(version);
+        this.bodlEventsCart = null;
+    }
+
+    getBodlEventsCart() {
+        if (!this.bodlEventsCart) {
+            this.bodlEventsCart = new BodlEventsCart();
+        }
+        return this.bodlEventsCart;
+    }
+
     /**
      * Get a collection of Carts. For now, this will only return an array of a single cart as multiple carts per session
      * are not currently supported.
@@ -98,7 +110,9 @@ export default class extends Base {
      */
     itemAdd(formData, callback) {
         this.handleItemAdd(formData, (err, response) => {
-            BodlEventsCart.create({ data: formData });
+            if (!err) {
+                this.getBodlEventsCart().emitAddItem(response);
+            }
             callback(err, response);
         });
     }
@@ -151,6 +165,10 @@ export default class extends Base {
                 response,
             };
 
+            if (qty === 0 && !err) {
+                this.getBodlEventsCart().emitRemoveItem(response);
+            }
+
             Hooks.emit('cart-item-update-remote', emitData);
             callbackArg(err, response);
         });
@@ -164,7 +182,9 @@ export default class extends Base {
      */
     itemRemove(itemId, callback) {
         this.handleItemRemove(itemId, (err, response) => {
-            BodlEventsCart.remove({ data: itemId });
+            if (!err) {
+                this.getBodlEventsCart().emitRemoveItem(response);
+            }
             callback(err, response);
         });
     }
