@@ -1,43 +1,65 @@
-import CartHandler from '../../src/bodl/handlers/cart';
-import { getBODLEvents, isBODLEnabled } from '../../src/bodl/helpers';
+import Cart from '../../src/bodl/emitters/cart';
 
-describe('Bodl Cart Class', () => {
-    let handleItemAdd; let handleItemRemove; let bodlEvents; let
-        cartHandler;
-
+describe('Emitter Cart Class', () => {
+    let cart;
     beforeEach(() => {
-        handleItemAdd = jest.fn();
-        handleItemRemove = jest.fn();
-        bodlEvents = getBODLEvents();
-        const cart = {
-            handleItemAdd,
-            handleItemRemove,
-        };
-        cartHandler = new CartHandler(cart);
+        cart = new Cart();
     });
 
-    it('should be able to initialize', () => {
-        expect(cartHandler).toBeDefined();
+    it('should emit add product event', () => {
+        const addItem = jest.fn();
+        cart.bodlEvents.cart.addItem(addItem);
+        cart.emitAddItem({
+            data: {
+                cart_item: 1,
+                line_items: [
+                    {},
+                ],
+            },
+        });
+        expect(addItem).toHaveBeenCalled();
     });
 
-    it('should validte that BODL is enabled', () => {
-        expect(isBODLEnabled()).toBeTruthy();
+    it('should not emit remove product event for the last item in the cart', () => {
+        const removeItem = jest.fn();
+        cart.bodlEvents.cart.removeItem(removeItem);
+        cart.emitRemoveItem({
+            data: {
+                channel_id: 1,
+                currency: 'USD',
+                cart_value: 0,
+                line_items: [],
+            },
+        });
+        expect(removeItem).not.toHaveBeenCalled();
     });
 
-    it('should be able to handle add item event', () => {
-        const data = {
-            itemId: 1,
-        };
-        const callback = jest.fn();
-        bodlEvents.cart.emit(bodlEvents.AddCartItemEvent.CREATE, { data, callback });
-        expect(handleItemAdd).toHaveBeenCalledWith(data, callback);
-    });
-
-    it('should be able to handle remove item event', () => {
-        const itemId = 1;
-        const callback = jest.fn();
-
-        bodlEvents.cart.emit(bodlEvents.RemoveCartItemEvent.CREATE, { data: itemId, callback });
-        expect(handleItemRemove).toHaveBeenCalledWith(itemId, callback);
+    it('should emit remove product event', () => {
+        const removeItem = jest.fn();
+        cart.bodlEvents.cart.removeItem(removeItem);
+        cart.emitRemoveItem({
+            data: {
+                channel_id: 1,
+                currency: 'USD',
+                cart_value: 49.5,
+                line_items: [
+                    {
+                        product_id: 86,
+                        product_name: '[Sample] Chemex Coffeemaker 3 Cup',
+                        sku: 'CC3C',
+                        base_price: 49.5,
+                        sale_price: 49.5,
+                        retail_price: 0,
+                        purchase_price: 49.5,
+                        quantity: 1,
+                        currency: 'USD',
+                        discount: 0,
+                        brand_name: 'Bigcommerce',
+                        category_names: ['Kitchen', 'Shop All'],
+                    },
+                ],
+            },
+        });
+        expect(removeItem).toHaveBeenCalled();
     });
 });

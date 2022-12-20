@@ -7,8 +7,6 @@ import SearchApi from './search';
 import CartApi from './cart';
 import Wishlist from './wishlist';
 
-import BodlCartHandler from '../bodl/handlers/cart';
-
 const internals = {};
 
 /**
@@ -36,16 +34,12 @@ internals.getPageByGQL = function (page, callback) {
     }, callback);
 };
 
-const cart = new CartApi();
-// eslint-disable-next-line no-new
-new BodlCartHandler(cart);
-
 export default {
     country: new CountryApi(),
     productAttributes: new ProductAttributesApi(),
     product: new ProductApi(),
     search: new SearchApi(),
-    cart,
+    cart: new CartApi(),
     wishlist: new Wishlist(),
     getPage: internals.getPage,
     getPageByGQL: internals.getPageByGQL,
