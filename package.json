@@ -29,19 +29,19 @@
     "@babel/core": "^7.11.4",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.11.0",
-    "@bigcommerce-labs/bodl-events": "1.7.0",
+    "@bigcommerce-labs/bodl-events": "1.9.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^9.1.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.4.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "engines": {
-    "node": ">=14.0.0 <15.0.0"
+    "node": ">=14.0.0 <19.0.0"
   }
 }
