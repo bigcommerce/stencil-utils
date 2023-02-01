@@ -26,7 +26,7 @@ class Cart extends Base {
             return {
                 channel_id: response.data.channel_id,
                 currency: response.data.currency,
-                cart_value: response.data.cart_value,
+                product_value: response.data.product_value,
                 line_items: response.data.line_items,
             };
         }
