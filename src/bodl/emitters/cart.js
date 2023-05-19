@@ -28,7 +28,7 @@ class Cart extends Base {
                 channel_id: response.data.channel_id,
                 currency: response.data.currency,
                 product_value: response.data.product_value,
-                line_items: response.data.line_items.map((item, index) => ({ ...item, index })),
+                line_items: response.data.line_items.map((item) => ({ ...item, product_id: String(item.product_id) })),
             };
         }
 
