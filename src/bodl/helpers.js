@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const isBODLEnabled = () => typeof window.bodlEvents !== 'undefined';
 
 export const FakeBODLEvents = {
@@ -13,6 +15,8 @@ export const FakeBODLEvents = {
         CREATE: 'create_remove_cart_item',
     },
 };
+
+export const getEventId = () => uuidv4();
 
 export const getBODLEvents = () => {
     if (isBODLEnabled()) {
