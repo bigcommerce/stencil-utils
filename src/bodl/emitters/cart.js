@@ -1,4 +1,4 @@
-import { isBODLEnabled } from '../helpers';
+import { getEventId, isBODLEnabled } from '../helpers';
 import Base from './base';
 
 class Cart extends Base {
@@ -24,10 +24,11 @@ class Cart extends Base {
     preparePayload(response) {
         if (isBODLEnabled() && !response.data.error) {
             return {
+                event_id: getEventId(),
                 channel_id: response.data.channel_id,
                 currency: response.data.currency,
                 product_value: response.data.product_value,
-                line_items: response.data.line_items,
+                line_items: response.data.line_items.map((item) => ({ ...item, product_id: String(item.product_id) })),
             };
         }
 
