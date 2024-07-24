@@ -1,7 +1,16 @@
 version: 2
 
+registries:
+    npmjs:
+        type: "npm-registry"
+        url: "https://registry.npmjs.org"
+        username: x-access-token
+        password: ${{secrets.NPM_TOKEN}}
+
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily" # Schedule updates to run daily
+    - package-ecosystem: "npm"
+      directory: "/"
+      registries:
+          - npmjs
+      schedule:
+          interval: "daily" # Schedule updates to run daily
