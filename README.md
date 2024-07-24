@@ -16,6 +16,7 @@ Stencil utils can either be imported to your theme as a module, or included as a
 
 ### Installing Stencil Utils on your theme
 
+test 
 #### As an ES6 module
 
 * Run `npm install @bigcommerce/stencil-utils` to install the latest tagged version of stencil-utils for use with your theme.
