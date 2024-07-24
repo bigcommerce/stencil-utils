@@ -25,10 +25,10 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Set npm registry
-        run: echo "@bigcommerce:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+        run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
       - name: Set npm secrets
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.CUSTOM_GA_TOKEN }}" >> ~/.npmrc
-
+    
       - name: Install Dependencies
         run: npm i
       - name: Lint the code
