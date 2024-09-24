@@ -6,14 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-latest 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14.x'
+          node-version: '20.x'
       - name: Set npm registry
         run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
       - name: Set npm secrets
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.CUSTOM_GA_TOKEN }}" >> ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DEPENDABOT_GITHUB_TOKEN }}" >> ~/.npmrc
       - run: npm i
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - run: npm publish

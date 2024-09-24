@@ -13,14 +13,14 @@ jobs:
 
     strategy:
       matrix:
-        node: [14.x]
+        node: [20.x]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
@@ -28,7 +28,6 @@ jobs:
         run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
       - name: Set npm secrets
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DEPENDABOT_GITHUB_TOKEN }}" >> ~/.npmrc
-
       - name: Install Dependencies
         run: npm i
       - name: Lint the code
