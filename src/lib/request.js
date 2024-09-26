@@ -88,6 +88,13 @@ export default function (relativeUrl, opts, callback) {
 
     return fetch(url, config)
         .then((response) => {
+            if (
+              opts?.requestOptions?.is404Error === true &&
+              response.status === 404
+            ) {
+              throw new Error('404');
+            }
+
             if (response.headers.get('content-type').indexOf('application/json') !== -1) {
                 return response.json();
             }
