@@ -88,12 +88,18 @@ export default function (relativeUrl, opts, callback) {
 
     return fetch(url, config)
         .then((response) => {
-            if (response.headers.get('content-type').indexOf('application/json') !== -1) {
-                return response.json();
+            let result = null;
+
+            if (response.status === 401 && response.headers.get('X-BC-Preview-Mode').indexOf('true') !== -1) {
+                window.location.reload();
+            } else if (response.headers.get('content-type').indexOf('application/json') !== -1) {
+                result = response.json();
+            } else {
+                result = response.text();
             }
-            return response.text();
-        })
-        .then((response) => {
+
+            return result;
+        }).then((response) => {
             const content = options.remote ? response.content : response;
             let ret = response;
 
