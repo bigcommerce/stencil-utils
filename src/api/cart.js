@@ -260,6 +260,16 @@ export default class extends Base {
     }
 
     /**
+     * POST form data to /cart.php
+     *
+     * @param {FormData} formData
+     * @param {Function} callback
+     */
+    postFormData(formData, callback) {
+        this.makeRequest('/cart.php', 'POST', { formData }, false, callback);
+    }
+
+    /**
      * Get cart content
      *
      * @param {Object} options
