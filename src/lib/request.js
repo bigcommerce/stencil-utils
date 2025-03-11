@@ -54,6 +54,8 @@ export default function (relativeUrl, opts, callback) {
         'x-requested-with': 'stencil-utils',
     };
 
+    const abortSignal = (options.requestOptions.abortSignal || null);
+
     if (!isValidHTTPMethod(options.method)) {
         return callback(new Error('Not a valid HTTP method'));
     }
@@ -76,6 +78,7 @@ export default function (relativeUrl, opts, callback) {
         method: options.method,
         headers,
         credentials: 'include',
+        signal: abortSignal,
     };
 
     let url = options.requestOptions.baseUrl ? `${options.requestOptions.baseUrl}${relativeUrl}` : relativeUrl;
