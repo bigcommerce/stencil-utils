@@ -11,7 +11,6 @@ export default class extends Base {
 
         // set up class variables
         this.endpoint = '/search.php?search_query=';
-        this.abortController = new AbortController();
     }
 
     /**
@@ -21,7 +20,9 @@ export default class extends Base {
      * @param {Function} callback
      */
     search(query, params, callback) {
-        this.abortController.abort();
+        if (this.abortController) {
+            this.abortController.abort();
+        }
 
         const url = this.endpoint + encodeURIComponent(query);
         let paramsArg = params;
@@ -34,6 +35,7 @@ export default class extends Base {
 
         Hooks.emit('search-quick-remote', query);
 
+        this.abortController = new AbortController();
         paramsArg.abortSignal = this.abortController.signal;
         this.makeRequest(url, 'GET', paramsArg, false, callbackArg);
     }
