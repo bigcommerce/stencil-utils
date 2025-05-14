@@ -20,6 +20,10 @@ export default class extends Base {
      * @param {Function} callback
      */
     search(query, params, callback) {
+        if (this.abortController) {
+            this.abortController.abort();
+        }
+
         const url = this.endpoint + encodeURIComponent(query);
         let paramsArg = params;
         let callbackArg = callback;
@@ -30,6 +34,9 @@ export default class extends Base {
         }
 
         Hooks.emit('search-quick-remote', query);
+
+        this.abortController = new AbortController();
+        paramsArg.abortSignal = this.abortController.signal;
         this.makeRequest(url, 'GET', paramsArg, false, callbackArg);
     }
 }
