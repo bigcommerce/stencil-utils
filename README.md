@@ -1,4 +1,5 @@
 # Stencil Utils
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/bigcommerce/stencil-utils)
 
 [![Build Status](https://travis-ci.org/bigcommerce/stencil-utils.svg?branch=master)](https://travis-ci.org/bigcommerce/stencil-utils) [![npm (scoped)](https://img.shields.io/npm/v/@bigcommerce/stencil-utils.svg)](https://www.npmjs.com/package/@bigcommerce/stencil-utils)
 
