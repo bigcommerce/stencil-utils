@@ -23,4 +23,62 @@ describe('Countries', () => {
         });
         expect(country.remoteRequest).toHaveBeenCalled();
     });
+
+    describe('getByName', () => {
+        let country;
+
+        beforeEach(() => {
+            Base.prototype.remoteRequest = jest.fn();
+            country = new Country();
+        });
+
+        test('should call remoteRequest with correct url when called without options (legacy signature)', () => {
+            const callback = jest.fn();
+
+            country.getByName('United States', callback);
+
+            expect(country.remoteRequest).toHaveBeenCalledWith(
+                '/country-states/United States',
+                'GET',
+                {},
+                callback,
+            );
+        });
+
+        test('should call remoteRequest with options when called with options object', () => {
+            const callback = jest.fn();
+            const options = { baseUrl: '/fr' };
+
+            country.getByName('United States', options, callback);
+
+            expect(country.remoteRequest).toHaveBeenCalledWith(
+                '/country-states/United States',
+                'GET',
+                options,
+                callback,
+            );
+        });
+
+        test('should pass baseUrl option through to remoteRequest for multi-lang support', () => {
+            const callback = jest.fn();
+
+            country.getByName('United States', { baseUrl: '/fr' }, callback);
+
+            const [, , passedOptions] = country.remoteRequest.mock.calls[0];
+            expect(passedOptions.baseUrl).toBe('/fr');
+        });
+
+        test('should handle undefined options gracefully (null guard)', () => {
+            const callback = jest.fn();
+
+            country.getByName('United States', undefined, callback);
+
+            expect(country.remoteRequest).toHaveBeenCalledWith(
+                '/country-states/United States',
+                'GET',
+                {},
+                callback,
+            );
+        });
+    });
 });
