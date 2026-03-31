@@ -27,12 +27,21 @@ export default class extends Base {
 
     /**
      * Get country data by country name
-     * @param name
-     * @param callback
+     * @param {String} name
+     * @param {Object} [options] - optional request options
+     * @param {Function} callback
      */
-    getByName(name, callback) {
+    getByName(name, options, callback) {
+        let opts = options || {};
+        let callbackArg = callback;
+
+        if (typeof opts === 'function') {
+            callbackArg = opts;
+            opts = {};
+        }
+
         const url = this.endpoint + name;
 
-        this.remoteRequest(url, 'GET', {}, callback);
+        this.remoteRequest(url, 'GET', opts, callbackArg);
     }
 }
