@@ -17,6 +17,11 @@ jobs:
               with:
                   node-version: '22.x'
 
+            # this is crucial for bodl-events package to be able to resolve @bigcommerce-labs scoped packages
+            - name: Set npm registry
+              run: echo "@bigcommerce-labs:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+            - name: Set npm secrets
+              run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DEPENDABOT_GITHUB_TOKEN }}" >> ~/.npmrc
             - run: npm i
             - name: Check Git Commit name
               run: git log -1 --pretty=format:"%s" |  npx commitlint
