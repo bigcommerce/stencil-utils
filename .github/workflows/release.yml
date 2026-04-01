@@ -6,9 +6,12 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            id-token: write
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with:
                   node-version: '22.x'
 
@@ -20,8 +23,6 @@ jobs:
             - run: npm i
             - name: Check Git Commit name
               run: git log -1 --pretty=format:"%s" |  npx commitlint
-            # Setup .npmrc file to publish to npm registry
-            - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
             - run: npm run build
             - name: Deploy to npm and git
               run: npm config list && npm run release
