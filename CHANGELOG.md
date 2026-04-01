@@ -1,3 +1,18 @@
+# [6.21.0](https://github.com/bigcommerce/stencil-utils/compare/6.20.0...6.21.0) (2026-04-01)
+
+
+### Bug Fixes
+
+* add OIDC-compliant permissions to release workflow ([#231](https://github.com/bigcommerce/stencil-utils/issues/231)) ([30c9a31](https://github.com/bigcommerce/stencil-utils/commit/30c9a315a894d2b34b9922dce9f66a509125590b))
+* **release:** trigger CI for stencil-utils ([959c1a5](https://github.com/bigcommerce/stencil-utils/commit/959c1a51590412fe6e935ad67a4348d2f81637b0))
+* **release:** trigger CI for stencil-utils ([#229](https://github.com/bigcommerce/stencil-utils/issues/229)) ([df726dd](https://github.com/bigcommerce/stencil-utils/commit/df726dda6fdf4dd88403c1fc6b730bd774bc0184))
+* STRF-13622 Fix PR release ([#226](https://github.com/bigcommerce/stencil-utils/issues/226)) ([30c7cbd](https://github.com/bigcommerce/stencil-utils/commit/30c7cbd828ae3515bfbe42becec74c55433231a4))
+
+
+### Features
+
+* STRF-13622 Semantic release ([#225](https://github.com/bigcommerce/stencil-utils/issues/225)) ([7612994](https://github.com/bigcommerce/stencil-utils/commit/7612994b7d743b302380fd9682c91108c140a252))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
