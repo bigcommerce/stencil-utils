@@ -107,14 +107,15 @@ export default class extends Base {
      *
      * @param {FormData} formData
      * @param {Function} callback
+     * @param {Object} [requestOptions] - optional
      */
-    itemAdd(formData, callback) {
+    itemAdd(formData, callback, requestOptions = {}) {
         this.handleItemAdd(formData, (err, response) => {
             if (!err) {
                 this.getBodlEventsCart().emitAddItem(response);
             }
             callback(err, response);
-        });
+        }, requestOptions);
     }
 
     /**
@@ -122,9 +123,11 @@ export default class extends Base {
      *
      * @param {FormData} formData
      * @param {Function} callback
+     * @param {Object} [requestOptions] - optional
      */
-    handleItemAdd(formData, callback) {
-        this.remoteRequest('/cart/add', 'POST', { formData }, (err, response) => {
+    handleItemAdd(formData, callback, requestOptions = {}) {
+        const { baseUrl } = requestOptions;
+        this.remoteRequest('/cart/add', 'POST', { formData, baseUrl }, (err, response) => {
             const emitData = {
                 err,
                 response,

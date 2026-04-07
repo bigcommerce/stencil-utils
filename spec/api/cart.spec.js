@@ -75,6 +75,44 @@ describe('Cart Api Class', () => {
         expect(cart.makeRequest).toHaveBeenCalled();
     });
 
+    it('should pass requestOptions baseUrl to makeRequest when provided to itemAdd', () => {
+        const baseUrl = 'https://site.com/es';
+        cart.itemAdd({}, jest.fn(), { baseUrl });
+
+        expect(cart.makeRequest).toHaveBeenCalledWith(
+            expect.stringContaining('/cart/add'),
+            'POST',
+            expect.objectContaining({ baseUrl }),
+            true,
+            expect.any(Function),
+        );
+    });
+
+    it('should pass requestOptions baseUrl to makeRequest when provided to handleItemAdd', () => {
+        const baseUrl = 'https://site.com/fr';
+        cart.handleItemAdd({}, jest.fn(), { baseUrl });
+
+        expect(cart.makeRequest).toHaveBeenCalledWith(
+            expect.stringContaining('/cart/add'),
+            'POST',
+            expect.objectContaining({ baseUrl }),
+            true,
+            expect.any(Function),
+        );
+    });
+
+    it('should work without requestOptions (backward compatibility)', () => {
+        cart.itemAdd({}, jest.fn());
+
+        expect(cart.makeRequest).toHaveBeenCalledWith(
+            expect.stringContaining('/cart/add'),
+            'POST',
+            expect.not.objectContaining({ baseUrl: expect.anything() }),
+            true,
+            expect.any(Function),
+        );
+    });
+
     it('should be able to call api on item remove', () => {
         cart.itemRemove(1, jest.fn());
 
