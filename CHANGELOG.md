@@ -1,3 +1,15 @@
+# [6.22.0](https://github.com/bigcommerce/stencil-utils/compare/6.21.0...6.22.0) (2026-04-07)
+
+
+### Bug Fixes
+
+* **release:** trigger CI for stencil-utils ([#242](https://github.com/bigcommerce/stencil-utils/issues/242)) ([a18f5f2](https://github.com/bigcommerce/stencil-utils/commit/a18f5f274da29853c8b57b39266aebdfd681cc96))
+
+
+### Features
+
+* TRAC-362 add optional requestOptions to itemAdd and handleItemAdd for locale-aware cart requests ([#240](https://github.com/bigcommerce/stencil-utils/issues/240)) ([a3ea075](https://github.com/bigcommerce/stencil-utils/commit/a3ea075def3ebfeb4be3e45a17e42564158f3c1f))
+
 # [6.21.0](https://github.com/bigcommerce/stencil-utils/compare/6.20.0...6.21.0) (2026-04-01)
 
 
