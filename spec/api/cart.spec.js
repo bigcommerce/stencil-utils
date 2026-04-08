@@ -119,3 +119,50 @@ describe('Cart Api Class', () => {
         expect(cart.makeRequest).toHaveBeenCalled();
     });
 });
+
+describe('getShippingQuotes', () => {
+    let cart;
+
+    beforeEach(() => {
+        cart = new CartApi();
+        cart.remoteRequest = jest.fn();
+    });
+
+    // Mirrors: utils.api.cart.getShippingQuotes(params, 'cart/shipping-quotes', callback)
+    test('3-arg call (no requestOptions): template and params are forwarded', () => {
+        const callback = jest.fn();
+
+        cart.getShippingQuotes({ zip: '10001' }, 'cart/shipping-quotes', callback);
+
+        expect(cart.remoteRequest).toHaveBeenCalledWith(
+            '/shipping-quote',
+            'GET',
+            expect.objectContaining({ params: { zip: '10001' }, template: 'cart/shipping-quotes' }),
+            callback,
+        );
+    });
+
+    // Mirrors: utils.api.cart.getShippingQuotes(params, 'cart/shipping-quotes', callback, { baseUrl: secureBaseUrl })
+    test('4-arg call (with baseUrl): baseUrl is forwarded and template is not overwritten', () => {
+        const callback = jest.fn();
+
+        cart.getShippingQuotes({ zip: '10001' }, 'cart/shipping-quotes', callback, { baseUrl: 'https://store.example.com/es' });
+
+        const [, , passedOptions] = cart.remoteRequest.mock.calls[0];
+        expect(passedOptions.baseUrl).toBe('https://store.example.com/es');
+        expect(passedOptions.template).toBe('cart/shipping-quotes');
+        expect(passedOptions.params).toEqual({ zip: '10001' });
+    });
+
+    // Regression: baseUrl must not be silently dropped when renderWith is omitted
+    test('3-arg call without renderWith (params, callback, requestOptions): baseUrl is forwarded', () => {
+        const callback = jest.fn();
+
+        cart.getShippingQuotes({ zip: '10001' }, callback, { baseUrl: 'https://store.example.com/es' });
+
+        const [, , passedOptions, actualCallback] = cart.remoteRequest.mock.calls[0];
+        expect(actualCallback).toBe(callback);
+        expect(passedOptions.baseUrl).toBe('https://store.example.com/es');
+        expect(passedOptions.params).toEqual({ zip: '10001' });
+    });
+});

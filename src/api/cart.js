@@ -296,18 +296,24 @@ export default class extends Base {
      * @param {Object} params
      * @param {String|Array|Object} renderWith
      * @param {Function} callback
+     * @param {Object} [requestOptions]
      */
-    getShippingQuotes(params, renderWith, callback) {
-        const options = {
-            params,
-        };
+    getShippingQuotes(params, renderWith, callback, requestOptions = {}) {
         let callbackArg = callback;
         let renderWithArg = renderWith;
+        let requestOptionsArg = requestOptions;
 
         if (typeof callbackArg !== 'function') {
+            // renderWith was omitted — shift remaining args: callback → requestOptions
+            requestOptionsArg = callbackArg || {};
             callbackArg = renderWithArg;
             renderWithArg = null;
         }
+
+        const options = {
+            ...requestOptionsArg,
+            params,
+        };
 
         if (renderWithArg) {
             options.template = renderWithArg;

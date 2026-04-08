@@ -18,18 +18,23 @@ export default class extends Base {
     /**
      * @param {Number} productId
      * @param {Object} params
-     * @param callback
+     * @param {String|null} [template]
+     * @param {Function} callback
+     * @param {Object} [requestOptions]
      */
-    optionChange(productId, params, template = null, callback) {
+    optionChange(productId, params, template = null, callback, requestOptions = {}) {
         let templateArg = template;
         let callbackArg = callback;
+        let requestOptionsArg = requestOptions;
 
         if (typeof templateArg === 'function') {
+            // template was omitted — shift remaining args: callback → requestOptions
+            requestOptionsArg = callbackArg || {};
             callbackArg = templateArg;
             templateArg = null;
         }
 
-        this.remoteRequest(this.endpoint + productId, 'POST', { params: parse(params), template: templateArg }, (err, response) => {
+        this.remoteRequest(this.endpoint + productId, 'POST', { ...requestOptionsArg, params: parse(params), template: templateArg }, (err, response) => {
             const emitData = {
                 err,
                 response,
@@ -43,10 +48,11 @@ export default class extends Base {
     /**
      * @param {Number} itemId
      * @param {Object} params
-     * @param callback
+     * @param {Function} callback
+     * @param {Object} [requestOptions]
      */
-    configureInCart(itemId, params, callback) {
-        this.remoteRequest(this.inCartEndpoint + itemId, 'GET', params, (err, response) => {
+    configureInCart(itemId, params, callback, requestOptions = {}) {
+        this.remoteRequest(this.inCartEndpoint + itemId, 'GET', { ...params, ...requestOptions }, (err, response) => {
             callback(err, response);
         });
     }
