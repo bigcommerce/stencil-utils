@@ -1,3 +1,15 @@
+# [6.23.0](https://github.com/bigcommerce/stencil-utils/compare/6.22.0...6.23.0) (2026-04-08)
+
+
+### Bug Fixes
+
+* **release:** trigger CI for stencil-utils ([#244](https://github.com/bigcommerce/stencil-utils/issues/244)) ([cdb733f](https://github.com/bigcommerce/stencil-utils/commit/cdb733f0b95da3f2f4ecd1556331d823590efb6a))
+
+
+### Features
+
+* TRAC-366 audit and fix Stencil theme remote API calls for multi-language subfolder support ([#241](https://github.com/bigcommerce/stencil-utils/issues/241)) ([e5ec9b1](https://github.com/bigcommerce/stencil-utils/commit/e5ec9b11bd73452e7ca7e600eaa58975efaf1fc4))
+
 # [6.22.0](https://github.com/bigcommerce/stencil-utils/compare/6.21.0...6.22.0) (2026-04-07)
 
 
