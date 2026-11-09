@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.4",
-    "uuid": "^9.0.0",
+    "uuid": "^11.1.1",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
