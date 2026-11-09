@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.4",
-    "uuid": "^9.0.0",
+    "uuid": "^11.1.1",
     "whatwg-fetch": "^3.4.0"
   },
   "devDependencies": {
@@ -39,13 +39,14 @@
     "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^14.1.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.3.0",
+    "babel-jest": "^30.5.2",
     "babel-loader": "^9.1.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.22.0",
-    "jest": "^26.4.2",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
     "semantic-release": "^25.0.3",
     "semantic-release-github-pullrequest-fixed": "^1.0.1",
     "webpack": "^5.75.0",
@@ -53,5 +54,20 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "overrides": {
+    "@jest/reporters": {
+      "glob": "^14.0.2"
+    },
+    "jest-config": {
+      "glob": "^14.0.2"
+    },
+    "jest-runtime": {
+      "glob": "^14.0.2"
+    },
+    "test-exclude": {
+      "glob": "^14.0.2",
+      "minimatch": "^11.0.1"
+    }
   }
 }

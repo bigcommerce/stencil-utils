@@ -4,6 +4,7 @@ module.exports = {
         'src/**',
     ],
     verbose: true,
+    testEnvironment: 'jsdom',
     coverageDirectory: '.coverage',
     testMatch: [
         '<rootDir>/spec/**/*.spec.js',
